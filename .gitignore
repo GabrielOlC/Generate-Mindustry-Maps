@@ -1,0 +1,25 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local settings (the shared CLAUDE.md stays tracked)
+.claude/settings.local.json
+
+# Operating system files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.tmp
