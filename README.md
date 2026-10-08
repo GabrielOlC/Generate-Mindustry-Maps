@@ -14,7 +14,7 @@ the game every time the map is loaded.** Every ore can turn up in every biome, a
 | Player core | Core: Foundation at the centre (tiles 399–402 × 399–402) |
 | Enemy spawns | 5 spawn points, one per biome, all near the map edge |
 | Ore nodes | Random on every load: about 1,440 patches per game, all 12 ores + siratla crystal in every biome |
-| Lava | Thermal generators can be built anywhere on it, not only on the banks |
+| Lava | Thermal generators can be built anywhere on it (molten slag and pyromagma), not only on the banks |
 | Session length | Wave 100 at ~4 h 15 min, wave 120 at ~5 h 05 min (players can call waves early) |
 | Required mod | Exogenesis Old 1.9.1 (needs game build 158 or newer) |
 
@@ -47,9 +47,12 @@ whether you start a custom game or host a server. A saved game keeps the ores it
 the map opens without ores; *Map Info → Generation* lists the filters, previews a roll and lets you
 tune them.
 
-**Thermal generators on lava.** A small data patch stored in the map lets the thermal generator be
-placed on lava (molten slag), including the middle of a river or the crater. Normally it only fits
-where it touches the bank. The patch is active only while this map is loaded.
+**Thermal generators on lava.** Two small data patches stored in the map make all lava usable:
+- Molten slag (the two lava rivers, the crater and the pools) takes thermal generators anywhere,
+  including the middle of a river or the crater. Normally they only fit where they touch the bank.
+- The pyromagma creeks get heat. This Exogenesis lava had none, so no thermal generator could stand on it.
+
+The patches are active only while this map is loaded.
 
 ---
 
@@ -142,7 +145,7 @@ barriers. They are the same in every game.
 |---|---|---|
 | **Crossroads Basin** (centre) | 10,801 | darksand (sand) 1,843 |
 | **Forest** (W) | 110,963 | **water 7,967** (Great River, Mirror Lake, fords) · spore moss 6,322 · sand/darksand 1,308 |
-| **Volcano** (SW) | 148,025 | **lava (molten slag) 4,353** (thermal generators can stand on it) · **pyromagma 983** (Exo, pumps pyroplasma) · hotrock/magmarock (heat) 18,045 |
+| **Volcano** (SW) | 148,025 | **lava (molten slag) 4,353** · **pyromagma 983** (Exo, pumps pyroplasma) · hotrock/magmarock 18,045. Thermal generators can stand on all of them. |
 | **Frozen** (N) | 112,525 | **pooled cryofluid 9,055** · **glowing vein 1,821** (Exo, pumps cold plasma) |
 | **Semi-arid** (NE) | 89,200 | shale (oil bonus) 6,222 · darksand 6,667 · oasis water 373 |
 | **Desert** (E) | 168,486 | **tar (oil) 2,205** · shale (oil bonus) 13,842 · sand/darksand 120,431 |
@@ -204,8 +207,8 @@ Signature terrain inside the biomes:
 - **Volcano.** A volcanic cone about 40 tiles in radius at (230, 185), around a molten-slag crater. Two **lava
   rivers** run to the west edge and the south edge, which walls off the south-west corner. Smaller
   lava pools and two pyromagma creeks are scattered through the rest of the biome. Thermal generators
-  can be built anywhere on the lava. Adjacent generators share power, so a field of them reaching the
-  bank feeds a power node there; enemies still cannot walk across.
+  can be built anywhere on the lava, creeks included. Adjacent generators share power, so a field of
+  them reaching the bank feeds a power node there; enemies still cannot walk across.
 - **Forest.** The **Great River** meanders from the Taiga Wall to the Ashwood Ridge through
   **Mirror Lake** (148, 360). Its banks are darksand and mud, and pine groves form natural cover.
   **Spore Hollow** is a purple spore-moss grove in the north-west.
@@ -350,11 +353,11 @@ it averages (20–50 s each).
 
 | File | What to change there |
 |---|---|
-| `generate_map.py` | Spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), the lava data patch (`DATA_PATCHES`), map author/name |
+| `generate_map.py` | Spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), the lava data patches (`DATA_PATCHES`, `FLOOR_HEAT`), map author/name |
 | `ores.py` | The in-game ore filters: map-wide layer per ore (`WIDESPREAD`: scale = how many patches, threshold = how big), biome tendencies (`TENDENCIES`), siratla crystal (`CRYSTAL_HOSTS`), ore-free floors (`CLEAR_FLOORS`) |
 | `waves.py` | Every spawn group, wave timer, loadout, unit cap |
 | `msav.py` | The save-format writer and validator (no need to touch) |
-| `check_map.py` | Re-reads a map, checks the ore filters and the data patch, and runs the barrier tests |
+| `check_map.py` | Re-reads a map, checks the ore filters, tests thermal-generator spots on all lava, and runs the barrier tests |
 | `audit_names.py` | Checks every block/unit/item/filter/patch name against the game and mod sources on GitHub (needs internet) |
 | `CLAUDE.md` | Maintenance notes: pipeline, invariants, what to re-check when the game updates |
 
@@ -368,14 +371,20 @@ it averages (20–50 s each).
   the core plaza clear. `World.FilterContext` calls `randomize()` on each filter before applying it,
   which is what makes every load different. An empty tag would make the game apply its default ore
   and boulder filters instead.
-- The patches region carries one embedded data patch,
-  `{"block":{"thermal-generator":{"placeableLiquid":true}}}`. The thermal generator is already
-  `floating` (it may stand on deep tiles), but `Build.validPlace` also requires it to touch non-deep
-  ground (`contactsShallows`), which kept it on the banks. Only floors with heat pass the generator's
-  own placement check, so the patch opens up lava and nothing else. Fully on lava, one generator gets
-  4 × 0.85 heat = 340 % efficiency, about 367 power units/s (magmarock: 324/s, hotrock: 216/s). The
-  barriers are unaffected because the pathfinder decides "impassable deep liquid" from the floor alone.
-  Multiplayer clients receive the patch with the world, and it is undone when the game ends.
+- The patches region carries two embedded data patches:
+  - `{"block":{"thermal-generator":{"placeableLiquid":true}}}`. The thermal generator is already
+    `floating` (it may stand on deep tiles), but `Build.validPlace` also requires it to touch non-deep
+    ground (`contactsShallows`), which kept it on the banks of the molten slag. Only floors with heat
+    pass the generator's own placement check (`ThermalGenerator.canPlaceOn`), so this opens up lava
+    and nothing else.
+  - `{"block.exogenesisold-pyromagma.attributes.heat":0.85}`. Exogenesis Old's `pyromagma.json`
+    defines no heat, so `canPlaceOn` rejected every spot on the creeks. It now has the heat of molten
+    slag. Without the mod this path does not resolve; the game logs a warning and skips it.
+
+  Fully on lava, one generator gets 4 × 0.85 heat = 340 % efficiency, about 367 power units/s
+  (magmarock: 324/s, hotrock: 216/s). `check_map.py` tests every 2×2 spot on lava against these rules.
+  The barriers are unaffected because the pathfinder decides "impassable deep liquid" from the floor
+  alone. Multiplayer clients receive the patches with the world, and they are undone when the game ends.
 - The core is written as a team-1 (Sharded) `core-foundation` building with the exact building
   data layout of v159.7 (`Building.writeBase` version 3 plus `CoreBuild` revision 1).
 - The first 34 entries of the block table copy the game's runtime block ids. That way, an unknown
@@ -383,13 +392,15 @@ it averages (20–50 s each).
 - Mod blocks are stored under their in-game names (`exogenesisold-pyromagma`, ...), because the game
   does not add the mod prefix by itself.
 - Name audit: all 89 block names in the block table, the 28 block names used by the ore filters,
-  the patched block and its field, all 82 wave unit types (62 from Exogenesis Old), the `boss`
-  effect and the loadout items were checked against v159.7's `Blocks`, `Block`, `UnitTypes`,
-  `StatusEffects`, `Items` and filter classes, and against the mod's `content/` folder. All five
+  the two patched blocks with their field and attribute, all 82 wave unit types (62 from Exogenesis
+  Old), the `boss` effect and the loadout items were checked against v159.7's `Blocks`, `Block`,
+  `Attribute`, `UnitTypes`, `StatusEffects`, `Items` and filter classes, and against the mod's
+  `content/` folder. All five
   pinned spawn positions sit on spawn tiles.
 - **Not tested in the game itself.** No game client was run during generation. Validation mirrors
   the game's own reader and source code. Please confirm once in the game: the map loads, the ores
-  differ between two loads, and a thermal generator can be placed in the middle of a lava river.
+  differ between two loads, and a thermal generator can be placed in the middle of a lava river and
+  on a pyromagma creek.
 
 ### Sources
 

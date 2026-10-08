@@ -131,17 +131,6 @@ BIOME_FLOOR = {DESERT: "sand-floor", SEMIARID: "dirt", FROZEN: "snow", FOREST: "
 BOULDERS = {DESERT: "sand-boulder", SEMIARID: "dacite-boulder", FROZEN: "snow-boulder", FOREST: "boulder",
             VOLCANO: "basalt-boulder", BASIN: "boulder"}
 
-# Map data patches (embedded in the save, applied by the game while the map is loaded).
-# The thermal generator is already `floating`, but Build.validPlace also wants it to touch non-deep
-# ground (contactsShallows), so it only fit along the lava banks. `placeableLiquid` lifts that rule.
-# Only heat floors pass ThermalGenerator.canPlaceOn, so in practice this opens up lava and nothing else.
-DATA_PATCHES = (
-    ("thermal-generators-on-lava.json", json.dumps({
-        "name": "Thermal generators on lava",
-        "block": {"thermal-generator": {"placeableLiquid": True}},
-    })),
-)
-
 # Exogenesis Old terrain. Mod content is registered as "<mod name>-<file name>", so these are written
 # to the map with the prefix (ContentLoader.getByName does no prefixing of its own).
 MOD_BLOCKS = {"pyromagma", "siratla-stone", "siratla-stone-wall", "siratla-crystal", "glowingvein",
@@ -151,6 +140,31 @@ MOD_PREFIX = "exogenesisold-"
 
 def file_block_name(name):
     return MOD_PREFIX + name if name in MOD_BLOCKS else name
+
+
+# Lava: floors drawn as lava, and Attribute.heat per floor (Blocks.java @ v159.7; Exogenesis Old 1.9.1
+# gives none of its floors on this map any heat). Thermal generators need heat > 0 under their 2x2.
+LAVA_FLOORS = {"molten-slag", "pyromagma"}
+FLOOR_HEAT = {"molten-slag": 0.85, "magmarock": 0.75, "hotrock": 0.5}
+
+# Map data patches (embedded in the save, applied by the game only while the map is loaded).
+# 1. The thermal generator is already `floating`, but Build.validPlace also wants it to touch non-deep
+#    ground (contactsShallows), so it only fit along the banks of the molten slag. `placeableLiquid`
+#    lifts that rule. Only heat floors pass ThermalGenerator.canPlaceOn, so this opens up lava and
+#    nothing else.
+# 2. Exogenesis' pyromagma (the creeks) is drawn as lava but has no heat at all, so no thermal generator
+#    could stand on it. It gets the heat of molten slag. This is a separate asset with a dotted path:
+#    without the mod the path does not resolve, and the game only logs a warning for it.
+DATA_PATCHES = (
+    ("thermal-generators-on-lava.json", json.dumps({
+        "name": "Thermal generators on lava",
+        "block": {"thermal-generator": {"placeableLiquid": True}},
+    })),
+    ("pyromagma-heat.json", json.dumps({
+        "name": "Pyromagma gives heat",
+        "block.%s.attributes.heat" % file_block_name("pyromagma"): FLOOR_HEAT["molten-slag"],
+    })),
+)
 
 
 # ----------------------------------------------------------------------------------------------

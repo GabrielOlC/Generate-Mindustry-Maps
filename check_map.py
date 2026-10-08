@@ -20,6 +20,51 @@ import msav
 import ores
 
 
+def flatten(tree, prefix=""):
+    """Data patch JSON -> {"block.thermal-generator.placeableLiquid": True, ...} (both syntaxes)."""
+    out = {}
+    for key, value in tree.items():
+        path = prefix + key
+        if isinstance(value, dict):
+            out.update(flatten(value, path + "."))
+        else:
+            out[path] = value
+    return out
+
+
+def thermal_on_lava(width, height, floor, wall, patched):
+    """Every 2x2 thermal-generator spot that lies fully on lava must be placeable (Build.validPlace +
+    ThermalGenerator.canPlaceOn), apart from spots under walls or in the map's border darkness."""
+    if patched.get("block.thermal-generator.placeableLiquid") is not True:
+        print("  FAIL: thermal generators only fit on the lava banks (missing placeableLiquid patch)")
+        return False
+    heat = dict(gm.FLOOR_HEAT)
+    for path, value in patched.items():
+        parts = path.split(".")
+        if parts[0] == "block" and parts[2:] == ["attributes", "heat"]:
+            name = parts[1]
+            heat[name[len(gm.MOD_PREFIX):] if name.startswith(gm.MOD_PREFIX) else name] = value
+    spots, blocked, cold, cold_floors = 0, 0, 0, set()
+    for y in range(height - 1):
+        for x in range(width - 1):
+            tiles = (y * width + x, y * width + x + 1, (y + 1) * width + x, (y + 1) * width + x + 1)
+            if not all(floor[i] in gm.LAVA_FLOORS for i in tiles):
+                continue
+            spots += 1
+            solid = any(wall[i] is not None and wall[i] not in gm.NON_SOLID_BLOCKS for i in tiles)
+            if solid or min(x, y, width - 2 - x, height - 2 - y) <= 2:      # World.getDarkness at the border
+                blocked += 1
+            elif sum(heat.get(floor[i], 0.0) for i in tiles) <= 0.0:
+                cold += 1
+                cold_floors.update(floor[i] for i in tiles)
+    print("  thermal generators on lava: %d of %d spots placeable (%d under walls or at the map edge)"
+          % (spots - blocked - cold, spots, blocked))
+    if cold:
+        print("  FAIL: %d lava spots have no heat (%s)" % (cold, ", ".join(sorted(cold_floors))))
+        return False
+    return True
+
+
 def main(path):
     info = msav.validate_msav(path)
     width, height = info["width"], info["height"]
@@ -69,13 +114,12 @@ def main(path):
     if problems:
         return 1
 
-    patch_ok = False
+    patched = {}
     for asset in info["patches"]:
         body = json.loads(asset["text"])
         print("  data patch %s: %s" % (asset["path"], json.dumps({k: v for k, v in body.items() if k != "name"})))
-        patch_ok |= body.get("block", {}).get("thermal-generator", {}).get("placeableLiquid") is True
-    if not patch_ok:
-        print("  FAIL: thermal generators are not placeable on lava (missing data patch)")
+        patched.update(flatten({k: v for k, v in body.items() if k != "name"}))
+    if not thermal_on_lava(width, height, floor, wall, patched):
         return 1
 
     report = json.load(open(path[:-len(".msav")] + " - report.json", encoding="utf-8"))

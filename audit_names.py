@@ -35,13 +35,17 @@ def fetch(url):
 
 
 def public_fields(java):
-    """Names of the public fields declared in a Java source (`public float a = 1, b = 2;`)."""
+    """Names of the public fields declared in a Java source (`public float a = 1, b = 2;`,
+    `public Attributes attributes = new Attributes();`)."""
     names = set()
     for decl in re.findall(r"public\s+(?:static\s+)?(?:final\s+)?[\w.<>\[\]]+\s+([^;(){}]+);", java):
         for part in decl.split(","):
             name = part.split("=")[0].strip()
             if re.fullmatch(r"[A-Za-z_]\w*", name):
                 names.add(name)
+    # first name of declarations whose initializer the pattern above cannot take apart
+    names.update(re.findall(r"public\s+(?:(?:static|final|transient|volatile)\s+)*(?:@\w+\s+)?"
+                            r"[\w.]+(?:<[\w.<>, ?]*>)?(?:\[\])*\s+(\w+)\s*(?:=|;|,)", java))
     return names
 
 
@@ -70,24 +74,37 @@ def audit_filters(tag, filters, known_blocks):
     return problems
 
 
+def patch_paths(tree, prefix=""):
+    """Data patch JSON -> dotted paths ("block.thermal-generator.placeableLiquid"); the game accepts both
+    nested objects and dotted keys."""
+    out = []
+    for key, value in tree.items():
+        if not prefix and key == "name":
+            continue
+        out += patch_paths(value, prefix + key + ".") if isinstance(value, dict) else [prefix + key]
+    return out
+
+
 def audit_patches(tag, patches, known_blocks):
-    """Problems with the data patches at this game tag: block names and Block fields."""
+    """Problems with the data patches at this game tag: block names, Block fields and attributes."""
     problems = []
     block_fields = public_fields(fetch(GAME_RAW % (tag, "world/Block.java")))
+    attributes = set(re.findall(r'(\w+)\s*=\s*add\("(\w+)"\)', fetch(GAME_RAW % (tag, "world/meta/Attribute.java"))))
+    attributes = {name for _, name in attributes}
     for asset in patches:
-        body = json.loads(asset["text"])
-        for ctype, entries in body.items():
-            if ctype == "name":
+        for path in patch_paths(json.loads(asset["text"])):
+            parts = path.split(".")
+            if parts[0] != "block" or len(parts) < 3:
+                problems.append("%s: only block field patches are audited, found %s" % (asset["path"], path))
                 continue
-            if ctype != "block":
-                problems.append("%s: only block patches are audited, found %s" % (asset["path"], ctype))
-                continue
-            for name, values in entries.items():
-                if name not in known_blocks:
-                    problems.append("%s: unknown block %s" % (asset["path"], name))
-                for field in values:
-                    if field not in block_fields:
-                        problems.append("%s: Block has no field %s" % (asset["path"], field))
+            if parts[1] not in known_blocks:
+                problems.append("%s: unknown block %s" % (asset["path"], parts[1]))
+            if parts[2] not in block_fields:
+                problems.append("%s: Block has no field %s" % (asset["path"], parts[2]))
+            elif parts[2] == "attributes" and (len(parts) != 4 or parts[3] not in attributes):
+                problems.append("%s: unknown attribute in %s" % (asset["path"], path))
+            elif parts[2] != "attributes" and len(parts) != 3:
+                problems.append("%s: nested field %s is not audited" % (asset["path"], path))
     return problems
 
 

@@ -35,7 +35,7 @@ copying them (roll 1, and so the preview, is the same with any roll count).
 | `ores.py` | In-game ore filters (`build_filters`, `check_filters`, `to_json`) and a port of the game's Simplex noise + OreFilter/NoiseFilter to simulate rolls (`roll`, `measure`) |
 | `waves.py` | All spawn groups (`build_groups`) and the rules JSON (`build_rules`: timer, loadout, unit cap) |
 | `msav.py` | Save-format-13 writer (incl. embedded data patches) plus a validator that mirrors the game's reader |
-| `check_map.py` | Barrier tests, ore-filter rules and data-patch check on a generated map |
+| `check_map.py` | Barrier tests, ore-filter rules and a thermal-generator test on every lava spot of a generated map |
 | `audit_names.py` | Content-name audit against GitHub sources (game tag configurable with `--tag`) |
 
 ## Pipeline order (`main()` in generate_map.py), which matters
@@ -73,10 +73,14 @@ floors.
   never target a mod floor (its target would become "everywhere"). NoiseFilters must set `block` to
   `air` (the default is stone-wall) and always have a floor target, or they would repaint lava, water
   and walls and break the barriers.
-- **Thermal generators on lava** come from the embedded data patch `DATA_PATCHES`
-  (`thermal-generator.placeableLiquid = true`; the block is already `floating`, but
-  `Build.contactsShallows` kept it on the banks). Lava stays a barrier because the pathfinder's
-  `allDeep` flag only looks at floors, so buildings on lava never open a ground route.
+- **Thermal generators on lava** come from the embedded data patches in `DATA_PATCHES`:
+  `thermal-generator.placeableLiquid = true` (the block is already `floating`, but
+  `Build.contactsShallows` kept it on the banks of the molten slag), and heat for Exogenesis'
+  `pyromagma`, which defines none, so `ThermalGenerator.canPlaceOn` (heat > 0) rejected the creeks.
+  Any new lava-looking floor needs heat too: add it to `LAVA_FLOORS`, and `check_map.py` will test
+  every 2×2 spot on it. Lava stays a barrier because the pathfinder's `allDeep` flag only looks at
+  floors, so buildings on lava never open a ground route. Keep patches on mod content in their own
+  asset with a dotted path, so a missing mod only produces a warning.
 - The first 34 entries of the block table copy the game's runtime ids (`msav.RUNTIME_BLOCK_PREFIX`).
   Don't reorder them.
 - The core is the only building. Its data layout (`msav.core_chunk`) is version-specific.
@@ -105,7 +109,9 @@ Compare these files at the new tag against v159.7:
   the `archash` in the game's `gradle.properties`.
 - Data patch: `io/SaveVersion.java` (`readDataPatches`), `mod/data/DataAssetType.java` (patch ordinal),
   `mod/data/PatchAsset.java`, `mod/DataPatcher.java` (patch syntax), `world/Build.java`
-  (`contactsShallows`, `placeableLiquid`) and `world/blocks/power/ThermalGenerator.java` (`canPlaceOn`).
+  (`contactsShallows`, `placeableLiquid`), `world/blocks/power/ThermalGenerator.java` (`canPlaceOn`)
+  and the heat values in `content/Blocks.java` (`FLOOR_HEAT`). If the mod updates, check whether
+  `content/blocks/environment/pyromagma.json` gained its own heat.
 
 Then run `python audit_names.py --tag <new tag>`. It also checks that the filter fields and the patched
 Block field still exist and that the game still re-rolls filter seeds on load.

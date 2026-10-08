@@ -8,8 +8,8 @@
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
   "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Extended Remastered.msav",
-  "file_bytes": 100933,
-  "uncompressed_bytes": 371573,
+  "file_bytes": 100987,
+  "uncompressed_bytes": 371687,
   "spawns": {
     "North spawn (Frozen)": [
       420,
@@ -841,6 +841,13 @@
             "placeableLiquid": true
           }
         }
+      }
+    },
+    {
+      "path": "pyromagma-heat.json",
+      "patch": {
+        "name": "Pyromagma gives heat",
+        "block.exogenesisold-pyromagma.attributes.heat": 0.85
       }
     }
   ],
