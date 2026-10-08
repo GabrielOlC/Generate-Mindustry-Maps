@@ -9,6 +9,9 @@ Only the Python standard library is used (Python 3.8+).
 
 Outputs: the .msav map, a top-down preview PNG, an enemy-routes PNG and a JSON report with the
 measured statistics (biome areas, ore tiles, routes, choke points, wave curve).
+
+Ore nodes are not part of the terrain written here: the map carries ore filters (see ores.py) that the
+game re-rolls every time the map is loaded. The preview and the report show simulated rolls.
 """
 
 import argparse
@@ -24,6 +27,7 @@ from array import array
 from collections import deque
 
 import msav
+import ores
 import waves
 
 MAP_NAME = "Biomes Extended Remastered"
@@ -109,9 +113,9 @@ OUTPOSTS = (  # name, biome, nominal centre of a 7x7 core-zone pad
 LIQUID_FLOORS = {"deep-water", "shallow-water", "sand-water", "darksand-water", "tar", "pooled-cryofluid",
                  "molten-slag", "pyromagma"}
 DEEP_FLOORS = {"deep-water", "tar", "pooled-cryofluid", "molten-slag"}
-NO_ORE_FLOORS = LIQUID_FLOORS | {"glowingvein", "siratla-crystal", "core-zone", "metal-floor",
-                                 "metal-floor-damaged", "dark-panel-1", "dark-panel-2", "dark-panel-3",
-                                 "dark-panel-4", "dark-panel-5", "dark-panel-6"}
+NO_DECOR_FLOORS = LIQUID_FLOORS | {"glowingvein", "siratla-crystal", "core-zone", "metal-floor",
+                                   "metal-floor-damaged", "dark-panel-1", "dark-panel-2", "dark-panel-3",
+                                   "dark-panel-4", "dark-panel-5", "dark-panel-6"}
 NON_SOLID_BLOCKS = {"boulder", "snow-boulder", "sand-boulder", "dacite-boulder", "basalt-boulder",
                     "shale-boulder", "spore-cluster", "siratla-stone-boulder"}
 NATURAL_WALL = {
@@ -127,33 +131,16 @@ BIOME_FLOOR = {DESERT: "sand-floor", SEMIARID: "dirt", FROZEN: "snow", FOREST: "
 BOULDERS = {DESERT: "sand-boulder", SEMIARID: "dacite-boulder", FROZEN: "snow-boulder", FOREST: "boulder",
             VOLCANO: "basalt-boulder", BASIN: "boulder"}
 
-# (ore, deposits, min distance from centre, max distance, min radius, max radius)
-# Many small patches (radius 2.5-5.5 tiles, roughly 15-75 ore tiles each) spread across each biome.
-ORE_SPECS = {
-    BASIN: (("ore-copper", 8, 14, 55, 3, 4.5), ("ore-lead", 6, 14, 55, 3, 4), ("ore-scrap", 3, 20, 55, 2.5, 3.5),
-            ("ore-coal", 2, 40, 56, 2.5, 3.5)),
-    FOREST: (("ore-copper", 16, 95, 420, 3, 5), ("ore-lead", 20, 95, 420, 3, 5), ("ore-coal", 20, 110, 440, 3, 5),
-             ("ore-titanium", 7, 240, 440, 3, 4.5), ("ore-scrap", 5, 120, 400, 3, 4)),
-    VOLCANO: (("ore-thorium", 18, 140, 520, 3, 5), ("ore-tungsten", 14, 170, 520, 3, 4.5),
-              ("ore-beryllium", 14, 120, 500, 3, 4.5), ("ore-coal", 12, 110, 480, 3, 4.5),
-              ("ore-titanium", 9, 150, 480, 3, 4.5), ("ore-copper", 7, 100, 300, 3, 4.5),
-              ("ore-lead", 7, 100, 300, 3, 4.5), ("ore-scrap", 7, 120, 480, 3, 4)),
-    FROZEN: (("ore-titanium", 22, 100, 440, 3.5, 5.5), ("ore-thorium", 11, 190, 440, 3, 4.5),
-             ("ore-lead", 11, 100, 400, 3, 4.5), ("ore-copper", 7, 100, 300, 3, 4.5),
-             ("ore-siradamite", 13, 290, 440, 3, 4.5), ("ore-stellar-steel", 11, 220, 440, 3, 4.5),
-             ("ore-scrap", 3, 120, 300, 3, 4)),
-    SEMIARID: (("ore-titanium", 16, 100, 540, 3, 5), ("ore-copper", 13, 95, 540, 3, 4.5),
-               ("ore-lead", 11, 95, 540, 3, 4.5), ("ore-coal", 11, 110, 540, 3, 4.5),
-               ("ore-scrap", 9, 110, 540, 3, 4), ("ore-thorium", 7, 260, 540, 3, 4.5),
-               ("ore-dytrix", 13, 200, 540, 3, 4.5), ("ore-urbium", 9, 240, 540, 3, 4)),
-    DESERT: (("ore-scrap", 22, 100, 520, 3, 5.5), ("ore-lead", 11, 95, 500, 3, 4.5),
-             ("ore-copper", 9, 95, 400, 3, 4.5), ("ore-titanium", 11, 170, 520, 3, 4.5),
-             ("ore-thorium", 5, 280, 520, 3, 4.5), ("ore-urbium", 13, 200, 520, 3, 4.5),
-             ("ore-coal", 5, 120, 400, 3, 4)),
-}
-CRYSTAL_SPEC = ("siratla-crystal", 11, 300, 460, 3, 4.5)  # Exogenesis astrolite floor, glacier only
-DEPOSIT_GAP = 8        # minimum empty tiles between any two patches
-SAME_ORE_GAP = 26      # minimum empty tiles between two patches of the same resource (spreads each ore out)
+# Map data patches (embedded in the save, applied by the game while the map is loaded).
+# The thermal generator is already `floating`, but Build.validPlace also wants it to touch non-deep
+# ground (contactsShallows), so it only fit along the lava banks. `placeableLiquid` lifts that rule.
+# Only heat floors pass ThermalGenerator.canPlaceOn, so in practice this opens up lava and nothing else.
+DATA_PATCHES = (
+    ("thermal-generators-on-lava.json", json.dumps({
+        "name": "Thermal generators on lava",
+        "block": {"thermal-generator": {"placeableLiquid": True}},
+    })),
+)
 
 # Exogenesis Old terrain. Mod content is registered as "<mod name>-<file name>", so these are written
 # to the map with the prefix (ContentLoader.getByName does no prefixing of its own).
@@ -351,11 +338,12 @@ def polyline_field(points, maxd, amplitude=0.0, scale=40.0, seed=0):
 # ----------------------------------------------------------------------------------------------
 
 class MapBuilder:
-    def __init__(self, seed):
+    def __init__(self, seed, ore_rolls=1):
         self.seed = seed
+        self.ore_rolls = ore_rolls
         self.rng = random.Random(seed)
         self.floor = ["stone"] * N
-        self.ore = [None] * N
+        self.ore = [None] * N      # overlays written to the map: spawn markers only (ores come from filters)
         self.wall = [None] * N
         self.prot = bytearray(N)   # 0 free, 1 liquid/bank feature, 2 forced open, 3 structural wall
         self.keep = bytearray(N)   # 1 = keep free of natural walls and decorations
@@ -959,81 +947,12 @@ class MapBuilder:
 
     # -- resources -------------------------------------------------------------------------------
 
-    def ore_ok(self, i):
-        return (self.wall[i] is None and self.prot[i] in (0,) and self.floor[i] not in NO_ORE_FLOORS
-                and self.ore[i] is None)
-
-    def place_deposits(self):
-        cell = 48                  # spatial grid for the spacing checks
-        grid = {}
-        spawn_pts = list(SPAWNS.values())
-        pad_pts = [(p["x"], p["y"]) for p in self.pads]
-        jobs = []
-        for biome, specs in ORE_SPECS.items():
-            for spec in specs:
-                jobs.append((biome,) + spec)
-        jobs.append((FROZEN,) + CRYSTAL_SPEC)
-        self.deposit_log = []
-
-        def too_close(x, y, size, ore):
-            cx, cy = x // cell, y // cell
-            for gx in range(cx - 1, cx + 2):
-                for gy in range(cy - 1, cy + 2):
-                    for (ox, oy, osize, oore) in grid.get((gx, gy), ()):
-                        gap = SAME_ORE_GAP if oore == ore else DEPOSIT_GAP
-                        if math.hypot(x - ox, y - oy) < size + osize + gap:
-                            return True
-            return False
-
-        for (biome, ore, count, rmin, rmax, smin, smax) in jobs:
-            done = 0
-            tries = 0
-            while done < count and tries < 8000:
-                tries += 1
-                ang = self.rng.uniform(0, 360)
-                r = math.sqrt(self.rng.uniform(rmin * rmin, rmax * rmax))
-                x, y = polar(ang, r)
-                if not (8 <= x < W - 8 and 8 <= y < H - 8):
-                    continue
-                i = y * W + x
-                if biome == BASIN:
-                    if self.BI[i] != BASIN:
-                        continue
-                elif self.CB[i] != biome or self.BI[i] == BASIN:
-                    continue
-                if ore == "siratla-crystal" and not self.glacier(i):
-                    continue
-                if not self.ore_ok(i):
-                    continue
-                size = self.rng.uniform(smin, smax)
-                if any(math.hypot(x - sx, y - sy) < 48 for (sx, sy) in spawn_pts):
-                    continue
-                if any(math.hypot(x - px, y - py) < size + 9 for (px, py) in pad_pts):
-                    continue
-                if too_close(x, y, size, ore):
-                    continue
-                cells = [j for j, d in disc(x, y, size * 1.2)
-                         if d < size * (0.62 + 0.55 * self.fine[j]) and self.ore_ok(j)]
-                if len(cells) < size * 2:
-                    continue
-                for j in cells:
-                    if ore == "siratla-crystal":
-                        self.floor[j] = ore
-                    else:
-                        self.ore[j] = ore
-                grid.setdefault((x // cell, y // cell), []).append((x, y, size, ore))
-                self.deposit_log.append({"biome": BIOME_NAMES[biome], "resource": ore, "x": x, "y": y,
-                                         "tiles": len(cells)})
-                done += 1
-            if done < count:
-                self.notes.append("Only %d/%d %s deposits fit in %s" % (done, count, ore, BIOME_NAMES[biome]))
-
     def decorate(self):
         rng = random.Random(self.seed + 99)
         for i in range(N):
             if self.wall[i] is not None or self.ore[i] is not None or self.prot[i] or self.keep[i]:
                 continue
-            if self.floor[i] in NO_ORE_FLOORS or self.R[i] < 20.0:
+            if self.floor[i] in NO_DECOR_FLOORS or self.R[i] < 20.0:
                 continue
             b = self.BI[i]
             roll = rng.random()
@@ -1041,6 +960,21 @@ class MapBuilder:
                 self.wall[i] = "spore-cluster"
             elif roll < (0.004 if b == BASIN else 0.011):
                 self.wall[i] = "siratla-stone-boulder" if self.floor[i] == "siratla-stone" else BOULDERS[b]
+
+    def roll_ores(self):
+        """Runs the map's ore filters the way the game does on every load. Nothing here is written to the
+        map; the first roll feeds the preview and all rolls feed the report."""
+        self.filters = ores.build_filters(MOD_BLOCKS)
+        problems = ores.check_filters(self.filters, MOD_BLOCKS)
+        assert not problems, problems
+        self.region = [BASIN if self.BI[i] == BASIN else self.CB[i] for i in range(N)]
+        open_tiles = [i for i in range(N) if self.wall[i] is None or self.wall[i] in NON_SOLID_BLOCKS]
+        self.rolls = []
+        for rng in ores.roll_seeds(self.seed, self.ore_rolls):
+            floor, overlay = ores.roll(self.filters, W, self.floor, self.ore, open_tiles, LIQUID_FLOORS, rng)
+            if not self.rolls:
+                self.preview_floor, self.preview_ore = floor, overlay
+            self.rolls.append(ores.measure(W, H, floor, overlay, self.region, BIOME_NAMES))
 
     # -- connectivity ----------------------------------------------------------------------------
 
@@ -1141,27 +1075,23 @@ class MapBuilder:
     # -- statistics ----------------------------------------------------------------------------
 
     def statistics(self):
+        """Terrain written to the map (ores and siratla crystal are rolled in-game, see ore_statistics)."""
         biome_tiles = [0] * 6
         open_tiles = [0] * 6
-        ores = {}
         resources = {}
         groups = {
             "water": {"deep-water", "shallow-water", "sand-water", "darksand-water"},
             "cryofluid": {"pooled-cryofluid"}, "oil (tar)": {"tar"}, "oil-rich ground (shale)": {"shale"},
             "slag (lava)": {"molten-slag"}, "pyroplasma (pyromagma)": {"pyromagma"},
-            "cold plasma (glowing vein)": {"glowingvein"}, "astrolite (siratla crystal)": {"siratla-crystal"},
+            "cold plasma (glowing vein)": {"glowingvein"},
             "heat (hotrock/magmarock)": {"hotrock", "magmarock"}, "spore moss": {"spore-moss"},
             "sand floor (sand/darksand)": {"sand-floor", "darksand"},
         }
         for i in range(N):
-            b = BASIN if self.BI[i] == BASIN else self.CB[i]
+            b = self.region[i]
             biome_tiles[b] += 1
             if self.passable(i):
                 open_tiles[b] += 1
-            o = self.ore[i]
-            if o and o != "spawn":
-                ores.setdefault(BIOME_NAMES[b], {}).setdefault(o, 0)
-                ores[BIOME_NAMES[b]][o] += 1
             fl = self.floor[i]
             for gname, members in groups.items():
                 if fl in members:
@@ -1170,8 +1100,34 @@ class MapBuilder:
         return {
             "biome_tiles": {BIOME_NAMES[b]: biome_tiles[b] for b in range(6)},
             "walkable_tiles": {BIOME_NAMES[b]: open_tiles[b] for b in range(6)},
-            "ore_tiles": ores,
             "special_floors": resources,
+        }
+
+    def ore_statistics(self):
+        """Averages over the simulated rolls: patches (6+ tiles) and ore tiles per biome, patch sizes."""
+        n = len(self.rolls)
+        tiles, count, sizes = {}, {}, []
+        for roll_tiles, roll_count, roll_sizes in self.rolls:
+            for total, part in ((tiles, roll_tiles), (count, roll_count)):
+                for reg, kinds in part.items():
+                    for kind, v in kinds.items():
+                        total.setdefault(reg, {}).setdefault(kind, 0)
+                        total[reg][kind] += v / n
+            sizes += roll_sizes
+        sizes.sort()
+
+        def tidy(table):
+            return {reg: dict(sorted(((k, round(v)) for k, v in table.get(reg, {}).items()), key=lambda kv: -kv[1]))
+                    for reg in BIOME_NAMES}
+
+        return {
+            "rolls": n,
+            "patches_per_game": round(len(sizes) / n),
+            "patch_tiles": {"median": sizes[len(sizes) // 2], "p10": sizes[len(sizes) // 10],
+                            "p90": sizes[len(sizes) * 9 // 10], "smallest_counted": 6},
+            "patches_per_biome": {reg: round(sum(count.get(reg, {}).values())) for reg in BIOME_NAMES},
+            "patches": tidy(count),
+            "ore_tiles": tidy(tiles),
         }
 
     # -- export ----------------------------------------------------------------------------------
@@ -1229,10 +1185,11 @@ def write_png(path, width, height, pixels):
 
 
 def render_preview(mb, path):
+    """Top-down view with the first simulated ore roll (every game rolls its own)."""
     px = bytearray(N * 3)
     for i in range(N):
         x, y = i % W, i // W
-        w, o, f = mb.wall[i], mb.ore[i], mb.floor[i]
+        w, o, f = mb.wall[i], mb.preview_ore[i], mb.preview_floor[i]
         if w is not None and w not in NON_SOLID_BLOCKS:
             c = COLORS.get(w, (60, 60, 60))
         elif o is not None and o != "spawn":
@@ -1314,8 +1271,10 @@ DESCRIPTION = (
     "[accent]800x800 PvE survival for 4-8 players, built for Exogenesis Old.[]\n"
     "Hold the Crossroads core while five factions pour out of five biomes: Genesux from the frozen north, "
     "the Titan host from the semi-arid north-east, Elecian from the eastern desert, Quantra from the western "
-    "forest and Solran from the volcano in the south-west. Each biome holds the resources its tech needs - "
-    "claim the core-zone outposts to expand. Endless waves; heralds at 90, apex bosses from wave 100."
+    "forest and Solran from the volcano in the south-west. Ore nodes are re-rolled every time the map is "
+    "loaded: every ore can appear in every biome, and each biome leans toward its faction's materials. "
+    "Thermal generators can be built anywhere on lava. Claim the core-zone outposts to expand. "
+    "Endless waves; heralds at 90, apex bosses from wave 100."
 )
 
 
@@ -1324,19 +1283,21 @@ def main():
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--out", default=DEFAULT_OUT)
     parser.add_argument("--name", default=MAP_NAME)
+    parser.add_argument("--ore-rolls", type=int, default=1,
+                        help="in-game ore rolls to simulate for the report (20-50 s each; default 1)")
     args = parser.parse_args()
 
     t0 = time.time()
     os.makedirs(args.out, exist_ok=True)
-    mb = MapBuilder(args.seed)
+    mb = MapBuilder(args.seed, max(1, args.ore_rolls))
     steps = (
         ("noise fields", mb.build_noise), ("polar grid", mb.build_polar), ("biomes", mb.build_biomes),
         ("floors", mb.paint_floors), ("volcano", mb.volcano_features), ("forest", mb.forest_features),
         ("frozen", mb.frozen_features), ("semi-arid", mb.semiarid_features), ("desert", mb.desert_features),
         ("keep-clear zones", mb.keep_clear), ("natural walls", mb.natural_walls),
         ("structural walls", mb.structural_walls), ("outpost pads", mb.place_pads),
-        ("spawns and core plaza", mb.clear_spawns_and_core), ("resources", mb.place_deposits),
-        ("decorations", mb.decorate), ("connectivity", mb.ensure_connectivity),
+        ("spawns and core plaza", mb.clear_spawns_and_core), ("decorations", mb.decorate),
+        ("connectivity", mb.ensure_connectivity), ("ore rolls (preview)", mb.roll_ores),
     )
     for label, step in steps:
         ts = time.time()
@@ -1365,19 +1326,23 @@ def main():
         "playtime": "0", "mapname": args.name, "wave": "1", "tick": "0.0", "wavetime": "0.0",
         "stats": "{}", "locales": "{}", "mods": "[]", "controlGroups": "null", "viewpos": "(3204.0,3204.0)",
         "controlledType": "null", "nocores": "false", "playerteam": "1", "hasExternalAssets": "false",
-        "sectorPreset": "", "genfilters": "[]",
+        "sectorPreset": "", "genfilters": ores.to_json(mb.filters, file_block_name),
     }
     map_path = os.path.join(args.out, args.name + ".msav")
     file_table = [file_block_name(name) for name in table]
-    raw_size, file_size = msav.write_msav(map_path, W, H, file_table, floors, overlays, walls, [core], tags)
+    raw_size, file_size = msav.write_msav(map_path, W, H, file_table, floors, overlays, walls, [core], tags,
+                                          DATA_PATCHES)
 
     check = msav.validate_msav(map_path, known_blocks=set(file_table))
     assert check["blocks"] == file_table
     assert check["width"] == W and check["height"] == H
     assert [table[k] for k in check["floors"]] == mb.floor
     assert all((table[k] if k else None) == (o if o else None) for k, o in zip(check["overlays"], mb.ore))
+    assert {table[k] for k in check["overlays"] if k} == {"spawn"}
     assert len(check["buildings"]) == 1 and check["buildings"][0]["block"] == "core-foundation"
     assert check["buildings"][0]["team"] == 1
+    assert [(p["path"], p["text"]) for p in check["patches"]] == list(DATA_PATCHES)
+    assert json.loads(check["tags"]["genfilters"]) == json.loads(tags["genfilters"])
 
     preview_path = os.path.join(args.out, args.name + " - preview.png")
     render_preview(mb, preview_path)
@@ -1391,7 +1356,10 @@ def main():
         "spawns": {SPAWN_LABELS[k]: v for k, v in SPAWNS.items()},
         "routes": routes, "outposts": mb.pads,
         "choke_points": {k: v for k, v in sorted(mb.markers.items())},
-        "statistics": mb.statistics(), "deposits": mb.deposit_log,
+        "statistics": mb.statistics(),
+        "ore_rolls": mb.ore_statistics(),
+        "ore_filters": json.loads(tags["genfilters"]), "genfilters_bytes": len(tags["genfilters"]),
+        "data_patches": [{"path": p, "patch": json.loads(t)} for p, t in DATA_PATCHES],
         "rules": {k: v for k, v in rules.items() if k != "spawns"}, "spawn_groups": len(rules["spawns"]),
         "rules_json_bytes": len(tags["rules"]),
         "wave_summary": waves.wave_summary([1, 10, 20, 30, 40, 50, 60, 75, 90, 100, 110, 120, 150]),
@@ -1409,6 +1377,10 @@ def main():
     for label, info in routes.items():
         print("  %-30s %4d tiles via %s" % (label, info["shortest_ground_path_tiles"],
                                            ", ".join(info["choke_points_on_near_shortest_routes"])))
+    ore_stats = report["ore_rolls"]
+    print("Ores: %d in-game filters, ~%d patches per game (median %d tiles; %d simulated roll%s)"
+          % (len(mb.filters), ore_stats["patches_per_game"], ore_stats["patch_tiles"]["median"],
+             ore_stats["rolls"], "" if ore_stats["rolls"] == 1 else "s"))
     for note in mb.notes:
         print("  note: " + note)
     print("Done in %.1fs" % (time.time() - t0))

@@ -15,6 +15,7 @@ import zlib
 
 SAVE_VERSION = 13
 PATCH_FORMAT_VERSION = 2          # mindustry.mod.DataPatcher.patchFormatVersion
+DATA_ASSET_PATCH = 0              # mindustry.mod.data.DataAssetType.patch.ordinal()
 CONTENT_TYPE_BLOCK = 1            # ContentType.block.ordinal()
 CORE_BUILD_REVISION = 1           # CoreBlock.CoreBuild.version()
 TEAM_SHARDED = 1
@@ -124,9 +125,19 @@ def encode_map(width, height, floors, overlays, walls, buildings):
     return bytes(out)
 
 
-def write_msav(path, width, height, block_table, floors, overlays, walls, buildings, tags):
+def data_patches(patches):
+    """SaveVersion.writeDataPatches with embedded PatchAssets: `patches` is a list of (path, json text).
+    The game applies them to its content while the map is loaded and undoes them afterwards."""
+    out = bytearray(struct.pack(">ii", PATCH_FORMAT_VERSION, len(patches)))
+    for name, text in patches:
+        body = text.encode("utf-8")
+        out += struct.pack(">b", DATA_ASSET_PATCH) + java_utf(name) + struct.pack(">?", True)
+        out += struct.pack(">i", len(body)) + body
+    return bytes(out)
+
+
+def write_msav(path, width, height, block_table, floors, overlays, walls, buildings, tags, patches=()):
     meta = _string_map(tags)
-    patches = struct.pack(">ii", PATCH_FORMAT_VERSION, 0)
     content = bytearray(struct.pack(">B", 1))
     content += struct.pack(">bh", CONTENT_TYPE_BLOCK, len(block_table))
     for name in block_table:
@@ -139,7 +150,7 @@ def write_msav(path, width, height, block_table, floors, overlays, walls, buildi
 
     raw = bytearray(b"MSAV")
     raw += struct.pack(">i", SAVE_VERSION)
-    for region in (meta, patches, bytes(content), tiles, entities, markers, custom):
+    for region in (meta, data_patches(patches), bytes(content), tiles, entities, markers, custom):
         raw += _region(region)
     data = zlib.compress(bytes(raw), 9)
     with open(path, "wb") as fh:
@@ -209,11 +220,18 @@ def validate_msav(path, known_blocks=None):
         return {rd.utf(): rd.utf() for _ in range(count)}
 
     def parse_patches(rd):
-        rd.i()
+        rd.i()                                   # format version, ignored by the game
         total = rd.i()
-        if total != 0:
-            raise ValueError("Expected no data patches")
-        return total
+        assets = []
+        for _ in range(total):
+            kind = rd.b()
+            asset_path = rd.utf()
+            embedded = rd.unpack(">?")[0]
+            if kind != DATA_ASSET_PATCH or not embedded:
+                raise ValueError("Expected only embedded patch assets")
+            length = rd.i()
+            assets.append({"path": asset_path, "text": rd.take(length).decode("utf-8")})
+        return assets
 
     def parse_content(rd):
         mapped = rd.ub()
@@ -225,7 +243,7 @@ def validate_msav(path, known_blocks=None):
         return table
 
     tags = region("meta", parse_meta)
-    region("patches", parse_patches)
+    patches = region("patches", parse_patches)
     content = region("content", parse_content)
     blocks = content.get(CONTENT_TYPE_BLOCK, [])
     if known_blocks is not None:
@@ -327,6 +345,6 @@ def validate_msav(path, known_blocks=None):
         raise ValueError("Trailing bytes after the last region: %d" % (len(raw) - r.pos))
 
     return {
-        "version": version, "width": width, "height": height, "tags": tags, "blocks": blocks,
+        "version": version, "width": width, "height": height, "tags": tags, "patches": patches, "blocks": blocks,
         "floors": floors, "overlays": overlays, "walls": walls, "teams": teams, **stats,
     }

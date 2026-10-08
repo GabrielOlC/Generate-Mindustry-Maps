@@ -6,6 +6,8 @@
 
 Downloads (standard library only, needs internet):
   * Blocks.java, UnitTypes.java, Items.java, StatusEffects.java from github.com/Anuken/Mindustry at --tag
+  * the generation-filter sources, Block.java, World.java and JsonIO.java at --tag, to confirm the ore
+    filters and the data patch still mean what the generator assumes
   * the file list of github.com/AureusStratus/ExoGenesis (Exogenesis Old) - mod names are
     "exogenesisold-<file name>"
 A name the game does not know is silently replaced (blocks -> air/stone, units -> dagger), so this is
@@ -30,6 +32,63 @@ def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "biomes-map-audit"})
     with urllib.request.urlopen(req, timeout=60) as resp:
         return resp.read().decode("utf-8")
+
+
+def public_fields(java):
+    """Names of the public fields declared in a Java source (`public float a = 1, b = 2;`)."""
+    names = set()
+    for decl in re.findall(r"public\s+(?:static\s+)?(?:final\s+)?[\w.<>\[\]]+\s+([^;(){}]+);", java):
+        for part in decl.split(","):
+            name = part.split("=")[0].strip()
+            if re.fullmatch(r"[A-Za-z_]\w*", name):
+                names.add(name)
+    return names
+
+
+def audit_filters(tag, filters, known_blocks):
+    """Problems with the genfilters list at this game tag (empty list = fine)."""
+    problems = []
+    world = fetch(GAME_RAW % (tag, "core/World.java"))
+    jsonio = fetch(GAME_RAW % (tag, "io/JsonIO.java"))
+    if "filter.randomize()" not in world:
+        problems.append("World.java no longer re-rolls filter seeds on load")
+    if 'addClassTag(Strings.camelize(i.getClass().getSimpleName().replace("Filter", ""))' not in jsonio:
+        problems.append("JsonIO.java changed how filter class tags are named")
+    base = public_fields(fetch(GAME_RAW % (tag, "maps/filters/GenerateFilter.java")))
+    fields = {}
+    for f in filters:
+        cls = f["class"]
+        if cls not in fields:
+            fields[cls] = base | public_fields(fetch(GAME_RAW % (tag, "maps/filters/%sFilter.java"
+                                                                     % (cls[0].upper() + cls[1:]))))
+        unknown = sorted(set(f) - {"class"} - fields[cls])
+        if unknown:
+            problems.append("%s filter has no field(s) %s" % (cls, unknown))
+        for key in ("ore", "target", "floor", "block"):
+            if key in f and f[key] not in known_blocks:
+                problems.append("%s filter: unknown block %s" % (cls, f[key]))
+    return problems
+
+
+def audit_patches(tag, patches, known_blocks):
+    """Problems with the data patches at this game tag: block names and Block fields."""
+    problems = []
+    block_fields = public_fields(fetch(GAME_RAW % (tag, "world/Block.java")))
+    for asset in patches:
+        body = json.loads(asset["text"])
+        for ctype, entries in body.items():
+            if ctype == "name":
+                continue
+            if ctype != "block":
+                problems.append("%s: only block patches are audited, found %s" % (asset["path"], ctype))
+                continue
+            for name, values in entries.items():
+                if name not in known_blocks:
+                    problems.append("%s: unknown block %s" % (asset["path"], name))
+                for field in values:
+                    if field not in block_fields:
+                        problems.append("%s: Block has no field %s" % (asset["path"], field))
+    return problems
 
 
 def main():
@@ -76,15 +135,24 @@ def main():
     width = info["width"]
     spawn_tiles = {(i % width, i // width) for i, k in enumerate(info["overlays"]) if k and table[k] == "spawn"}
     pinned = {((g["spawn"] >> 16) & 0xFFFF, g["spawn"] & 0xFFFF) for g in rules["spawns"] if "spawn" in g}
+    filters = json.loads(info["tags"].get("genfilters") or "[]")
+    filter_names = {f[k] for f in filters for k in ("ore", "target", "floor", "block") if k in f}
+    filter_problems = audit_filters(args.tag, filters, vanilla_blocks | mod_blocks)
+    patch_problems = audit_patches(args.tag, info["patches"], vanilla_blocks | mod_blocks)
 
     print("game %s: %d blocks, %d units | Exogenesis Old: %d blocks, %d units"
           % (args.tag, len(vanilla_blocks), len(vanilla_units), len(mod_blocks), len(mod_units)))
     print("block names used: %d, unknown: %s" % (len(table), bad_blocks or "none"))
+    print("ore filters: %d using %d block names, problems: %s"
+          % (len(filters), len(filter_names), filter_problems or "none"))
+    print("data patches: %d, problems: %s" % (len(info["patches"]), patch_problems or "none"))
     print("wave unit types: %d, unknown: %s" % (len(units), bad_units or "none"))
     print("status effects unknown: %s | loadout items unknown: %s" % (bad_effects or "none", bad_items or "none"))
     print("pinned wave spawns on spawn tiles: %s" % (pinned <= spawn_tiles))
-    print("rules JSON: %d bytes (limit 65535)" % len(info["tags"]["rules"]))
-    ok = not (bad_blocks or bad_units or bad_effects or bad_items) and pinned <= spawn_tiles
+    print("rules JSON: %d bytes, genfilters: %d bytes (limit 65535 each)"
+          % (len(info["tags"]["rules"]), len(info["tags"].get("genfilters", ""))))
+    ok = (not (bad_blocks or bad_units or bad_effects or bad_items or filter_problems or patch_problems)
+          and pinned <= spawn_tiles)
     print("All names valid." if ok else "PROBLEMS FOUND.")
     return 0 if ok else 1
 

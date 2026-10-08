@@ -8,8 +8,8 @@
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
   "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Extended Remastered.msav",
-  "file_bytes": 110868,
-  "uncompressed_bytes": 394663,
+  "file_bytes": 100933,
+  "uncompressed_bytes": 371573,
   "spawns": {
     "North spawn (Frozen)": [
       420,
@@ -252,59 +252,6 @@
       "Volcano (SW)": 117934,
       "Crossroads Basin": 10801
     },
-    "ore_tiles": {
-      "Desert (E)": {
-        "ore-lead": 419,
-        "ore-thorium": 135,
-        "ore-scrap": 1063,
-        "ore-coal": 138,
-        "ore-titanium": 357,
-        "ore-urbium": 488,
-        "ore-copper": 291
-      },
-      "Volcano (SW)": {
-        "ore-titanium": 344,
-        "ore-coal": 453,
-        "ore-scrap": 196,
-        "ore-beryllium": 459,
-        "ore-thorium": 787,
-        "ore-tungsten": 467,
-        "ore-copper": 215,
-        "ore-lead": 293
-      },
-      "Forest (W)": {
-        "ore-lead": 834,
-        "ore-titanium": 287,
-        "ore-copper": 662,
-        "ore-coal": 779,
-        "ore-scrap": 151
-      },
-      "Crossroads Basin": {
-        "ore-lead": 213,
-        "ore-copper": 343,
-        "ore-scrap": 72,
-        "ore-coal": 39
-      },
-      "Frozen (N)": {
-        "ore-lead": 380,
-        "ore-copper": 238,
-        "ore-titanium": 1105,
-        "ore-scrap": 85,
-        "ore-thorium": 366,
-        "ore-stellar-steel": 381,
-        "ore-siradamite": 522
-      },
-      "Semi-arid (NE)": {
-        "ore-titanium": 658,
-        "ore-copper": 481,
-        "ore-coal": 322,
-        "ore-lead": 352,
-        "ore-dytrix": 498,
-        "ore-scrap": 307,
-        "ore-urbium": 299,
-        "ore-thorium": 260
-      }
-    },
     "special_floors": {
       "Volcano (SW)": {
         "heat (hotrock/magmarock)": 18045,
@@ -337,3014 +284,564 @@
         "sand floor (sand/darksand)": 18,
         "cryofluid": 9055,
         "cold plasma (glowing vein)": 1821,
-        "astrolite (siratla crystal)": 403,
         "oil-rich ground (shale)": 48
       }
     }
   },
-  "deposits": [
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 410,
-      "y": 361,
-      "tiles": 58
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 365,
-      "y": 428,
-      "tiles": 51
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 452,
-      "y": 392,
-      "tiles": 46
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 370,
-      "y": 366,
-      "tiles": 38
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 424,
-      "y": 429,
-      "tiles": 39
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 386,
-      "y": 398,
-      "tiles": 49
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 395,
-      "y": 450,
-      "tiles": 33
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-copper",
-      "x": 350,
-      "y": 398,
-      "tiles": 29
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 417,
-      "y": 392,
-      "tiles": 40
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 373,
-      "y": 382,
-      "tiles": 36
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 393,
-      "y": 435,
-      "tiles": 27
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 437,
-      "y": 363,
-      "tiles": 42
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 393,
-      "y": 349,
-      "tiles": 36
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-lead",
-      "x": 441,
-      "y": 430,
-      "tiles": 32
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-scrap",
-      "x": 408,
-      "y": 443,
-      "tiles": 18
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-scrap",
-      "x": 363,
-      "y": 406,
-      "tiles": 29
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-scrap",
-      "x": 424,
-      "y": 375,
-      "tiles": 25
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-coal",
-      "x": 353,
-      "y": 382,
-      "tiles": 28
-    },
-    {
-      "biome": "Crossroads Basin",
-      "resource": "ore-coal",
-      "x": 378,
-      "y": 447,
-      "tiles": 11
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 143,
-      "y": 654,
-      "tiles": 47
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 226,
-      "y": 348,
-      "tiles": 61
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 104,
-      "y": 676,
-      "tiles": 36
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 64,
-      "y": 315,
-      "tiles": 32
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 61,
-      "y": 387,
-      "tiles": 48
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 150,
-      "y": 529,
-      "tiles": 36
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 188,
-      "y": 619,
-      "tiles": 60
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 101,
-      "y": 316,
-      "tiles": 23
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 140,
-      "y": 425,
-      "tiles": 30
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 206,
-      "y": 491,
-      "tiles": 61
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 13,
-      "y": 344,
-      "tiles": 42
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 66,
-      "y": 621,
-      "tiles": 43
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 203,
-      "y": 534,
-      "tiles": 46
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 23,
-      "y": 571,
-      "tiles": 52
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 154,
-      "y": 483,
-      "tiles": 18
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-copper",
-      "x": 72,
-      "y": 503,
-      "tiles": 27
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 201,
-      "y": 470,
-      "tiles": 27
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 218,
-      "y": 400,
-      "tiles": 55
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 248,
-      "y": 519,
-      "tiles": 15
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 183,
-      "y": 601,
-      "tiles": 67
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 60,
-      "y": 522,
-      "tiles": 51
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 139,
-      "y": 584,
-      "tiles": 24
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 43,
-      "y": 382,
-      "tiles": 43
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 61,
-      "y": 574,
-      "tiles": 48
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 71,
-      "y": 283,
-      "tiles": 21
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 267,
-      "y": 398,
-      "tiles": 51
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 267,
-      "y": 491,
-      "tiles": 64
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 249,
-      "y": 349,
-      "tiles": 27
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 133,
-      "y": 498,
-      "tiles": 50
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 210,
-      "y": 329,
-      "tiles": 21
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 22,
-      "y": 272,
-      "tiles": 38
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 310,
-      "y": 444,
-      "tiles": 41
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 187,
-      "y": 425,
-      "tiles": 53
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 103,
-      "y": 561,
-      "tiles": 55
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 197,
-      "y": 514,
-      "tiles": 57
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-lead",
-      "x": 109,
-      "y": 468,
-      "tiles": 26
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 260,
-      "y": 362,
-      "tiles": 71
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 308,
-      "y": 465,
-      "tiles": 53
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 178,
-      "y": 342,
-      "tiles": 30
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 81,
-      "y": 515,
-      "tiles": 30
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 236,
-      "y": 406,
-      "tiles": 20
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 196,
-      "y": 405,
-      "tiles": 17
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 27,
-      "y": 545,
-      "tiles": 19
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 245,
-      "y": 503,
-      "tiles": 28
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 104,
-      "y": 449,
-      "tiles": 52
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 34,
-      "y": 323,
-      "tiles": 28
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 101,
-      "y": 627,
-      "tiles": 54
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 121,
-      "y": 680,
-      "tiles": 60
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 137,
-      "y": 480,
-      "tiles": 40
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 258,
-      "y": 455,
-      "tiles": 44
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 38,
-      "y": 640,
-      "tiles": 54
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 44,
-      "y": 507,
-      "tiles": 24
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 76,
-      "y": 653,
-      "tiles": 59
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 128,
-      "y": 532,
-      "tiles": 19
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 129,
-      "y": 334,
-      "tiles": 27
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-coal",
-      "x": 59,
-      "y": 409,
-      "tiles": 50
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 72,
-      "y": 299,
-      "tiles": 44
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 113,
-      "y": 661,
-      "tiles": 38
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 91,
-      "y": 330,
-      "tiles": 32
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 42,
-      "y": 274,
-      "tiles": 38
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 99,
-      "y": 387,
-      "tiles": 55
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 114,
-      "y": 589,
-      "tiles": 39
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-titanium",
-      "x": 131,
-      "y": 441,
-      "tiles": 41
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-scrap",
-      "x": 231,
-      "y": 562,
-      "tiles": 27
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-scrap",
-      "x": 193,
-      "y": 382,
-      "tiles": 33
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-scrap",
-      "x": 165,
-      "y": 618,
-      "tiles": 23
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-scrap",
-      "x": 188,
-      "y": 491,
-      "tiles": 36
-    },
-    {
-      "biome": "Forest (W)",
-      "resource": "ore-scrap",
-      "x": 57,
-      "y": 352,
-      "tiles": 32
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 247,
-      "y": 258,
-      "tiles": 41
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 225,
-      "y": 37,
-      "tiles": 51
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 117,
-      "y": 225,
-      "tiles": 24
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 134,
-      "y": 84,
-      "tiles": 41
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 84,
-      "y": 127,
-      "tiles": 30
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 332,
-      "y": 81,
-      "tiles": 69
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 206,
-      "y": 116,
-      "tiles": 22
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 241,
-      "y": 119,
-      "tiles": 33
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 458,
-      "y": 72,
-      "tiles": 23
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 433,
-      "y": 233,
-      "tiles": 34
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 157,
-      "y": 140,
-      "tiles": 43
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 76,
-      "y": 190,
-      "tiles": 60
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 202,
-      "y": 293,
-      "tiles": 52
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 73,
-      "y": 232,
-      "tiles": 48
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 359,
-      "y": 265,
-      "tiles": 50
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 301,
-      "y": 59,
-      "tiles": 68
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 325,
-      "y": 281,
-      "tiles": 67
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-thorium",
-      "x": 262,
-      "y": 292,
-      "tiles": 31
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 349,
-      "y": 125,
-      "tiles": 16
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 144,
-      "y": 167,
-      "tiles": 39
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 482,
-      "y": 56,
-      "tiles": 35
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 143,
-      "y": 44,
-      "tiles": 49
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 302,
-      "y": 119,
-      "tiles": 35
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 313,
-      "y": 214,
-      "tiles": 25
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 117,
-      "y": 245,
-      "tiles": 44
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 282,
-      "y": 50,
-      "tiles": 49
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 313,
-      "y": 88,
-      "tiles": 27
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 445,
-      "y": 170,
-      "tiles": 29
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 268,
-      "y": 271,
-      "tiles": 24
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 259,
-      "y": 141,
-      "tiles": 40
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 68,
-      "y": 152,
-      "tiles": 26
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-tungsten",
-      "x": 199,
-      "y": 247,
-      "tiles": 29
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 131,
-      "y": 201,
-      "tiles": 30
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 122,
-      "y": 29,
-      "tiles": 47
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 256,
-      "y": 330,
-      "tiles": 28
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 190,
-      "y": 35,
-      "tiles": 37
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 255,
-      "y": 59,
-      "tiles": 24
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 178,
-      "y": 110,
-      "tiles": 28
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 317,
-      "y": 112,
-      "tiles": 14
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 34,
-      "y": 220,
-      "tiles": 30
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 400,
-      "y": 75,
-      "tiles": 46
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 212,
-      "y": 79,
-      "tiles": 41
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 479,
-      "y": 93,
-      "tiles": 39
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 84,
-      "y": 164,
-      "tiles": 31
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 156,
-      "y": 68,
-      "tiles": 31
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-beryllium",
-      "x": 447,
-      "y": 141,
-      "tiles": 33
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 458,
-      "y": 155,
-      "tiles": 23
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 425,
-      "y": 17,
-      "tiles": 37
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 208,
-      "y": 58,
-      "tiles": 44
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 138,
-      "y": 248,
-      "tiles": 36
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 268,
-      "y": 97,
-      "tiles": 33
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 226,
-      "y": 19,
-      "tiles": 54
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 382,
-      "y": 289,
-      "tiles": 29
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 137,
-      "y": 110,
-      "tiles": 19
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 148,
-      "y": 19,
-      "tiles": 32
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 409,
-      "y": 188,
-      "tiles": 50
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 298,
-      "y": 337,
-      "tiles": 54
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-coal",
-      "x": 41,
-      "y": 145,
-      "tiles": 42
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 436,
-      "y": 64,
-      "tiles": 49
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 366,
-      "y": 180,
-      "tiles": 45
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 197,
-      "y": 13,
-      "tiles": 48
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 113,
-      "y": 95,
-      "tiles": 35
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 116,
-      "y": 166,
-      "tiles": 37
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 170,
-      "y": 130,
-      "tiles": 40
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 177,
-      "y": 205,
-      "tiles": 23
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 379,
-      "y": 214,
-      "tiles": 40
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-titanium",
-      "x": 296,
-      "y": 206,
-      "tiles": 27
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 181,
-      "y": 295,
-      "tiles": 25
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 401,
-      "y": 289,
-      "tiles": 28
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 306,
-      "y": 137,
-      "tiles": 38
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 341,
-      "y": 108,
-      "tiles": 24
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 164,
-      "y": 245,
-      "tiles": 19
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 400,
-      "y": 123,
-      "tiles": 40
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-copper",
-      "x": 291,
-      "y": 301,
-      "tiles": 41
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 274,
-      "y": 187,
-      "tiles": 34
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 384,
-      "y": 117,
-      "tiles": 50
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 210,
-      "y": 271,
-      "tiles": 45
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 441,
-      "y": 187,
-      "tiles": 30
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 404,
-      "y": 154,
-      "tiles": 54
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 328,
-      "y": 241,
-      "tiles": 41
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-lead",
-      "x": 153,
-      "y": 274,
-      "tiles": 39
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 276,
-      "y": 23,
-      "tiles": 17
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 432,
-      "y": 87,
-      "tiles": 34
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 232,
-      "y": 312,
-      "tiles": 21
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 121,
-      "y": 135,
-      "tiles": 40
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 414,
-      "y": 262,
-      "tiles": 25
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 468,
-      "y": 112,
-      "tiles": 22
-    },
-    {
-      "biome": "Volcano (SW)",
-      "resource": "ore-scrap",
-      "x": 282,
-      "y": 326,
-      "tiles": 37
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 478,
-      "y": 633,
-      "tiles": 46
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 308,
-      "y": 562,
-      "tiles": 38
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 395,
-      "y": 617,
-      "tiles": 33
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 221,
-      "y": 727,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 343,
-      "y": 561,
-      "tiles": 75
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 542,
-      "y": 779,
-      "tiles": 51
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 458,
-      "y": 708,
-      "tiles": 46
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 347,
-      "y": 609,
-      "tiles": 74
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 486,
-      "y": 771,
-      "tiles": 44
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 278,
-      "y": 766,
-      "tiles": 54
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 323,
-      "y": 686,
-      "tiles": 45
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 533,
-      "y": 724,
-      "tiles": 64
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 345,
-      "y": 754,
-      "tiles": 52
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 359,
-      "y": 710,
-      "tiles": 54
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 271,
-      "y": 712,
-      "tiles": 54
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 175,
-      "y": 769,
-      "tiles": 43
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 312,
-      "y": 511,
-      "tiles": 48
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 417,
-      "y": 584,
-      "tiles": 47
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 156,
-      "y": 695,
-      "tiles": 48
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 257,
-      "y": 656,
-      "tiles": 38
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 124,
-      "y": 719,
-      "tiles": 50
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-titanium",
-      "x": 366,
-      "y": 510,
-      "tiles": 70
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 496,
-      "y": 787,
-      "tiles": 42
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 508,
-      "y": 723,
-      "tiles": 24
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 190,
-      "y": 650,
-      "tiles": 33
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 266,
-      "y": 593,
-      "tiles": 28
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 308,
-      "y": 770,
-      "tiles": 45
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 350,
-      "y": 584,
-      "tiles": 27
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 234,
-      "y": 707,
-      "tiles": 41
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 424,
-      "y": 617,
-      "tiles": 38
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 308,
-      "y": 735,
-      "tiles": 22
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 139,
-      "y": 713,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-thorium",
-      "x": 190,
-      "y": 750,
-      "tiles": 35
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 328,
-      "y": 493,
-      "tiles": 37
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 343,
-      "y": 683,
-      "tiles": 35
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 542,
-      "y": 754,
-      "tiles": 28
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 301,
-      "y": 538,
-      "tiles": 32
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 395,
-      "y": 504,
-      "tiles": 44
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 353,
-      "y": 778,
-      "tiles": 30
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 264,
-      "y": 689,
-      "tiles": 38
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 390,
-      "y": 705,
-      "tiles": 34
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 378,
-      "y": 625,
-      "tiles": 22
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 301,
-      "y": 584,
-      "tiles": 32
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-lead",
-      "x": 394,
-      "y": 594,
-      "tiles": 48
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 263,
-      "y": 560,
-      "tiles": 33
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 237,
-      "y": 650,
-      "tiles": 27
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 358,
-      "y": 537,
-      "tiles": 27
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 398,
-      "y": 565,
-      "tiles": 57
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 437,
-      "y": 577,
-      "tiles": 39
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 458,
-      "y": 688,
-      "tiles": 30
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-copper",
-      "x": 426,
-      "y": 497,
-      "tiles": 17
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 519,
-      "y": 758,
-      "tiles": 29
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 234,
-      "y": 664,
-      "tiles": 27
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 116,
-      "y": 701,
-      "tiles": 47
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 179,
-      "y": 725,
-      "tiles": 56
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 196,
-      "y": 783,
-      "tiles": 54
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 298,
-      "y": 673,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 332,
-      "y": 774,
-      "tiles": 44
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 471,
-      "y": 764,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 203,
-      "y": 690,
-      "tiles": 63
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 242,
-      "y": 758,
-      "tiles": 40
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 328,
-      "y": 713,
-      "tiles": 36
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 145,
-      "y": 753,
-      "tiles": 32
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-siradamite",
-      "x": 428,
-      "y": 694,
-      "tiles": 32
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 513,
-      "y": 678,
-      "tiles": 41
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 505,
-      "y": 771,
-      "tiles": 29
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 259,
-      "y": 787,
-      "tiles": 35
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 476,
-      "y": 724,
-      "tiles": 16
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 290,
-      "y": 615,
-      "tiles": 51
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 410,
-      "y": 689,
-      "tiles": 38
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 341,
-      "y": 703,
-      "tiles": 30
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 291,
-      "y": 737,
-      "tiles": 29
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 447,
-      "y": 641,
-      "tiles": 49
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 369,
-      "y": 766,
-      "tiles": 22
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-stellar-steel",
-      "x": 247,
-      "y": 739,
-      "tiles": 41
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-scrap",
-      "x": 382,
-      "y": 535,
-      "tiles": 20
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-scrap",
-      "x": 415,
-      "y": 552,
-      "tiles": 44
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "ore-scrap",
-      "x": 424,
-      "y": 520,
-      "tiles": 21
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 745,
-      "y": 785,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 479,
-      "y": 558,
-      "tiles": 71
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 751,
-      "y": 661,
-      "tiles": 37
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 778,
-      "y": 761,
-      "tiles": 54
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 579,
-      "y": 495,
-      "tiles": 36
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 597,
-      "y": 761,
-      "tiles": 50
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 747,
-      "y": 553,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 670,
-      "y": 697,
-      "tiles": 54
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 784,
-      "y": 689,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 447,
-      "y": 504,
-      "tiles": 31
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 706,
-      "y": 673,
-      "tiles": 57
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 644,
-      "y": 568,
-      "tiles": 25
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 584,
-      "y": 617,
-      "tiles": 30
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 756,
-      "y": 590,
-      "tiles": 52
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 675,
-      "y": 743,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-titanium",
-      "x": 538,
-      "y": 538,
-      "tiles": 35
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 637,
-      "y": 533,
-      "tiles": 52
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 665,
-      "y": 731,
-      "tiles": 28
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 658,
-      "y": 663,
-      "tiles": 53
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 734,
-      "y": 616,
-      "tiles": 33
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 571,
-      "y": 769,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 584,
-      "y": 667,
-      "tiles": 43
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 557,
-      "y": 497,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 596,
-      "y": 740,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 495,
-      "y": 547,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 685,
-      "y": 551,
-      "tiles": 39
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 631,
-      "y": 745,
-      "tiles": 31
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 564,
-      "y": 725,
-      "tiles": 31
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-copper",
-      "x": 538,
-      "y": 669,
-      "tiles": 57
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 778,
-      "y": 625,
-      "tiles": 47
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 721,
-      "y": 592,
-      "tiles": 54
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 591,
-      "y": 785,
-      "tiles": 14
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 585,
-      "y": 586,
-      "tiles": 30
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 642,
-      "y": 790,
-      "tiles": 27
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 724,
-      "y": 654,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 688,
-      "y": 566,
-      "tiles": 27
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 619,
-      "y": 581,
-      "tiles": 47
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 692,
-      "y": 626,
-      "tiles": 21
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 655,
-      "y": 687,
-      "tiles": 27
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-lead",
-      "x": 542,
-      "y": 517,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 658,
-      "y": 557,
-      "tiles": 17
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 784,
-      "y": 567,
-      "tiles": 17
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 498,
-      "y": 499,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 568,
-      "y": 620,
-      "tiles": 35
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 774,
-      "y": 709,
-      "tiles": 41
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 558,
-      "y": 659,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 660,
-      "y": 774,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 605,
-      "y": 665,
-      "tiles": 43
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 681,
-      "y": 585,
-      "tiles": 12
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 747,
-      "y": 683,
-      "tiles": 27
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-coal",
-      "x": 618,
-      "y": 704,
-      "tiles": 44
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 571,
-      "y": 643,
-      "tiles": 22
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 602,
-      "y": 707,
-      "tiles": 42
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 621,
-      "y": 545,
-      "tiles": 20
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 710,
-      "y": 564,
-      "tiles": 35
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 764,
-      "y": 790,
-      "tiles": 28
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 600,
-      "y": 579,
-      "tiles": 48
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 525,
-      "y": 527,
-      "tiles": 37
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 715,
-      "y": 633,
-      "tiles": 41
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-scrap",
-      "x": 486,
-      "y": 575,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 552,
-      "y": 624,
-      "tiles": 24
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 789,
-      "y": 586,
-      "tiles": 28
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 581,
-      "y": 706,
-      "tiles": 44
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 591,
-      "y": 645,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 698,
-      "y": 690,
-      "tiles": 42
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 605,
-      "y": 681,
-      "tiles": 32
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-thorium",
-      "x": 704,
-      "y": 655,
-      "tiles": 56
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 537,
-      "y": 641,
-      "tiles": 63
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 727,
-      "y": 557,
-      "tiles": 22
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 656,
-      "y": 754,
-      "tiles": 59
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 620,
-      "y": 764,
-      "tiles": 49
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 761,
-      "y": 613,
-      "tiles": 51
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 730,
-      "y": 675,
-      "tiles": 22
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 616,
-      "y": 645,
-      "tiles": 17
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 687,
-      "y": 653,
-      "tiles": 19
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 635,
-      "y": 719,
-      "tiles": 29
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 680,
-      "y": 724,
-      "tiles": 36
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 574,
-      "y": 745,
-      "tiles": 40
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 734,
-      "y": 634,
-      "tiles": 46
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-dytrix",
-      "x": 557,
-      "y": 528,
-      "tiles": 45
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 680,
-      "y": 766,
-      "tiles": 33
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 608,
-      "y": 595,
-      "tiles": 26
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 657,
-      "y": 582,
-      "tiles": 38
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 624,
-      "y": 790,
-      "tiles": 28
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 580,
-      "y": 689,
-      "tiles": 48
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 772,
-      "y": 594,
-      "tiles": 30
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 782,
-      "y": 745,
-      "tiles": 34
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 635,
-      "y": 551,
-      "tiles": 27
-    },
-    {
-      "biome": "Semi-arid (NE)",
-      "resource": "ore-urbium",
-      "x": 701,
-      "y": 544,
-      "tiles": 35
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 742,
-      "y": 143,
-      "tiles": 27
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 587,
-      "y": 65,
-      "tiles": 59
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 789,
-      "y": 464,
-      "tiles": 70
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 743,
-      "y": 461,
-      "tiles": 40
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 520,
-      "y": 174,
-      "tiles": 48
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 770,
-      "y": 195,
-      "tiles": 48
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 511,
-      "y": 296,
-      "tiles": 27
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 642,
-      "y": 264,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 528,
-      "y": 251,
-      "tiles": 31
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 622,
-      "y": 179,
-      "tiles": 70
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 507,
-      "y": 368,
-      "tiles": 78
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 763,
-      "y": 239,
-      "tiles": 47
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 588,
-      "y": 334,
-      "tiles": 31
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 702,
-      "y": 303,
-      "tiles": 30
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 453,
-      "y": 257,
-      "tiles": 66
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 533,
-      "y": 427,
-      "tiles": 69
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 722,
-      "y": 496,
-      "tiles": 57
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 645,
-      "y": 18,
-      "tiles": 49
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 699,
-      "y": 89,
-      "tiles": 29
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 474,
-      "y": 209,
-      "tiles": 84
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 781,
-      "y": 270,
-      "tiles": 57
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-scrap",
-      "x": 584,
-      "y": 215,
-      "tiles": 22
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 732,
-      "y": 323,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 562,
-      "y": 254,
-      "tiles": 51
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 661,
-      "y": 284,
-      "tiles": 41
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 791,
-      "y": 488,
-      "tiles": 34
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 540,
-      "y": 390,
-      "tiles": 41
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 579,
-      "y": 10,
-      "tiles": 48
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 563,
-      "y": 109,
-      "tiles": 22
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 566,
-      "y": 431,
-      "tiles": 38
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 731,
-      "y": 530,
-      "tiles": 35
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 702,
-      "y": 496,
-      "tiles": 47
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-lead",
-      "x": 484,
-      "y": 320,
-      "tiles": 38
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 702,
-      "y": 158,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 774,
-      "y": 291,
-      "tiles": 34
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 576,
-      "y": 403,
-      "tiles": 16
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 779,
-      "y": 504,
-      "tiles": 34
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 589,
-      "y": 101,
-      "tiles": 41
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 590,
-      "y": 188,
-      "tiles": 23
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 669,
-      "y": 120,
-      "tiles": 46
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 487,
-      "y": 154,
-      "tiles": 44
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-copper",
-      "x": 723,
-      "y": 265,
-      "tiles": 29
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 738,
-      "y": 174,
-      "tiles": 44
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 540,
-      "y": 177,
-      "tiles": 52
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 604,
-      "y": 326,
-      "tiles": 18
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 523,
-      "y": 136,
-      "tiles": 35
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 687,
-      "y": 176,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 560,
-      "y": 317,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 739,
-      "y": 502,
-      "tiles": 11
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 695,
-      "y": 350,
-      "tiles": 39
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 764,
-      "y": 73,
-      "tiles": 25
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 787,
-      "y": 126,
-      "tiles": 45
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-titanium",
-      "x": 655,
-      "y": 309,
-      "tiles": 40
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-thorium",
-      "x": 632,
-      "y": 141,
-      "tiles": 21
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-thorium",
-      "x": 559,
-      "y": 20,
-      "tiles": 39
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-thorium",
-      "x": 727,
-      "y": 12,
-      "tiles": 10
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-thorium",
-      "x": 494,
-      "y": 103,
-      "tiles": 38
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-thorium",
-      "x": 749,
-      "y": 128,
-      "tiles": 27
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 623,
-      "y": 236,
-      "tiles": 55
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 769,
-      "y": 489,
-      "tiles": 32
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 635,
-      "y": 89,
-      "tiles": 28
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 721,
-      "y": 286,
-      "tiles": 32
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 537,
-      "y": 85,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 611,
-      "y": 283,
-      "tiles": 31
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 718,
-      "y": 244,
-      "tiles": 42
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 639,
-      "y": 447,
-      "tiles": 23
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 657,
-      "y": 483,
-      "tiles": 47
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 681,
-      "y": 237,
-      "tiles": 58
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 692,
-      "y": 479,
-      "tiles": 41
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 561,
-      "y": 192,
-      "tiles": 52
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-urbium",
-      "x": 491,
-      "y": 123,
-      "tiles": 23
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-coal",
-      "x": 546,
-      "y": 98,
-      "tiles": 28
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-coal",
-      "x": 543,
-      "y": 443,
-      "tiles": 30
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-coal",
-      "x": 571,
-      "y": 47,
-      "tiles": 24
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-coal",
-      "x": 666,
-      "y": 153,
-      "tiles": 19
-    },
-    {
-      "biome": "Desert (E)",
-      "resource": "ore-coal",
-      "x": 511,
-      "y": 228,
-      "tiles": 37
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 203,
-      "y": 735,
-      "tiles": 30
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 149,
-      "y": 733,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 495,
-      "y": 757,
-      "tiles": 56
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 478,
-      "y": 790,
-      "tiles": 59
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 517,
-      "y": 706,
-      "tiles": 53
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 340,
-      "y": 790,
-      "tiles": 31
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 513,
-      "y": 791,
-      "tiles": 37
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 97,
-      "y": 719,
-      "tiles": 23
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 256,
-      "y": 725,
-      "tiles": 28
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 230,
-      "y": 688,
-      "tiles": 32
-    },
-    {
-      "biome": "Frozen (N)",
-      "resource": "siratla-crystal",
-      "x": 64,
-      "y": 708,
-      "tiles": 23
+  "ore_rolls": {
+    "rolls": 1,
+    "patches_per_game": 1466,
+    "patch_tiles": {
+      "median": 33,
+      "p10": 10,
+      "p90": 87,
+      "smallest_counted": 6
+    },
+    "patches_per_biome": {
+      "Desert (E)": 397,
+      "Semi-arid (NE)": 179,
+      "Frozen (N)": 266,
+      "Forest (W)": 223,
+      "Volcano (SW)": 361,
+      "Crossroads Basin": 40
+    },
+    "patches": {
+      "Desert (E)": {
+        "ore-scrap": 59,
+        "ore-urbium": 47,
+        "ore-copper": 42,
+        "ore-lead": 28,
+        "ore-stellar-steel": 28,
+        "ore-titanium": 28,
+        "ore-tungsten": 26,
+        "ore-thorium": 25,
+        "ore-coal": 25,
+        "ore-beryllium": 24,
+        "ore-dytrix": 24,
+        "ore-siradamite": 23,
+        "siratla-crystal": 18
+      },
+      "Semi-arid (NE)": {
+        "ore-titanium": 28,
+        "ore-dytrix": 26,
+        "ore-copper": 18,
+        "ore-coal": 16,
+        "ore-siradamite": 16,
+        "ore-tungsten": 16,
+        "ore-urbium": 12,
+        "ore-stellar-steel": 12,
+        "ore-lead": 9,
+        "ore-scrap": 8,
+        "ore-beryllium": 7,
+        "ore-thorium": 6,
+        "siratla-crystal": 5
+      },
+      "Frozen (N)": {
+        "ore-titanium": 56,
+        "ore-tungsten": 21,
+        "ore-coal": 21,
+        "ore-lead": 20,
+        "ore-thorium": 20,
+        "ore-stellar-steel": 19,
+        "ore-scrap": 17,
+        "ore-siradamite": 17,
+        "siratla-crystal": 17,
+        "ore-copper": 16,
+        "ore-beryllium": 15,
+        "ore-dytrix": 15,
+        "ore-urbium": 12
+      },
+      "Forest (W)": {
+        "ore-coal": 32,
+        "ore-lead": 30,
+        "ore-titanium": 22,
+        "ore-copper": 20,
+        "ore-siradamite": 17,
+        "ore-thorium": 15,
+        "ore-beryllium": 15,
+        "siratla-crystal": 15,
+        "ore-tungsten": 13,
+        "ore-dytrix": 12,
+        "ore-stellar-steel": 12,
+        "ore-scrap": 10,
+        "ore-urbium": 10
+      },
+      "Volcano (SW)": {
+        "ore-tungsten": 48,
+        "ore-beryllium": 43,
+        "ore-titanium": 37,
+        "ore-thorium": 34,
+        "ore-copper": 30,
+        "ore-siradamite": 30,
+        "ore-coal": 29,
+        "ore-lead": 28,
+        "ore-scrap": 23,
+        "ore-dytrix": 18,
+        "ore-urbium": 18,
+        "ore-stellar-steel": 12,
+        "siratla-crystal": 11
+      },
+      "Crossroads Basin": {
+        "ore-copper": 8,
+        "ore-coal": 6,
+        "ore-lead": 5,
+        "ore-siradamite": 4,
+        "ore-scrap": 3,
+        "ore-thorium": 3,
+        "ore-tungsten": 3,
+        "ore-titanium": 2,
+        "ore-dytrix": 2,
+        "ore-stellar-steel": 1,
+        "ore-urbium": 1,
+        "ore-beryllium": 1,
+        "siratla-crystal": 1
+      }
+    },
+    "ore_tiles": {
+      "Desert (E)": {
+        "ore-scrap": 2776,
+        "ore-copper": 1782,
+        "ore-urbium": 1702,
+        "ore-stellar-steel": 1607,
+        "ore-tungsten": 1404,
+        "ore-beryllium": 1387,
+        "ore-dytrix": 1375,
+        "ore-lead": 1272,
+        "ore-titanium": 1182,
+        "ore-thorium": 1163,
+        "ore-coal": 1004,
+        "ore-siradamite": 921,
+        "siratla-crystal": 667
+      },
+      "Semi-arid (NE)": {
+        "ore-titanium": 1080,
+        "ore-tungsten": 1055,
+        "ore-dytrix": 969,
+        "ore-siradamite": 881,
+        "ore-coal": 794,
+        "ore-copper": 620,
+        "ore-urbium": 588,
+        "ore-stellar-steel": 578,
+        "ore-lead": 386,
+        "ore-scrap": 354,
+        "ore-beryllium": 275,
+        "ore-thorium": 225,
+        "siratla-crystal": 98
+      },
+      "Frozen (N)": {
+        "ore-titanium": 1901,
+        "ore-tungsten": 1265,
+        "ore-thorium": 1124,
+        "ore-stellar-steel": 1049,
+        "ore-scrap": 949,
+        "ore-coal": 929,
+        "ore-siradamite": 801,
+        "ore-lead": 696,
+        "ore-dytrix": 696,
+        "ore-beryllium": 669,
+        "ore-copper": 576,
+        "siratla-crystal": 477,
+        "ore-urbium": 382
+      },
+      "Forest (W)": {
+        "ore-thorium": 1067,
+        "ore-lead": 1032,
+        "ore-coal": 884,
+        "ore-titanium": 809,
+        "ore-copper": 796,
+        "ore-beryllium": 711,
+        "ore-siradamite": 704,
+        "ore-urbium": 637,
+        "ore-stellar-steel": 523,
+        "ore-dytrix": 451,
+        "ore-tungsten": 435,
+        "ore-scrap": 379,
+        "siratla-crystal": 372
+      },
+      "Volcano (SW)": {
+        "ore-tungsten": 2639,
+        "ore-beryllium": 1868,
+        "ore-siradamite": 1632,
+        "ore-titanium": 1380,
+        "ore-thorium": 1318,
+        "ore-scrap": 1209,
+        "ore-copper": 1120,
+        "ore-lead": 1046,
+        "ore-urbium": 936,
+        "ore-dytrix": 825,
+        "ore-coal": 785,
+        "ore-stellar-steel": 557,
+        "siratla-crystal": 315
+      },
+      "Crossroads Basin": {
+        "ore-copper": 292,
+        "ore-tungsten": 283,
+        "ore-coal": 282,
+        "ore-lead": 274,
+        "ore-thorium": 172,
+        "ore-dytrix": 131,
+        "ore-scrap": 111,
+        "ore-urbium": 104,
+        "ore-siradamite": 100,
+        "ore-titanium": 53,
+        "ore-stellar-steel": 49,
+        "ore-beryllium": 10
+      }
+    }
+  },
+  "ore_filters": [
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 36.0,
+      "threshold": 0.87,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "snow",
+      "scl": 48.0,
+      "threshold": 0.89,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "basalt",
+      "scl": 48.0,
+      "threshold": 0.89,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "grass",
+      "scl": 48.0,
+      "threshold": 0.89,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "dirt",
+      "scl": 48.0,
+      "threshold": 0.89,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "sand-floor",
+      "scl": 48.0,
+      "threshold": 0.89,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-dytrix",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-urbium",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-siradamite",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-stellar-steel",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-siradamite",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 38.0,
+      "threshold": 0.87,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-stellar-steel",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 38.0,
+      "threshold": 0.87,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-dytrix",
+      "target": "dacite",
+      "scl": 36.0,
+      "threshold": 0.865,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-urbium",
+      "target": "sand-floor",
+      "scl": 42.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-copper",
+      "target": "air",
+      "scl": 44.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "air",
+      "scl": 44.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-coal",
+      "target": "air",
+      "scl": 46.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "air",
+      "scl": 46.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-scrap",
+      "target": "air",
+      "scl": 50.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-thorium",
+      "target": "air",
+      "scl": 50.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-beryllium",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-tungsten",
+      "target": "air",
+      "scl": 54.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-copper",
+      "target": "stone",
+      "scl": 30.0,
+      "threshold": 0.835,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "stone",
+      "scl": 30.0,
+      "threshold": 0.84,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-coal",
+      "target": "grass",
+      "scl": 40.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "moss",
+      "scl": 40.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-thorium",
+      "target": "basalt",
+      "scl": 40.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-tungsten",
+      "target": "basalt",
+      "scl": 42.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-beryllium",
+      "target": "basalt",
+      "scl": 40.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "snow",
+      "scl": 35.0,
+      "threshold": 0.86,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "ice-snow",
+      "scl": 35.0,
+      "threshold": 0.86,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "dirt",
+      "scl": 44.0,
+      "threshold": 0.88,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-scrap",
+      "target": "sand-floor",
+      "scl": 40.0,
+      "threshold": 0.875,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "core-zone",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "dark-panel-3",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "metal-floor",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "dark-panel-4",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    }
+  ],
+  "genfilters_bytes": 4457,
+  "data_patches": [
+    {
+      "path": "thermal-generators-on-lava.json",
+      "patch": {
+        "name": "Thermal generators on lava",
+        "block": {
+          "thermal-generator": {
+            "placeableLiquid": true
+          }
+        }
+      }
     }
   ],
   "rules": {

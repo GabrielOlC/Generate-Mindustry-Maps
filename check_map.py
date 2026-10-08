@@ -5,6 +5,7 @@
     python check_map.py "path\\to\\map.msav"              # another map
 
 The map is decoded with the same region/length checks the game performs (msav.validate_msav).
+It also checks the in-game ore filters (genfilters tag) and the thermal-generator data patch.
 Each barrier test closes the named choke points and checks whether the far side is still reachable
 by ground units (walls and deep liquids block; boulders do not).
 """
@@ -16,6 +17,7 @@ from collections import deque
 
 import generate_map as gm
 import msav
+import ores
 
 
 def main(path):
@@ -40,6 +42,41 @@ def main(path):
     units = sorted({g["type"] for g in rules["spawns"]})
     mod_units = [u for u in units if u.startswith(gm.MOD_PREFIX)]
     print("  wave unit types: %d (%d from Exogenesis Old)" % (len(units), len(mod_units)))
+
+    baked = sorted({blocks[k] for k in info["overlays"] if k} - {"spawn"})
+    if baked:
+        print("  FAIL: ores baked into the map (they would not change between games): %s" % baked)
+        return 1
+    filters = json.loads(info["tags"].get("genfilters") or "[]")
+    if not filters:
+        print("  FAIL: no genfilters; the game would scatter its default ores instead")
+        return 1
+    plain = []
+    for f in filters:
+        g = dict(f)
+        for key in ("ore", "target", "floor", "block"):
+            if key in g:
+                g[key] = g[key][len(gm.MOD_PREFIX):] if g[key].startswith(gm.MOD_PREFIX) else g[key]
+                if g[key] in gm.MOD_BLOCKS and not f[key].startswith(gm.MOD_PREFIX):
+                    print("  FAIL: filter uses mod block %s without the prefix" % g[key])
+                    return 1
+        plain.append(g)
+    problems = ores.check_filters(plain, gm.MOD_BLOCKS)
+    kinds = sorted({f["ore"] for f in plain if f["class"] == "ore" and f["ore"] != "air"})
+    print("  in-game ore filters: %d (%d ores + siratla crystal), re-rolled on every load" % (len(filters), len(kinds)))
+    for p in problems:
+        print("  FAIL: " + p)
+    if problems:
+        return 1
+
+    patch_ok = False
+    for asset in info["patches"]:
+        body = json.loads(asset["text"])
+        print("  data patch %s: %s" % (asset["path"], json.dumps({k: v for k, v in body.items() if k != "name"})))
+        patch_ok |= body.get("block", {}).get("thermal-generator", {}).get("placeableLiquid") is True
+    if not patch_ok:
+        print("  FAIL: thermal generators are not placeable on lava (missing data patch)")
+        return 1
 
     report = json.load(open(path[:-len(".msav")] + " - report.json", encoding="utf-8"))
     marks = report["choke_points"]
