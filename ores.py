@@ -25,44 +25,47 @@ FALLOFF = 0.15   # weak second octave: round, solid patches with few one-tile sp
 
 # Map-wide layer: every ore can turn up on any open ground of every biome.
 # (ore, scale, threshold). The scale sets how many patches an ore gets (about 1 / scale^2.4) and the
-# threshold how big they are. On this map the whole list gives ~1,440 patches per game with a median of
-# ~33 tiles (9-86 for 80% of them); the README quotes the measured numbers from the report.
+# threshold how big they are. On this map the whole list gives ~1,250 patches per game with a median of
+# ~33 tiles (10-88 for 80% of them); the README quotes the measured numbers from the report.
+# All scales and thresholds below (and in TENDENCIES / CRYSTAL_HOSTS) were tuned together for ~15% less
+# ore than the first random layout: each threshold keeps 85% of the area the old one covered, and each
+# scale is ~4% larger so that the cut removes patches rather than shrinking them.
 WIDESPREAD = (
-    ("ore-copper", 44, 0.875), ("ore-lead", 44, 0.875),
-    ("ore-coal", 46, 0.88), ("ore-titanium", 46, 0.88),
-    ("ore-scrap", 50, 0.88), ("ore-thorium", 50, 0.88),
-    ("ore-beryllium", 54, 0.88), ("ore-tungsten", 54, 0.88),
-    ("ore-dytrix", 54, 0.88), ("ore-urbium", 54, 0.88),
-    ("ore-siradamite", 54, 0.88), ("ore-stellar-steel", 54, 0.88),
+    ("ore-copper", 46, 0.881), ("ore-lead", 46, 0.881),
+    ("ore-coal", 48, 0.885), ("ore-titanium", 48, 0.885),
+    ("ore-scrap", 52, 0.885), ("ore-thorium", 52, 0.885),
+    ("ore-beryllium", 56, 0.885), ("ore-tungsten", 56, 0.885),
+    ("ore-dytrix", 56, 0.885), ("ore-urbium", 56, 0.885),
+    ("ore-siradamite", 56, 0.885), ("ore-stellar-steel", 56, 0.885),
 )
 
 # Biome tendencies: extra patches of a few ores on a floor that (nearly) only one biome has. They make
 # those ores about 1.5-2x as common there without taking any ore away from the other biomes.
 # (floor, ore, scale, threshold)
 TENDENCIES = (
-    ("stone", "ore-copper", 30, 0.835),          # Crossroads Basin + Ring Road: starter copper and lead
-    ("stone", "ore-lead", 30, 0.84),
-    ("grass", "ore-coal", 40, 0.875),            # Forest
-    ("moss", "ore-lead", 40, 0.875),
-    ("basalt", "ore-thorium", 40, 0.875),        # Volcano
-    ("basalt", "ore-tungsten", 42, 0.875),
-    ("basalt", "ore-beryllium", 40, 0.875),
-    ("snow", "ore-titanium", 35, 0.86),          # Frozen tundra
-    ("ice-snow", "ore-titanium", 35, 0.86),
-    ("siratla-stone", "ore-siradamite", 38, 0.87),   # Siratla Glacier
-    ("siratla-stone", "ore-stellar-steel", 38, 0.87),
-    ("dacite", "ore-dytrix", 36, 0.865),         # Semi-arid steppe
-    ("dirt", "ore-titanium", 44, 0.88),
-    ("sand-floor", "ore-scrap", 40, 0.875),      # Desert
-    ("sand-floor", "ore-urbium", 42, 0.875),
+    ("stone", "ore-copper", 31, 0.844),          # Crossroads Basin + Ring Road: starter copper and lead
+    ("stone", "ore-lead", 31, 0.848),
+    ("grass", "ore-coal", 42, 0.881),            # Forest
+    ("moss", "ore-lead", 42, 0.881),
+    ("basalt", "ore-thorium", 42, 0.881),        # Volcano
+    ("basalt", "ore-tungsten", 44, 0.881),
+    ("basalt", "ore-beryllium", 42, 0.881),
+    ("snow", "ore-titanium", 36, 0.867),         # Frozen tundra
+    ("ice-snow", "ore-titanium", 36, 0.867),
+    ("siratla-stone", "ore-siradamite", 40, 0.876),  # Siratla Glacier
+    ("siratla-stone", "ore-stellar-steel", 40, 0.876),
+    ("dacite", "ore-dytrix", 37, 0.871),         # Semi-arid steppe
+    ("dirt", "ore-titanium", 46, 0.885),
+    ("sand-floor", "ore-scrap", 42, 0.881),      # Desert
+    ("sand-floor", "ore-urbium", 44, 0.881),
 )
 
 # Siratla crystal is a floor (drills astrolite), so it is placed by NoiseFilters, one per host floor.
 # (floor it replaces, scale, threshold): dense on the glacier, sparse in every other biome.
 CRYSTAL = "siratla-crystal"
 CRYSTAL_HOSTS = (
-    ("siratla-stone", 36, 0.87),
-    ("snow", 48, 0.89), ("basalt", 48, 0.89), ("grass", 48, 0.89), ("dirt", 48, 0.89), ("sand-floor", 48, 0.89),
+    ("siratla-stone", 37, 0.876),
+    ("snow", 50, 0.894), ("basalt", 50, 0.894), ("grass", 50, 0.894), ("dirt", 50, 0.894), ("sand-floor", 50, 0.894),
 )
 
 # Floors kept free of ore: outpost pads (core-zone + ring) and the core plaza (metal floor + border).

@@ -13,7 +13,7 @@ the game every time the map is loaded.** Every ore can turn up in every biome, a
 | Mode | Survival / PvE, endless waves |
 | Player core | Core: Foundation at the centre (tiles 399–402 × 399–402) |
 | Enemy spawns | 5 spawn points, one per biome, all near the map edge |
-| Ore nodes | Random on every load: about 1,440 patches per game, all 12 ores + siratla crystal in every biome |
+| Ore nodes | Random on every load: about 1,240 patches per game, all 12 ores + siratla crystal in every biome |
 | Lava | Thermal generators can be built anywhere on it (molten slag and pyromagma), not only on the banks |
 | Session length | Wave 100 at ~4 h 15 min, wave 120 at ~5 h 05 min (players can call waves early) |
 | Required mod | Exogenesis Old 1.9.1 (needs game build 158 or newer) |
@@ -96,44 +96,45 @@ different layout. The map's ore filters work in two layers:
   get the fewest. Siratla crystal (astrolite) is rolled on the main floor of every biome.
 - **Biome tendencies.** Fifteen extra filters add patches of chosen ores on a floor that (nearly)
   only one biome has, for example thorium, tungsten and beryllium on volcanic basalt. That makes
-  those ores roughly 1.5–2.4× as common in their biome. They never take ore away from another biome.
+  those ores roughly 1.5–2.5× as common in their biome. They never take ore away from another biome.
 
-A game gets about **1,440 patches**, 3.4× the 429 of the old fixed layout. Patches stay the same
-size as before: median 33 ore tiles, 80% of them between 9 and 86. Ore never covers the outpost
+A game gets about **1,240 patches**, 2.9× the 429 of the old fixed layout. That is about 15% fewer
+patches and ore tiles than the first random layout (1,440 patches). The cut removes whole patches
+and keeps their size: median 34 ore tiles, 80% of them between 10 and 85. Ore never covers the outpost
 pads, the core plaza or the spawn markers. The **start is always supplied**: in 30 test rolls the
-area inside the Crossroads Rim held at least 1 copper and 2 lead patches every time (about 5.5 of
-each on average). Within the Ring Road there were never fewer than 5 copper and 6 lead patches.
+area inside the Crossroads Rim held at least 1 copper and 1 lead patch every time (about 4.5 copper
+and 5.3 lead on average). Within the Ring Road there were never fewer than 4 copper and 3 lead patches.
 
 ### Ore patches per biome (typical game)
 
 Average of 5 simulated rolls of the game's own filters (`generate_map.py --ore-rolls 5`, seed 1597).
-A single game varies around these numbers. In 6 further test rolls the whole map had 1,365–1,504
-patches, a biome's total varied by 2–10% (standard deviation; 14% for the small basin) and one ore in
-one biome typically by about 20%. **Bold** marks a biome tendency.
+A single game varies around these numbers. In 10 further test rolls the whole map had 1,205–1,311
+patches, a biome's total varied by 4–7% (standard deviation; 16% for the small basin) and one ore in
+one biome typically by about 22%. **Bold** marks a biome tendency.
 
 | Resource | Basin | Forest (W) | Volcano (SW) | Frozen (N) | Semi-arid (NE) | Desert (E) |
 |---|---|---|---|---|---|---|
-| copper | **6** | 18 | 32 | 22 | 17 | 35 |
-| lead | **5** | **34** | 30 | 21 | 15 | 31 |
-| coal | 5 | **28** | 26 | 20 | 16 | 28 |
-| scrap | 2 | 14 | 22 | 17 | 11 | **60** |
-| titanium | 3 | 23 | 26 | **45** | **21** | 30 |
-| thorium | 2 | 17 | **39** | 17 | 11 | 25 |
-| beryllium | 1 | 12 | **42** | 14 | 8 | 20 |
-| tungsten | 2 | 14 | **49** | 17 | 12 | 25 |
-| dytrix (Exo) | 2 | 13 | 18 | 14 | **18** | 21 |
-| urbium (Exo) | 2 | 13 | 21 | 14 | 10 | **47** |
-| siradamite (Exo) | 2 | 13 | 21 | **25** | 11 | 22 |
-| stellar steel (Exo) | 2 | 15 | 20 | **26** | 9 | 25 |
-| siratla crystal (Exo) | 2 | 13 | 11 | **18** | 6 | 16 |
-| **All patches** | **35** | **228** | **359** | **269** | **166** | **385** |
-| Ore tiles | 1,601 | 9,062 | 15,445 | 11,809 | 7,260 | 17,341 |
+| copper | **6** | 15 | 25 | 20 | 15 | 31 |
+| lead | **5** | **29** | 23 | 20 | 12 | 26 |
+| coal | 5 | **25** | 23 | 16 | 15 | 26 |
+| scrap | 1 | 12 | 18 | 15 | 10 | **50** |
+| titanium | 2 | 22 | 22 | **39** | **18** | 26 |
+| thorium | 2 | 14 | **33** | 16 | 10 | 22 |
+| beryllium | 1 | 11 | **37** | 11 | 7 | 16 |
+| tungsten | 2 | 13 | **39** | 14 | 10 | 23 |
+| dytrix (Exo) | 1 | 12 | 14 | 11 | **17** | 19 |
+| urbium (Exo) | 2 | 10 | 20 | 14 | 9 | **39** |
+| siradamite (Exo) | 2 | 11 | 18 | **24** | 10 | 18 |
+| stellar steel (Exo) | 1 | 11 | 18 | **25** | 7 | 24 |
+| siratla crystal (Exo) | 1 | 8 | 10 | **16** | 5 | 11 |
+| **All patches** | **32** | **192** | **301** | **242** | **144** | **331** |
+| Ore tiles | 1,458 | 7,784 | 12,930 | 10,480 | 6,085 | 14,960 |
 | Old fixed layout | 19 | 68 | 88 | 89 | 89 | 76 |
 
-Big biomes get more patches because density is even: about 28–33 patches per 10,000 walkable tiles
-everywhere. The Volcano tendencies come out at 1.7× (thorium), 2.4× (beryllium) and 2.2× (tungsten)
-the density elsewhere. Frozen titanium is 2.1×, Desert scrap 2.3× and urbium 2.0×, Forest lead 1.7×
-and coal 1.5×, Semi-arid dytrix 1.9×. The basin's grass also picks up some of the Forest's coal
+Big biomes get more patches because density is even: about 24–30 patches per 10,000 walkable tiles
+everywhere. The Volcano tendencies come out at 1.6× (thorium), 2.5× (beryllium) and 1.9× (tungsten)
+the density elsewhere. Frozen titanium is 2.1×, Desert scrap 2.3× and urbium 1.8×, Forest lead 1.7×
+and coal 1.5×, Semi-arid dytrix 2.2×. The basin's grass also picks up some of the Forest's coal
 tendency.
 
 ### Terrain resources (fixed)
