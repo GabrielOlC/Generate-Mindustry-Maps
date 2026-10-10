@@ -1,17 +1,22 @@
-"""Wave design for "Biomes Extended Remastered".
+"""Wave design shared by every map type.
 
 The spawn groups copy the owner's BIOME FFA wave list group for group: same units, waves, growth
-and shields. This map has no water route to the core, so its naval units are swapped for land or
-air units of the same tier (`cdtNavalSwap`). Groups are written in the JSON format that
-mindustry.game.SpawnGroup reads (v8 build 159.7):
+and shields. Each map gets them through `fnExpandGroups`: on a map with naval spawns (spawn tiles on
+water) every naval group comes up each of those spawns; on a map without them its naval units are
+swapped for land or air units of the same tier (`cdtNavalSwap`). Groups are written in the JSON format
+that mindustry.game.SpawnGroup reads (v8 build 159.7):
 
     type, begin, end, spacing, max, scaling, shields, shieldScaling, amount, effect, spawn
 
 `begin`/`end` are 0-based wave indexes in the file; this module uses human wave numbers
 (wave 1 = first wave) and converts them. `scaling` counts *appearances* of the group, not waves:
 units per spawn point = min(amount + int(appearances_so_far / scaling), max).
-A group without a `spawn` position spawns at all five spawn points.
+A group without a `spawn` position spawns at every spawn point of the map.
 """
+
+import copy
+
+import sys_config
 
 EXO = "exogenesisold-"
 NEVER = 2147483647
@@ -49,15 +54,20 @@ UNIT_HP = {
     EXO + "colossus": 287000,
     # Exogenesis core units
     EXO + "asgard": 900,
+    # naval units (vanilla risso and retusa lines, Exogenesis tier 6/7 boats, the Quantra apex)
+    "risso": 280, "minke": 600, "bryde": 910, "cyerce": 870, "navanax": 20000,
+    EXO + "orca": 68200, EXO + "balaenoptera": 158200, EXO + "apotheosis": 6000000,
 }
 
 BOSS_HEALTH_MULTIPLIER = 1.5  # StatusEffects.boss.healthMultiplier @ v159.7
 
-# Naval units would never reach the core here, so each one takes the place of the land unit of the same
-# tier and role: attack boats (risso line) -> dagger line, support boats (retusa line) -> nova line. The
-# lines are the species of Waves.generate @ v159.7. Exogenesis Old extends both (omura -> orca ->
-# balaenoptera, reign -> anvil -> fornax). apotheosis, the Quantra naval apex, has no line; war is the
-# apex closest in health and armour (5.0M HP / 90 vs 6.0M HP / 100), though it flies.
+# Every naval unit of the groups, with its stand-in for maps without naval spawns. A boat spawned on dry
+# ground dies at once (UnitComp.update kills units on tiles that are solid to them, and land is solid to
+# boats), so there each one takes the place of the land unit of the same tier and role: attack boats
+# (risso line) -> dagger line, support boats (retusa line) -> nova line. The lines are the species of
+# Waves.generate @ v159.7. Exogenesis Old extends both (omura -> orca -> balaenoptera, reign -> anvil ->
+# fornax). apotheosis, the Quantra naval apex, has no line; war is the apex closest in health and armour
+# (5.0M HP / 90 vs 6.0M HP / 100), though it flies. A naval unit added to the groups needs an entry here.
 cdtNavalSwap = {
     "risso": "dagger", "minke": "mace", "bryde": "fortress",
     "cyerce": "quasar", "navanax": "corvus",
@@ -141,23 +151,23 @@ def build_groups():
         Group("nova", 5),
         Group("nova", 6, 24, grow=4.318818, cap=13, shield_growth=cShieldGrowth),
         Group("locus", 10, 70, grow=25),
-        # BIOME FFA pins this one to its south-east spawn; east is the nearest direction here
+        # BIOME FFA pins this one to its south-east spawn; east is the nearest direction on both maps
         Group("locus", 10, 70, grow=25, shields=50, at="desert"),
         Group("crawler", 14, amount=3, grow=2.5361075, cap=6, shield_growth=cShieldGrowth),
-        Group(cdtNavalSwap["minke"], 14, grow=43.47826),
+        Group("minke", 14, grow=43.47826),
         Group("horizon", 15, 60, every=3, grow=50),
         Group("fortress", 16, grow=499.99997),
         Group("fortress", 16, grow=499.99997),
         Group("quasar", 19, grow=50),
-        Group(cdtNavalSwap["bryde"], 20, grow=33.333336),
+        Group("bryde", 20, grow=33.333336),
         Group(EXO + "heat", 20),
         Group(EXO + "drone-B", 21, grow=999.99994),
         Group("nova", 23, 33, every=4, amount=3, grow=2.21728, cap=6, shield_growth=cShieldGrowth),
-        Group(cdtNavalSwap["risso"], 23, grow=50),
+        Group("risso", 23, grow=50),
         Group("flare", 24, 40, grow=3.9181943, cap=13, shield_growth=cShieldGrowth),
         Group("zenith", 24, 70, every=3, amount=3),
         Group("horizon", 25, 45, amount=3, grow=5.83123, cap=13, shield_growth=cShieldGrowth),
-        Group(cdtNavalSwap["cyerce"], 25, 101),
+        Group("cyerce", 25, 101),
         Group("precept", 25, grow=5),
         Group("pulsar", 28),
         Group("atrax", 33, 50, amount=3, grow=5.0970526, cap=13, shield_growth=cShieldGrowth),
@@ -193,7 +203,7 @@ def build_groups():
               shields=233.89519, shield_growth=cShieldGrowth),
         Group("atrax", 65, 84, amount=3, grow=5.1379867, cap=13, shields=757.3749, shield_growth=cShieldGrowth),
         Group("toxopid", 70),
-        Group(cdtNavalSwap["navanax"], 70, 1, effect="boss"),  # never spawns: ends before it begins, as in FFA
+        Group("navanax", 70, 1, effect="boss"),  # never spawns: ends before it begins, as in FFA
         Group("spiroct", 72, 82, every=2, grow=3.7324436, cap=6, shields=167.068, shield_growth=cShieldGrowth),
         Group("arkyid", 74, 99, every=2, grow=10.064946, cap=13, shields=957.8565, shield_growth=cShieldGrowth),
         Group("horizon", 76, 87, every=2, grow=2.3367858, cap=6,
@@ -201,7 +211,7 @@ def build_groups():
         Group("nova", 78, 92, grow=3.0233536, cap=13, shields=1046.9594, shield_growth=cShieldGrowth),
         Group("zenith", 78, 103, amount=2, grow=11.70797, cap=13,
               shields=1046.9594, shield_growth=cShieldGrowth),
-        Group(cdtNavalSwap[EXO + "orca"], 80),
+        Group(EXO + "orca", 80),
         Group("atrax", 83, 93, every=4, grow=3.9277453, cap=6, shields=378.68744, shield_growth=cShieldGrowth),
         Group("quasar", 84, 95, every=2, grow=3.7063124, cap=6, shields=356.4117, shield_growth=cShieldGrowth),
         Group("quasar", 85, 111, amount=2, grow=9.971519, cap=13,
@@ -298,81 +308,112 @@ def build_groups():
               shields=1280.8546, shield_growth=cShieldGrowth),
         Group("arkyid", 174, 185, every=4, amount=0, grow=2.7223077, cap=6,
               shields=1325.406, shield_growth=cShieldGrowth),
-        Group(cdtNavalSwap[EXO + "balaenoptera"], 180),
+        Group(EXO + "balaenoptera", 180),
         Group("antumbra", 186, every=33, grow=33, cap=16, shield_growth=cShieldGrowth, effect="boss"),
         Group(EXO + "T-atlas", 200, grow=100),
         Group(EXO + "twilight", 200),
-        Group(cdtNavalSwap[EXO + "apotheosis"], 250, effect="boss"),
+        Group(EXO + "apotheosis", 250, effect="boss"),
         Group(EXO + "sagittarius", 300, effect="boss"),
     ]
 
 
+def fnExpandGroups(arGroups, dtSpawns=None, arNavalSpawnKeys=(), dtSpawnAliases=None):
+    """The groups as one map spawns them.
+
+    On a map with naval spawns, each naval group comes up every naval spawn (one copy pinned to each,
+    since a boat at a dry spawn dies at once); everywhere else its unit takes the stand-in from
+    `cdtNavalSwap`. A group pinned to a spawn key the map does not have is resolved through
+    `dtSpawnAliases` ({key used here: the map's own key}); `dtSpawns` = None skips that check."""
+    dtAliases = dtSpawnAliases or {}
+    arOut = []
+    for sGroup in arGroups:
+        if sGroup.unit in cdtNavalSwap:
+            if arNavalSpawnKeys:
+                for vKey in arNavalSpawnKeys:
+                    sCopy = copy.copy(sGroup)
+                    sCopy.at = vKey
+                    arOut.append(sCopy)
+                continue
+            sGroup = copy.copy(sGroup)
+            sGroup.unit = cdtNavalSwap[sGroup.unit]
+        if sGroup.at is not None and dtSpawns is not None:
+            vKey = dtAliases.get(sGroup.at, sGroup.at)
+            if vKey not in dtSpawns:
+                raise ValueError("A wave group is pinned to spawn '%s', which this map does not have; map it to "
+                                 "one of %s with spawn aliases" % (sGroup.at, sorted(dtSpawns)))
+            if vKey != sGroup.at:
+                sGroup = copy.copy(sGroup)
+                sGroup.at = vKey
+        arOut.append(sGroup)
+    return arOut
+
+
+def fnBuildRules(dtSpawns, arNavalSpawnKeys=(), dtSpawnAliases=None):
+    """Rules JSON object for a map's "rules" tag: the shared match rules plus the map's spawn groups."""
+    dtRules = copy.deepcopy(sys_config.cdtMatchRules)
+    arGroups = fnExpandGroups(build_groups(), dtSpawns, arNavalSpawnKeys, dtSpawnAliases)
+    dtRules["spawns"] = [sGroup.to_json(dtSpawns) for sGroup in arGroups]
+    return dtRules
+
+
+def fnUnitsOnWave(vWave, arGroups, vSpawnCount):
+    """(unit count, total health incl. boss multiplier and shields, {label: count}) for one wave of
+    expanded groups on a map with `vSpawnCount` spawn points."""
+    vUnits, vHp, dtCounts = 0, 0.0, {}
+    for sGroup in arGroups:
+        vSpawned = sGroup.spawned(vWave)
+        if vSpawned == 0:
+            continue
+        vCount = vSpawned * (vSpawnCount if sGroup.at is None else 1)
+        vBoss = sGroup.effect == "boss"
+        vUnits += vCount
+        vHp += vCount * (UNIT_HP.get(sGroup.unit, 0) * (BOSS_HEALTH_MULTIPLIER if vBoss else 1.0)
+                         + sGroup.shield_at(vWave))
+        vLabel = sGroup.unit.replace(EXO, "") + (" (boss)" if vBoss else "")
+        dtCounts[vLabel] = dtCounts.get(vLabel, 0) + vCount
+    return vUnits, vHp, dtCounts
+
+
+def _fnToughness(vLabel):
+    vName = vLabel.replace(" (boss)", "")
+    return UNIT_HP.get(EXO + vName, UNIT_HP.get(vName, 0)) * (BOSS_HEALTH_MULTIPLIER if "(boss)" in vLabel else 1)
+
+
+def fnWaveSummary(arWaves, arGroups, vSpawnCount):
+    """Units, total health and the toughest units for selected waves."""
+    arRows = []
+    for vWave in arWaves:
+        vUnits, vHp, dtCounts = fnUnitsOnWave(vWave, arGroups, vSpawnCount)
+        arTop = sorted(dtCounts.items(), key=lambda kv: -_fnToughness(kv[0]))[:4]
+        arRows.append({"wave": vWave, "units": vUnits, "total_hp": int(vHp),
+                       "toughest": ", ".join("%dx %s" % (c, n) for n, c in arTop)})
+    return arRows
+
+
+def fnWaveCurve(vFirst, vLast, vWindow, arGroups, vSpawnCount):
+    """Average units and health per wave over windows of waves."""
+    arRows = []
+    for vStart in range(vFirst, vLast + 1, vWindow):
+        arData = [fnUnitsOnWave(w, arGroups, vSpawnCount)[:2] for w in range(vStart, vStart + vWindow)]
+        arRows.append({"waves": "%d-%d" % (vStart, vStart + vWindow - 1),
+                       "avg_units": round(sum(u for u, _ in arData) / vWindow, 1),
+                       "min_units": min(u for u, _ in arData), "max_units": max(u for u, _ in arData),
+                       "avg_total_hp": int(sum(h for _, h in arData) / vWindow)})
+    return arRows
+
+
+# Entry points generate_map.py has always used (Biomes Extended Remastered: five spawns, none on water).
+
 def build_rules(spawn_positions):
     """Rules JSON object for the map's "rules" tag (Survival / PvE)."""
-    return {
-        "waves": True,
-        "waveTimer": True,
-        "waveSending": True,
-        "waitEnemies": False,
-        "waveSpacing": 9000.0,          # 150 s between waves
-        "initialWaveSpacing": 25200.0,  # 7 min to set up before wave 1
-        "winWave": 0,                   # endless
-        "attackMode": False,
-        "pvp": False,
-        "hideSpawns": False,
-        "unitCap": 24,                  # + core bonus (foundation +16)
-        "unitCapVariable": True,
-        "dropZoneRadius": 300.0,
-        "loadout": [
-            {"item": "copper", "amount": 700},
-            {"item": "lead", "amount": 300},
-        ],
-        "spawns": [grp.to_json(spawn_positions) for grp in build_groups()],
-    }
-
-
-def units_on_wave(wave, groups=None, spawn_count=5):
-    """(unit count, total health incl. boss multiplier and shields, {label: count}) for one wave."""
-    groups = groups or build_groups()
-    units, hp, counts = 0, 0.0, {}
-    for grp in groups:
-        n = grp.spawned(wave)
-        if n == 0:
-            continue
-        count = n * (spawn_count if grp.at is None else 1)
-        boss = grp.effect == "boss"
-        units += count
-        hp += count * (UNIT_HP.get(grp.unit, 0) * (BOSS_HEALTH_MULTIPLIER if boss else 1.0) + grp.shield_at(wave))
-        label = grp.unit.replace(EXO, "") + (" (boss)" if boss else "")
-        counts[label] = counts.get(label, 0) + count
-    return units, hp, counts
+    return fnBuildRules(spawn_positions)
 
 
 def wave_summary(waves_to_report):
     """Units, total health and the toughest units for selected waves."""
-    groups = build_groups()
-    rows = []
-    for wave in waves_to_report:
-        units, hp, counts = units_on_wave(wave, groups)
-
-        def toughness(label):
-            name = label.replace(" (boss)", "")
-            return UNIT_HP.get(EXO + name, UNIT_HP.get(name, 0)) * (BOSS_HEALTH_MULTIPLIER if "(boss)" in label else 1)
-
-        top = sorted(counts.items(), key=lambda kv: -toughness(kv[0]))[:4]
-        rows.append({"wave": wave, "units": units, "total_hp": int(hp),
-                     "toughest": ", ".join("%dx %s" % (c, n) for n, c in top)})
-    return rows
+    return fnWaveSummary(waves_to_report, fnExpandGroups(build_groups()), 5)
 
 
 def curve(first=1, last=160, window=10):
     """Average units and health per wave over windows of waves."""
-    groups = build_groups()
-    rows = []
-    for a in range(first, last + 1, window):
-        data = [units_on_wave(w, groups)[:2] for w in range(a, a + window)]
-        rows.append({"waves": "%d-%d" % (a, a + window - 1),
-                     "avg_units": round(sum(u for u, _ in data) / window, 1),
-                     "min_units": min(u for u, _ in data), "max_units": max(u for u, _ in data),
-                     "avg_total_hp": int(sum(h for _, h in data) / window)})
-    return rows
+    return fnWaveCurve(first, last, window, fnExpandGroups(build_groups()), 5)

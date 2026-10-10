@@ -15,6 +15,8 @@ This file holds the additions to the Coding-Conventions-Patterns standards (`REA
 * `fn` → **Functions:** `def` that returns a value. **e.g.:** `fnWaveCurve`
 * `cl` → **Class:** Class definitions. **e.g.:** `clGroup`
 * `_` → **Auxiliary Elements:** Module-private helpers; Python already marks them with a leading `_`. **e.g.:** `_fnPackPoint`
+* `vs` → **Procedures:** `def` that returns nothing, as VBA's Sub. **e.g.:** `vsRenderPreview`
+* `wf_` / `cm_` / `sys_` → **Modules:** The layer token from `Architecture_Principles.md` (controller, service, core) in front of the snake_case file name. A folder of interchangeable plugins keeps plain names. **e.g.:** `wf_generate.py`, `cm_pipeline.py`, `sys_config.py`, `layouts/biomes_confluence.py`
 
 ### 🔹Variables
 
@@ -23,6 +25,7 @@ This file holds the additions to the Coding-Conventions-Patterns standards (`REA
 * `c` → **Constant:** Module-level constant. Alone for a basic value, stacked on the type token for a collection, as in `ctbID`. **e.g.:** `cShieldGrowth`, `cdtNavalSwap`
 * `ar` → **Array:** list, tuple or set. **e.g.:** `arWaves`
 * `dt` → **Dictionary:** dict. **e.g.:** `dtCounts`
+* Attributes on `self` and on a class take the same tokens. **e.g.:** `self.arFloor`, `cKey`
 
 ### 🔹Kept from Python
 

@@ -24,6 +24,11 @@ biome only *leans* toward the materials its faction's tech tree needs.
 yellow dots are named choke points, and orange marks the core. North is up. The ore patches are
 **one example roll**; every game gets its own.*
 
+> **Two map types.** This project generates two maps with one shared framework (section 8). This
+> README describes **Biomes Extended Remastered**. The naval map, **Biomes Confluence**, has boats that
+> sail its water and cryofluid rivers to the core; it is described in
+> [docs/Biomes_Confluence.md](docs/Biomes_Confluence.md).
+
 ---
 
 ## 1. Install and play
@@ -285,7 +290,7 @@ the counts below are five times the list. BIOME FFA has six spawn points, so thi
 its units. The wave timer and loadout stay this map's own (section 1).
 
 **Naval units.** This map has no water route to the core, so each naval unit in BIOME FFA is
-replaced by the land or air unit of the same tier and role:
+replaced by the land or air unit of the same tier and role. (On Biomes Confluence they stay boats.)
 
 | BIOME FFA | Here | Rule |
 |---|---|---|
@@ -356,30 +361,42 @@ vanilla ore.
 
 ## 8. Regenerating or changing the map
 
-Everything runs on the Python standard library (3.8+), so there is nothing to install.
+Everything runs on the Python standard library (3.8+), so there is nothing to install. One controller
+generates every map type. It asks which one you want, or takes `--map`:
 
 ```bash
-python generate_map.py                                  # default seed 1597, writes to the maps folder
-python generate_map.py --seed 42 --out "D:\some\folder"  # a different variation
-python generate_map.py --ore-rolls 5                    # average 5 simulated ore rolls in the report
-python check_map.py                                     # checks maps\Biomes Extended Remastered.msav
+python wf_generate.py                                         # lists the map types and asks
+python wf_generate.py --list                                  # biomes-extended, biomes-confluence
+python wf_generate.py --map biomes-extended                   # this map, default seed 1597
+python wf_generate.py --map biomes-confluence --ore-rolls 5   # the naval map, 5 simulated ore rolls
+python wf_generate.py --map biomes-extended --seed 42 --out "D:\someolder"
 ```
 
-One run takes about 1–2 minutes and writes four files: the `.msav`, a preview PNG, an enemy-routes
-PNG and a JSON report with every measured number used in this document. The terrain depends on
-`--seed`. The ores do not: the game rolls them. The generator only simulates rolls (with the game's
-own noise function) to draw the preview and to measure a typical game. `--ore-rolls` sets how many
-it averages (20–50 s each).
+The original commands still work for this map and write the same file:
+`python generate_map.py [--seed N] [--ore-rolls N]`, then `python check_map.py`.
+
+One run takes about 1–2 minutes and writes four files to `maps`: the `.msav`, a preview PNG, an
+enemy-routes PNG and a JSON report with every measured number used in this document. It then checks
+the written map and ends with "All checks passed.". The terrain depends on `--seed`. The ores do
+not: the game rolls them. The generator only simulates rolls (with the game's own noise function) to
+draw the preview and to measure a typical game. `--ore-rolls` sets how many it averages (20–50 s each).
+
+Every map type shares the same ores, waves, match rules, data patches, writer, images, report and
+checks. Only the layout differs, and a new map type is one new file in `layouts/` (see `CLAUDE.md`).
 
 | File | What to change there |
 |---|---|
-| `generate_map.py` | Spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), the lava data patches (`DATA_PATCHES`, `FLOOR_HEAT`), map author/name |
+| `wf_generate.py` | The controller: asks for the map type and runs it (no need to touch) |
+| `sys_config.py` | Shared by all maps: wave timer, first-wave delay, unit cap, loadout (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
 | `ores.py` | The in-game ore filters: map-wide layer per ore (`WIDESPREAD`: scale = how many patches, threshold = how big), biome tendencies (`TENDENCIES`), siratla crystal (`CRYSTAL_HOSTS`), ore-free floors (`CLEAR_FLOORS`) |
-| `waves.py` | Every spawn group, wave timer, loadout, unit cap |
+| `waves.py` | Every spawn group, and the land stand-ins for boats on maps without water routes (`cdtNavalSwap`) |
+| `generate_map.py` | This map's layout: spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), map name |
+| `layouts/biomes_confluence.py` | The naval map's layout (see `docs/Biomes_Confluence.md`) |
+| `cm_pipeline.py`, `cm_layout.py`, `cm_terrain.py`, `cm_render.py`, `cm_checks.py` | The shared pipeline, layout contract, terrain toolkit, images and checks |
 | `msav.py` | The save-format writer and validator (no need to touch) |
-| `check_map.py` | Re-reads a map, checks the ore filters, tests thermal-generator spots on all lava, and runs the barrier tests |
-| `audit_names.py` | Checks every block/unit/item/filter/patch name against the game and mod sources on GitHub (needs internet) |
-| `CLAUDE.md` | Maintenance notes: pipeline, invariants, what to re-check when the game updates |
+| `check_map.py` | Re-reads this map, checks the ore filters, tests thermal-generator spots on all lava, and runs its barrier tests |
+| `audit_names.py` | Checks every block/unit/item/filter/patch name against the game and mod sources on GitHub (needs internet); pass the map file to audit another map |
+| `CLAUDE.md` | Maintenance notes: framework, invariants, what to re-check when the game updates |
 
 ### Technical notes
 

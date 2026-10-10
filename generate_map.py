@@ -20,14 +20,14 @@ import json
 import math
 import os
 import random
-import struct
 import time
-import zlib
 from array import array
 from collections import deque
 
+import cm_render
 import msav
 import ores
+import sys_config
 import waves
 
 MAP_NAME = "Biomes Extended Remastered"
@@ -110,61 +110,27 @@ OUTPOSTS = (  # name, biome, nominal centre of a 7x7 core-zone pad
     ("Ashfall Outpost", VOLCANO, (358, 103)),
 )
 
-LIQUID_FLOORS = {"deep-water", "shallow-water", "sand-water", "darksand-water", "tar", "pooled-cryofluid",
-                 "molten-slag", "pyromagma"}
-DEEP_FLOORS = {"deep-water", "tar", "pooled-cryofluid", "molten-slag"}
+# Shared with every map type: defined once in sys_config.py (the common configuration layer).
+LIQUID_FLOORS = sys_config.carLiquidFloors
+DEEP_FLOORS = sys_config.carDeepFloors
 NO_DECOR_FLOORS = LIQUID_FLOORS | {"glowingvein", "siratla-crystal", "core-zone", "metal-floor",
                                    "metal-floor-damaged", "dark-panel-1", "dark-panel-2", "dark-panel-3",
                                    "dark-panel-4", "dark-panel-5", "dark-panel-6"}
-NON_SOLID_BLOCKS = {"boulder", "snow-boulder", "sand-boulder", "dacite-boulder", "basalt-boulder",
-                    "shale-boulder", "spore-cluster", "siratla-stone-boulder"}
-NATURAL_WALL = {
-    "stone": "stone-wall", "crater-stone": "stone-wall", "char": "dune-wall", "basalt": "dune-wall",
-    "hotrock": "dune-wall", "magmarock": "dune-wall", "sand-floor": "sand-wall", "darksand": "dune-wall",
-    "salt": "salt-wall", "shale": "shale-wall", "dirt": "dirt-wall", "mud": "dirt-wall", "grass": "dirt-wall",
-    "moss": "stone-wall", "spore-moss": "spore-wall", "dacite": "dacite-wall", "snow": "snow-wall",
-    "ice-snow": "snow-wall", "ice": "ice-wall", "siratla-stone": "siratla-stone-wall",
-    "metal-floor-damaged": "dark-metal",
-}
+NON_SOLID_BLOCKS = sys_config.carNonSolidBlocks
+NATURAL_WALL = sys_config.cdtNaturalWall
 BIOME_FLOOR = {DESERT: "sand-floor", SEMIARID: "dirt", FROZEN: "snow", FOREST: "grass", VOLCANO: "basalt",
                BASIN: "stone"}
 BOULDERS = {DESERT: "sand-boulder", SEMIARID: "dacite-boulder", FROZEN: "snow-boulder", FOREST: "boulder",
             VOLCANO: "basalt-boulder", BASIN: "boulder"}
 
-# Exogenesis Old terrain. Mod content is registered as "<mod name>-<file name>", so these are written
-# to the map with the prefix (ContentLoader.getByName does no prefixing of its own).
-MOD_BLOCKS = {"pyromagma", "siratla-stone", "siratla-stone-wall", "siratla-crystal", "glowingvein",
-              "siratla-stone-boulder", "ore-dytrix", "ore-siradamite", "ore-stellar-steel", "ore-urbium"}
-MOD_PREFIX = "exogenesisold-"
-
-
-def file_block_name(name):
-    return MOD_PREFIX + name if name in MOD_BLOCKS else name
-
-
-# Lava: floors drawn as lava, and Attribute.heat per floor (Blocks.java @ v159.7; Exogenesis Old 1.9.1
-# gives none of its floors on this map any heat). Thermal generators need heat > 0 under their 2x2.
-LAVA_FLOORS = {"molten-slag", "pyromagma"}
-FLOOR_HEAT = {"molten-slag": 0.85, "magmarock": 0.75, "hotrock": 0.5}
-
-# Map data patches (embedded in the save, applied by the game only while the map is loaded).
-# 1. The thermal generator is already `floating`, but Build.validPlace also wants it to touch non-deep
-#    ground (contactsShallows), so it only fit along the banks of the molten slag. `placeableLiquid`
-#    lifts that rule. Only heat floors pass ThermalGenerator.canPlaceOn, so this opens up lava and
-#    nothing else.
-# 2. Exogenesis' pyromagma (the creeks) is drawn as lava but has no heat at all, so no thermal generator
-#    could stand on it. It gets the heat of molten slag. This is a separate asset with a dotted path:
-#    without the mod the path does not resolve, and the game only logs a warning for it.
-DATA_PATCHES = (
-    ("thermal-generators-on-lava.json", json.dumps({
-        "name": "Thermal generators on lava",
-        "block": {"thermal-generator": {"placeableLiquid": True}},
-    })),
-    ("pyromagma-heat.json", json.dumps({
-        "name": "Pyromagma gives heat",
-        "block.%s.attributes.heat" % file_block_name("pyromagma"): FLOOR_HEAT["molten-slag"],
-    })),
-)
+# Exogenesis Old terrain (written with the mod prefix), lava heat and the thermal-generator data patches:
+# shared with every map type, see sys_config.py for the reasons behind each value.
+MOD_BLOCKS = sys_config.carModBlocks
+MOD_PREFIX = sys_config.cModPrefix
+file_block_name = sys_config.fnFileBlockName
+LAVA_FLOORS = sys_config.carLavaFloors
+FLOOR_HEAT = sys_config.cdtFloorHeat
+DATA_PATCHES = sys_config.carDataPatches
 
 
 # ----------------------------------------------------------------------------------------------
@@ -1157,45 +1123,9 @@ class MapBuilder:
 # Preview image
 # ----------------------------------------------------------------------------------------------
 
-COLORS = {
-    "stone": (92, 92, 98), "crater-stone": (80, 80, 88), "char": (58, 52, 50), "basalt": (52, 50, 56),
-    "hotrock": (128, 72, 52), "magmarock": (196, 96, 44), "molten-slag": (255, 132, 36),
-    "pyromagma": (255, 70, 20), "sand-floor": (222, 196, 138), "darksand": (150, 118, 88),
-    "salt": (232, 226, 214), "shale": (132, 98, 78), "dirt": (142, 110, 80), "mud": (100, 84, 70),
-    "dacite": (164, 152, 142), "grass": (88, 140, 70), "moss": (70, 112, 62), "spore-moss": (112, 82, 142),
-    "snow": (236, 240, 246), "ice": (176, 208, 240), "ice-snow": (208, 224, 240),
-    "siratla-stone": (150, 172, 196), "siratla-crystal": (120, 205, 245), "glowingvein": (160, 230, 255),
-    "deep-water": (38, 68, 140), "shallow-water": (72, 112, 182), "sand-water": (122, 150, 170),
-    "darksand-water": (90, 110, 132), "tar": (28, 28, 34), "pooled-cryofluid": (96, 200, 232),
-    "core-zone": (230, 186, 60), "metal-floor": (112, 112, 122), "metal-floor-damaged": (96, 96, 102),
-    "dark-panel-1": (66, 66, 72), "dark-panel-2": (62, 62, 70), "dark-panel-3": (72, 72, 80),
-    "dark-panel-4": (60, 60, 66), "dark-panel-5": (64, 64, 70), "dark-panel-6": (58, 58, 64),
-    "stone-wall": (58, 58, 64), "sand-wall": (176, 146, 98), "salt-wall": (196, 190, 180),
-    "shale-wall": (98, 74, 60), "dirt-wall": (98, 74, 54), "dacite-wall": (118, 108, 100),
-    "snow-wall": (188, 198, 210), "ice-wall": (136, 166, 200), "dune-wall": (64, 48, 42),
-    "spore-wall": (80, 60, 100), "dark-metal": (40, 40, 48), "siratla-stone-wall": (104, 126, 150),
-    "pine": (36, 88, 40), "snow-pine": (58, 106, 82), "spore-pine": (92, 58, 122), "shrubs": (58, 100, 50),
-    "white-tree-dead": (112, 100, 90),
-    "ore-copper": (218, 142, 92), "ore-lead": (142, 132, 176), "ore-scrap": (136, 134, 124),
-    "ore-coal": (30, 30, 30), "ore-titanium": (140, 162, 232), "ore-thorium": (240, 150, 200),
-    "ore-beryllium": (58, 143, 100), "ore-tungsten": (118, 138, 154), "ore-dytrix": (115, 255, 174),
-    "ore-siradamite": (169, 216, 255), "ore-stellar-steel": (102, 177, 255), "ore-urbium": (64, 64, 84),
-}
-
-
-def write_png(path, width, height, pixels):
-    raw = bytearray()
-    for y in range(height):
-        raw.append(0)
-        raw += pixels[y * width * 3:(y + 1) * width * 3]
-
-    def chunk(tag, data):
-        return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
-
-    png = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
-    png += chunk(b"IDAT", zlib.compress(bytes(raw), 9)) + chunk(b"IEND", b"")
-    with open(path, "wb") as fh:
-        fh.write(png)
+# Preview palette and PNG writer: shared with every map type (sys_config.py, cm_render.py).
+COLORS = sys_config.cdtPreviewColors
+write_png = cm_render.fnWritePng
 
 
 def render_preview(mb, path):
