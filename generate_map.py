@@ -1283,12 +1283,12 @@ def render_routes(mb, corridors, path):
 
 DESCRIPTION = (
     "[accent]800x800 PvE survival for 4-8 players, built for Exogenesis Old.[]\n"
-    "Hold the Crossroads core while five factions pour out of five biomes: Genesux from the frozen north, "
-    "the Titan host from the semi-arid north-east, Elecian from the eastern desert, Quantra from the western "
-    "forest and Solran from the volcano in the south-west. Ore nodes are re-rolled every time the map is "
-    "loaded: every ore can appear in every biome, and each biome leans toward its faction's materials. "
-    "Thermal generators can be built anywhere on lava. Claim the core-zone outposts to expand. "
-    "Endless waves; heralds at 90, apex bosses from wave 100."
+    "Hold the Crossroads core against endless waves from five biome spawns: the frozen north, the semi-arid "
+    "north-east, the eastern desert, the western forest and the volcano in the south-west. Serpulo and "
+    "Erekir armies march with Exogenesis Old elites. Ore nodes are re-rolled every time the map is loaded: "
+    "every ore can appear in every biome, and each biome leans toward the materials of the Exogenesis "
+    "faction it is themed after. Thermal generators can be built anywhere on lava. Claim the core-zone "
+    "outposts to expand. Bosses from wave 40; sagittarius from wave 300."
 )
 
 
@@ -1376,8 +1376,8 @@ def main():
         "data_patches": [{"path": p, "patch": json.loads(t)} for p, t in DATA_PATCHES],
         "rules": {k: v for k, v in rules.items() if k != "spawns"}, "spawn_groups": len(rules["spawns"]),
         "rules_json_bytes": len(tags["rules"]),
-        "wave_summary": waves.wave_summary([1, 10, 20, 30, 40, 50, 60, 75, 90, 100, 110, 120, 150]),
-        "wave_curve": waves.curve(1, 160, 10),
+        "wave_summary": waves.wave_summary([1, 10, 20, 30, 40, 50, 60, 75, 90, 100, 120, 150, 200, 250, 300]),
+        "wave_curve": waves.curve(1, 310, 10),
         "notes": mb.notes,
     }
     report_path = os.path.join(args.out, args.name + " - report.json")

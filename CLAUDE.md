@@ -13,6 +13,10 @@ A stdlib-only Python generator that writes the Mindustry PvE map **"Biomes Exten
   Generated maps go to the `maps` folder next to the scripts. That is the default `--out`
   (`DEFAULT_OUT` in `generate_map.py`, built from the script's own location). Keep every default
   path relative to the project folder; no machine-specific paths.
+- **Naming in new code** follows the owner's notation (the Coding-Conventions-Patterns skill) with the
+  Python rules in `docs/Coding_Conventions_Updates.md`: token + PascalCase (`cdtNavalSwap`,
+  `cShieldGrowth`). Existing names change only when that code is rewritten anyway. New rules go into
+  that file, never into the skill's own files.
 
 ## Workflow after any change
 
@@ -85,7 +89,7 @@ floors.
   Don't reorder them.
 - The core is the only building. Its data layout (`msav.core_chunk`) is version-specific.
 - Rules JSON and the genfilters JSON must each stay under 65,535 bytes (Java `writeUTF`). They are
-  about 10 KB and 4.5 KB now.
+  about 12.5 KB and 4.5 KB now.
 - The preview/report ore numbers come from `ores.py`'s port of `arc.util.noise.Simplex` and the filter
   rules. It follows the game's arithmetic step by step (doubles, int32 hashing, the final float cast and
   comparison), so a simulated roll stands for a possible in-game roll; only the random seeds differ.

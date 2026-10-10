@@ -8,8 +8,8 @@
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
   "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Extended Remastered.msav",
-  "file_bytes": 100995,
-  "uncompressed_bytes": 371709,
+  "file_bytes": 102124,
+  "uncompressed_bytes": 374075,
   "spawns": {
     "North spawn (Frozen)": [
       420,
@@ -877,200 +877,317 @@
       }
     ]
   },
-  "spawn_groups": 96,
-  "rules_json_bytes": 10166,
+  "spawn_groups": 125,
+  "rules_json_bytes": 12516,
   "wave_summary": [
     {
       "wave": 1,
       "units": 5,
       "total_hp": 750,
-      "toughest": "5x dagger"
+      "toughest": "5x crawler"
     },
     {
       "wave": 10,
-      "units": 52,
-      "total_hp": 10860,
-      "toughest": "1x heat, 2x sol, 1x disrespect, 2x pteris"
+      "units": 36,
+      "total_hp": 20302,
+      "toughest": "6x locus, 15x crawler, 5x dagger, 10x nova"
     },
     {
       "wave": 20,
-      "units": 97,
-      "total_hp": 40310,
-      "toughest": "1x molten, 1x strife, 1x corona, 1x aster"
+      "units": 96,
+      "total_hp": 54678,
+      "toughest": "6x locus, 5x heat, 15x fortress, 5x quasar"
     },
     {
       "wave": 30,
-      "units": 110,
-      "total_hp": 83352,
-      "toughest": "1x combat, 1x magma, 1x debate, 1x photosphere"
+      "units": 161,
+      "total_hp": 134949,
+      "toughest": "10x precept, 6x locus, 5x heat, 15x fortress"
     },
     {
       "wave": 40,
-      "units": 128,
-      "total_hp": 117314,
-      "toughest": "1x b04-oort, 1x radiative, 2x photosphere, 2x b03-kuiper"
+      "units": 242,
+      "total_hp": 441810,
+      "toughest": "5x conquer (boss), 5x tecta, 20x precept, 12x locus"
     },
     {
       "wave": 50,
-      "units": 95,
-      "total_hp": 293608,
-      "toughest": "1x stella, 1x disaccord, 1x thymus, 1x disagreement"
+      "units": 277,
+      "total_hp": 596881,
+      "toughest": "5x conquer, 5x b04-oort (boss), 10x tecta, 30x precept"
     },
     {
       "wave": 60,
-      "units": 100,
-      "total_hp": 544598,
-      "toughest": "1x stella, 1x hostile, 1x core, 1x eruption"
+      "units": 288,
+      "total_hp": 635900,
+      "toughest": "5x conquer, 10x tecta, 5x quad, 40x precept"
     },
     {
       "wave": 75,
-      "units": 28,
-      "total_hp": 614015,
-      "toughest": "1x assault, 2x stella, 1x eruption, 1x b05-centauri"
+      "units": 265,
+      "total_hp": 863773,
+      "toughest": "5x conquer, 5x toxopid, 10x arkyid, 10x tecta"
     },
     {
       "wave": 90,
-      "units": 61,
-      "total_hp": 2491760,
-      "toughest": "1x collapse, 1x xenoct, 1x b07-atlas, 1x bloodshed"
+      "units": 290,
+      "total_hp": 1723895,
+      "toughest": "5x anvil, 5x Fusion, 5x conquer, 5x toxopid"
     },
     {
       "wave": 100,
-      "units": 70,
-      "total_hp": 16565588,
-      "toughest": "1x sagittarius (boss), 1x virgo, 1x b06-altair, 2x T-prometheus"
-    },
-    {
-      "wave": 110,
-      "units": 56,
-      "total_hp": 9687752,
-      "toughest": "1x arcturus (boss), 1x fornax, 1x b07-universalis, 1x battle"
+      "units": 290,
+      "total_hp": 1828157,
+      "toughest": "5x anvil, 5x Fusion, 5x conquer, 5x toxopid"
     },
     {
       "wave": 120,
-      "units": 96,
-      "total_hp": 11471858,
-      "toughest": "1x war (boss), 1x colossus, 2x collapse, 2x xenoct"
+      "units": 345,
+      "total_hp": 4358765,
+      "toughest": "5x colossus (boss), 5x anvil, 5x Fusion, 5x conquer"
     },
     {
       "wave": 150,
-      "units": 88,
-      "total_hp": 13317620,
-      "toughest": "1x war (boss), 3x collapse, 3x xenoct, 3x b07-atlas"
+      "units": 420,
+      "total_hp": 7509698,
+      "toughest": "5x colossus (boss), 5x xenoct, 5x bloodshed, 5x hex"
+    },
+    {
+      "wave": 200,
+      "units": 645,
+      "total_hp": 10678622,
+      "toughest": "5x colossus (boss), 5x xenoct, 5x fornax, 5x bloodshed"
+    },
+    {
+      "wave": 250,
+      "units": 775,
+      "total_hp": 53438558,
+      "toughest": "5x war (boss), 10x colossus (boss), 10x xenoct, 5x fornax"
+    },
+    {
+      "wave": 300,
+      "units": 870,
+      "total_hp": 130219727,
+      "toughest": "5x sagittarius (boss), 5x war (boss), 10x colossus (boss), 10x xenoct"
     }
   ],
   "wave_curve": [
     {
       "waves": "1-10",
-      "avg_units": 19.0,
+      "avg_units": 19.1,
       "min_units": 5,
-      "max_units": 52,
-      "avg_total_hp": 3478
+      "max_units": 36,
+      "avg_total_hp": 5111
     },
     {
       "waves": "11-20",
-      "avg_units": 58.5,
-      "min_units": 24,
-      "max_units": 97,
-      "avg_total_hp": 20296
+      "avg_units": 74.5,
+      "min_units": 41,
+      "max_units": 101,
+      "avg_total_hp": 38059
     },
     {
       "waves": "21-30",
-      "avg_units": 88.3,
-      "min_units": 43,
-      "max_units": 147,
-      "avg_total_hp": 44170
+      "avg_units": 133.5,
+      "min_units": 106,
+      "max_units": 161,
+      "avg_total_hp": 88378
     },
     {
       "waves": "31-40",
-      "avg_units": 84.0,
-      "min_units": 44,
-      "max_units": 129,
-      "avg_total_hp": 68727
+      "avg_units": 195.6,
+      "min_units": 151,
+      "max_units": 247,
+      "avg_total_hp": 198773
     },
     {
       "waves": "41-50",
-      "avg_units": 68.0,
-      "min_units": 30,
-      "max_units": 129,
-      "avg_total_hp": 117340
+      "avg_units": 263.5,
+      "min_units": 242,
+      "max_units": 287,
+      "avg_total_hp": 467739
     },
     {
       "waves": "51-60",
-      "avg_units": 56.0,
-      "min_units": 21,
-      "max_units": 101,
-      "avg_total_hp": 195235
+      "avg_units": 246.6,
+      "min_units": 217,
+      "max_units": 288,
+      "avg_total_hp": 544100
     },
     {
       "waves": "61-70",
-      "avg_units": 44.7,
-      "min_units": 9,
-      "max_units": 82,
-      "avg_total_hp": 301277
+      "avg_units": 270.0,
+      "min_units": 248,
+      "max_units": 298,
+      "avg_total_hp": 693144
     },
     {
       "waves": "71-80",
-      "avg_units": 37.1,
-      "min_units": 10,
-      "max_units": 73,
-      "avg_total_hp": 498805
+      "avg_units": 276.0,
+      "min_units": 260,
+      "max_units": 295,
+      "avg_total_hp": 925392
     },
     {
       "waves": "81-90",
-      "avg_units": 37.1,
-      "min_units": 15,
-      "max_units": 71,
-      "avg_total_hp": 727262
+      "avg_units": 287.5,
+      "min_units": 275,
+      "max_units": 310,
+      "avg_total_hp": 1434356
     },
     {
       "waves": "91-100",
-      "avg_units": 42.4,
-      "min_units": 10,
-      "max_units": 76,
-      "avg_total_hp": 2386425
+      "avg_units": 294.5,
+      "min_units": 280,
+      "max_units": 305,
+      "avg_total_hp": 1745406
     },
     {
       "waves": "101-110",
-      "avg_units": 45.6,
-      "min_units": 8,
-      "max_units": 96,
-      "avg_total_hp": 2019835
+      "avg_units": 299.0,
+      "min_units": 285,
+      "max_units": 310,
+      "avg_total_hp": 1879026
     },
     {
       "waves": "111-120",
-      "avg_units": 52.8,
-      "min_units": 26,
-      "max_units": 96,
-      "avg_total_hp": 2219647
+      "avg_units": 315.0,
+      "min_units": 300,
+      "max_units": 345,
+      "avg_total_hp": 2202650
     },
     {
       "waves": "121-130",
-      "avg_units": 49.1,
-      "min_units": 12,
-      "max_units": 90,
-      "avg_total_hp": 2849872
+      "avg_units": 358.0,
+      "min_units": 335,
+      "max_units": 395,
+      "avg_total_hp": 5048542
     },
     {
       "waves": "131-140",
-      "avg_units": 56.5,
-      "min_units": 9,
-      "max_units": 107,
-      "avg_total_hp": 2564593
+      "avg_units": 381.5,
+      "min_units": 370,
+      "max_units": 395,
+      "avg_total_hp": 5536419
     },
     {
       "waves": "141-150",
-      "avg_units": 56.1,
-      "min_units": 21,
-      "max_units": 98,
-      "avg_total_hp": 2763541
+      "avg_units": 405.5,
+      "min_units": 380,
+      "max_units": 420,
+      "avg_total_hp": 7140754
     },
     {
       "waves": "151-160",
-      "avg_units": 55.9,
-      "min_units": 12,
-      "max_units": 107,
-      "avg_total_hp": 3224671
+      "avg_units": 439.0,
+      "min_units": 410,
+      "max_units": 475,
+      "avg_total_hp": 7545911
+    },
+    {
+      "waves": "161-170",
+      "avg_units": 480.0,
+      "min_units": 465,
+      "max_units": 500,
+      "avg_total_hp": 7793097
+    },
+    {
+      "waves": "171-180",
+      "avg_units": 529.5,
+      "min_units": 500,
+      "max_units": 550,
+      "avg_total_hp": 8182577
+    },
+    {
+      "waves": "181-190",
+      "avg_units": 572.5,
+      "min_units": 550,
+      "max_units": 600,
+      "avg_total_hp": 9255992
+    },
+    {
+      "waves": "191-200",
+      "avg_units": 623.5,
+      "min_units": 605,
+      "max_units": 645,
+      "avg_total_hp": 9906995
+    },
+    {
+      "waves": "201-210",
+      "avg_units": 665.0,
+      "min_units": 645,
+      "max_units": 685,
+      "avg_total_hp": 10816798
+    },
+    {
+      "waves": "211-220",
+      "avg_units": 691.0,
+      "min_units": 675,
+      "max_units": 720,
+      "avg_total_hp": 11274413
+    },
+    {
+      "waves": "221-230",
+      "avg_units": 728.5,
+      "min_units": 710,
+      "max_units": 740,
+      "avg_total_hp": 14264491
+    },
+    {
+      "waves": "231-240",
+      "avg_units": 747.0,
+      "min_units": 735,
+      "max_units": 755,
+      "avg_total_hp": 14747956
+    },
+    {
+      "waves": "241-250",
+      "avg_units": 769.5,
+      "min_units": 760,
+      "max_units": 785,
+      "avg_total_hp": 19540102
+    },
+    {
+      "waves": "251-260",
+      "avg_units": 793.0,
+      "min_units": 780,
+      "max_units": 810,
+      "avg_total_hp": 53531479
+    },
+    {
+      "waves": "261-270",
+      "avg_units": 808.5,
+      "min_units": 795,
+      "max_units": 825,
+      "avg_total_hp": 53716007
+    },
+    {
+      "waves": "271-280",
+      "avg_units": 831.0,
+      "min_units": 815,
+      "max_units": 840,
+      "avg_total_hp": 53947873
+    },
+    {
+      "waves": "281-290",
+      "avg_units": 848.5,
+      "min_units": 830,
+      "max_units": 865,
+      "avg_total_hp": 54208070
+    },
+    {
+      "waves": "291-300",
+      "avg_units": 865.5,
+      "min_units": 850,
+      "max_units": 880,
+      "avg_total_hp": 62220367
+    },
+    {
+      "waves": "301-310",
+      "avg_units": 886.5,
+      "min_units": 870,
+      "max_units": 900,
+      "avg_total_hp": 130311832
     }
   ],
   "notes": []

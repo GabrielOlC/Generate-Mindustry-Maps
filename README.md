@@ -2,9 +2,9 @@
 
 An 800×800 PvE survival map for **Mindustry v8 Build 159.7**, designed for **4–8 players** and the
 **Exogenesis Old** mod (`exogenesisold` 1.9.1). One player core sits in the centre. Five biomes surround
-it, and each one sends out the Exogenesis faction that matches its theme. **Ore nodes are re-rolled by
-the game every time the map is loaded.** Every ore can turn up in every biome, and each biome only
-*leans* toward the materials its faction's tech tree needs.
+it, each themed after an Exogenesis faction, and all five send the same endless waves. **Ore nodes are
+re-rolled by the game every time the map is loaded.** Every ore can turn up in every biome, and each
+biome only *leans* toward the materials its faction's tech tree needs.
 
 | | |
 |---|---|
@@ -58,7 +58,7 @@ The patches are active only while this map is loaded.
 
 ## 2. Layout
 
-| Direction | Biome | Spawn (x, y) | Enemy faction |
+| Direction | Biome | Spawn (x, y) | Theme faction |
 |---|---|---|---|
 | North | Frozen / cryofluid | (420, 778) | **Genesux**, the cold faction |
 | North-east | Semi-arid steppe | (730, 730) | **Titan host**: vanilla lines plus Exogenesis tier 6/7 |
@@ -67,7 +67,8 @@ The patches are active only while this map is loaded.
 | South-west | Volcano | (68, 68) | **Solran**, the molten faction |
 | Centre | Crossroads Basin | core at (400, 400) | — |
 
-Vanilla Serpulo units (dagger up to corvus) come out of **every** spawn.
+The theme faction shapes each biome's look and ore leanings. The waves are the same at every spawn
+(section 6).
 
 The map is built from three rings:
 
@@ -277,43 +278,61 @@ Flying units ignore all of this. They enter from the map edge in the direction o
 
 ## 6. Waves
 
-There are 96 spawn groups. Faction groups are pinned to their own spawn point. Vanilla groups spawn
-at all five, so their counts are multiplied by 5.
+The waves copy the owner's map **BIOME FFA** group for group: 125 spawn groups with the same units,
+start and end waves, growth and shields. One shielded locus group is pinned to the East spawn
+(BIOME FFA pins it to its south-east spawn). Every other group spawns at all five spawn points, so
+the counts below are five times the list. BIOME FFA has six spawn points, so this map sends 5/6 of
+its units. The wave timer and loadout stay this map's own (section 1).
+
+**Naval units.** This map has no water route to the core, so each naval unit in BIOME FFA is
+replaced by the land or air unit of the same tier and role:
+
+| BIOME FFA | Here | Rule |
+|---|---|---|
+| risso, minke, bryde | dagger, mace, fortress | Attack boats → dagger line, tier for tier |
+| cyerce, navanax | quasar, corvus | Support boats → nova line, tier for tier |
+| orca, balaenoptera | anvil, fornax | Exogenesis tier 6/7 of the same lines (omura → orca → balaenoptera, reign → anvil → fornax) |
+| apotheosis | war | Apex with the closest health and armour: 5.0M HP / 90 vs 6.0M HP / 100 (war flies) |
 
 | Phase | Waves (time) | What arrives |
 |---|---|---|
-| Landfall | 1–12 (0:07–0:35) | Vanilla tier 1: dagger, flare, crawler, nova |
-| Factions emerge | 8–30 | Faction tier 1–2 from each biome: b01/b02 Genesux, sol/heat/corona/molten, challenge/disrespect/dispute/strife, pteris/irises/guardian/aster, plus the north-east dust swarm |
-| Escalation | 28–56 (~1:15–2:25) | Tier 3–4: b03/b04, photosphere/magma/radiative/lava, combat/disagreement/disaccord, urtica/thymus, vanilla fortress → vela |
-| Siege | 56–89 (~2:25–3:50) | Tier 5–6: b05/b06, core/eruption/Fusion, hostile/assault/contention, anvil/toxicity/virgo, stella/T-nemesis/T-atlas/T-prometheus/twilight/hex, vanilla reign/eclipse/toxopid/corvus |
-| Apocalypse | 90+ (~3:50 →) | Tier 7: b07-atlas/universalis, collapse, bloodshed/battle, xenoct/fornax, nadir/colossus, plus apex bosses |
+| Opening | 1–19 (0:07–0:52) | crawler, dagger, nova, locus (plus a shielded locus from the East spawn), crawler packs, mace, horizon, fortress, quasar |
+| Escalation | 20–39 (0:54–1:42) | Exogenesis heat and drone-B, zenith, flare, precept, pulsar, atrax, shielded quasar and flare packs |
+| Siege | 40–99 (1:44–4:12) | conquer (boss at 40–41, then one every wave), tecta, b02-galileo, b01-orion, b04-oort boss, scepter boss, quad, arkyid, toxopid, anvil, vela, Fusion |
+| Late game | 100–199 (4:14–8:22) | scepter, antumbra, molten, colossus, xenoct, b05-centauri, bloodshed, hex, b06-eros, asgard, fornax, plus the boss rotation below |
+| Endgame | 200+ (8:24 →) | T-atlas and twilight, war boss from 250, sagittarius boss from 300 (12:34) |
 
-**Milestone guardians (boss status: ×1.5 health, ×1.3 damage).** At wave 25, a boss fortress comes
-from each spawn. At wave 50 it's a boss scepter, and at wave 75 a boss reign with 2,000 shields.
-At wave 90 each faction sends a **Herald**: b06-eros, Fusion, assault, virgo and T-prometheus,
-each with boss status and 5,000 shields.
+**Bosses (boss status: ×1.5 health, ×1.3 damage).** One per spawn point each time:
 
-**Apex bosses.** Each one has boss status and repeats every 30 waves. Its shields grow every wave
-after its first appearance.
+| Boss | Waves | Notes |
+|---|---|---|
+| conquer | 40–41 | |
+| b04-oort | 50–51 | |
+| scepter | 54, then every 33 | |
+| molten | every wave from 112 | |
+| colossus | every wave from 120 | 287,000 HP, flying carrier |
+| vela | 130, then every 16 | 500 shields, +89 per wave |
+| b05-centauri | every wave from 140 | 38,400 HP |
+| arkyid | 145, then every 16 | 500 shields, +89 per wave |
+| antumbra | 186, then every 33 | |
+| war (for apotheosis) | every wave from 250 | 5,000,000 HP, 90 armour, flying |
+| sagittarius | every wave from 300 | 10,000,000 HP, 144 armour |
 
-| Boss | First wave | From | Base stats | Shield growth |
-|---|---|---|---|---|
-| sagittarius | 100 (~4:15) | North | 10,000,000 HP, 144 armour | +3,000 per wave |
-| xenoct ×2 | 105 | West | 210,000 HP each | +1,500 per wave |
-| arcturus | 110 (~4:40) | South-west | 5,300,000 HP, 460 armour | +3,000 per wave |
-| colossus | 115 | North-east | 287,000 HP, flying carrier | +2,000 per wave |
-| war | 120 (~5:05) | East | 5,000,000 HP, 90 armour, flying | +3,000 per wave |
+Most groups were made by the game's own wave generator: they are capped at 13 or 6 units and gain
+22.3 shields per wave. The rest were added by hand. Two groups never spawn, in BIOME FFA either,
+because they end before they begin: the navanax boss (corvus here), set to run from wave 70 to wave 1,
+and T-prometheus, from wave 100 to wave 90. They are kept as they are so the list matches.
 
 **Difficulty curve.** Averages per 10 waves, with total health including shields and the boss
 multiplier:
 
-| Waves | 1–10 | 11–20 | 21–30 | 31–40 | 41–50 | 51–60 | 61–70 | 71–80 | 81–90 | 91–100 | 101–110 | 111–120 | 121–130 | 141–150 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Units per wave | 19 | 59 | 88 | 84 | 68 | 56 | 45 | 37 | 37 | 42 | 46 | 53 | 49 | 56 |
-| Total HP per wave | 3.5k | 20k | 44k | 69k | 117k | 195k | 301k | 499k | 727k | 2.39M | 2.02M | 2.22M | 2.85M | 2.76M |
+| Waves | 1–10 | 11–20 | 21–30 | 31–40 | 41–50 | 61–70 | 91–100 | 111–120 | 141–150 | 191–200 | 241–250 | 251–260 | 301–310 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Units per wave | 19 | 75 | 134 | 196 | 264 | 270 | 295 | 315 | 406 | 624 | 770 | 793 | 887 |
+| Total HP per wave | 5.1k | 38k | 88k | 199k | 468k | 693k | 1.75M | 2.20M | 7.14M | 9.91M | 19.5M | 53.5M | 130M |
 
-Early waves are many weak units. Later waves are fewer but much tougher, and shields keep growing,
-so endless play eventually overwhelms any defence.
+Unit counts climb all game: about 300 per wave by wave 100 and almost 900 by wave 300, and shields
+grow every wave. Total health jumps when war (250) and sagittarius (300) arrive.
 
 **Without the mod.** Exogenesis unit names fall back to **dagger** in the game's wave loader. If the
 waves look like endless daggers, Exogenesis Old is not enabled.
@@ -393,11 +412,10 @@ it averages (20–50 s each).
 - Mod blocks are stored under their in-game names (`exogenesisold-pyromagma`, ...), because the game
   does not add the mod prefix by itself.
 - Name audit: all 89 block names in the block table, the 28 block names used by the ore filters,
-  the two patched blocks with their field and attribute, all 82 wave unit types (62 from Exogenesis
+  the two patched blocks with their field and attribute, all 44 wave unit types (21 from Exogenesis
   Old), the `boss` effect and the loadout items were checked against v159.7's `Blocks`, `Block`,
   `Attribute`, `UnitTypes`, `StatusEffects`, `Items` and filter classes, and against the mod's
-  `content/` folder. All five
-  pinned spawn positions sit on spawn tiles.
+  `content/` folder. The one pinned spawn position (East) sits on a spawn tile.
 - **Not tested in the game itself.** No game client was run during generation. Validation mirrors
   the game's own reader and source code. Please confirm once in the game: the map loads, the ores
   differ between two loads, and a thermal generator can be placed in the middle of a lava river and
@@ -407,7 +425,8 @@ it averages (20–50 s each).
 
 - Mindustry source code at release **v159.7**: `SaveIO`, `SaveVersion`, `Save13`,
   `SaveFileReader`, `MapIO`, `Maps`, `BuildingComp`, `CoreBlock`, `Rules`, `SpawnGroup`,
-  `WaveSpawner`, `Pathfinder`, `Blocks`, `UnitTypes` and `Items`. For the ores: `World`
+  `WaveSpawner`, `Waves` (wave generator), `StatusEffects`, `Pathfinder`, `Blocks`, `UnitTypes` and
+  `Items`. For the ores: `World`
   (`FilterContext`), `Map.filters`, `JsonIO`, `GenerateFilter`, `OreFilter`, `NoiseFilter` and
   `MapInfoDialog`. For the lava: `Build.validPlace`, `Block`, `Floor`, `ThermalGenerator`,
   `DataPatcher`, `DataManager`, `PatchAsset`, `DataAssetType`, `NetworkIO` and `Logic.reset`.
@@ -416,5 +435,6 @@ it averages (20–50 s each).
 - Arc library (JSON/UBJSON, `Simplex` noise, `Strings.camelize`) at commit `208a754044`, the
   version pinned by v159.7: <https://github.com/Anuken/Arc>
 - Exogenesis Old by AureusStratus. From `mod.json`: name `exogenesisold`, version 1.9.1,
-  minGameVersion 158. Unit and terrain definitions are in `content/`.
-  <https://github.com/AureusStratus/ExoGenesis>
+  minGameVersion 158. Unit and terrain definitions are in `content/`; the naval replacements follow
+  each unit's `research.parent`. <https://github.com/AureusStratus/ExoGenesis>
+- BIOME FFA, the owner's map whose wave list section 6 copies (125 spawn groups, six spawn points).
