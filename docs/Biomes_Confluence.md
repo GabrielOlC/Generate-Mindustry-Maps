@@ -8,9 +8,9 @@ in the west and **Rimeflow** (cryofluid) from the frozen north.
 
 | | |
 |---|---|
-| Map file | `maps\Biomes Confluence.msav` (save format 13) |
+| Map file | `maps\Biomes Confluence (Eradication).msav` (save format 13); other difficulties alongside, Normal without a suffix |
 | Size | 800 × 800 tiles (640,000) |
-| Mode | Survival / PvE, endless waves (same rules and wave list as Biomes Extended Remastered) |
+| Mode | Survival / PvE, endless waves, five difficulty levels (same rules and wave list as Biomes Extended Remastered) |
 | Player core | Core: Foundation at the centre (tiles 399–402 × 399–402), beside the lagoon |
 | Enemy spawns | 5 spawn points, one per biome; the forest and frozen spawns are **harbours** on water |
 | Naval routes | Greenwater and Rimeflow into the lagoon; boats come to rest 9.5 tiles from the core |
@@ -28,14 +28,16 @@ marks the core. North is up. The ore patches are **one example roll**; every gam
 
 ## 1. Play
 
-Turn on **Exogenesis Old**, then import `maps\Biomes Confluence.msav` in the editor (or copy it into
-the game's `maps` folder) and start it as **Survival**. The rules are the same as on Biomes Extended
-Remastered:
-- 7 minutes to set up before wave 1, then one wave every 150 s, endless;
+Turn on **Exogenesis Old**, then import the file of the difficulty you want, for example
+`maps\Biomes Confluence (Eradication).msav`, in the editor (or copy it into the game's `maps` folder) and
+start it as **Survival**. The rules are the same as on Biomes Extended Remastered:
+- on Normal, 7 minutes to set up before wave 1, then one wave every 150 s, endless (other
+  difficulties scale both, see section 5);
 - a unit cap of 24 plus the core bonus;
 - a starting loadout of 700 copper and 300 lead.
 
-To regenerate the map: `python wf_generate.py --map biomes-confluence` (README section 8).
+To regenerate the map: `python wf_generate.py --map biomes-confluence [--difficulty <level>]`. Leaving
+the difficulty out gives Eradication, the hardest (README section 8).
 
 ---
 
@@ -185,12 +187,24 @@ spawn groups (125 + 8 naval copies). The naval groups:
 As in BIOME FFA, the navanax boss never spawns, because its end wave lies before its first.
 
 Boats come from 2 spawns instead of the 5 their land stand-ins use on Biomes Extended Remastered, so
-waves here are slightly smaller:
+waves here are slightly smaller. On Normal:
 
 | Waves | 1–10 | 11–20 | 21–30 | 31–40 | 41–50 | 61–70 | 91–100 | 111–120 | 141–150 | 191–200 | 241–250 | 251–260 | 301–310 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Units per wave | 19 | 72 | 123 | 184 | 252 | 252 | 268 | 288 | 371 | 573 | 709 | 728 | 812 |
 | Total HP per wave | 5.1k | 37k | 83k | 193k | 462k | 683k | 1.48M | 1.93M | 6.87M | 9.04M | 16.7M | 33.2M | 110M |
+
+**Difficulty levels.** The same five levels as on Biomes Extended Remastered (README section 6): the
+game's own enemy health, enemy unit and wave timer multipliers. The unit multiplier applies to boats
+too (two apotheosis per harbour on Eradication).
+
+| Level | Enemy health | Enemy units | Between waves | Before wave 1 | Units / total HP per wave, waves 1–10 | 41–50 | 91–100 | 141–150 | 291–300 |
+|---|---|---|---|---|---|---|---|---|---|
+| Casual | ×0.5 | ×0.5 | 300 s | 14 min | 16 / 2.1k | 167 / 174k | 178 / 599k | 249 / 3.2M | 463 / 18M |
+| Easy | ×1 | ×0.75 | 225 s | 10.5 min | 17 / 4.5k | 208 / 408k | 232 / 1.3M | 304 / 6.6M | 630 / 40M |
+| Normal | ×1 | ×1 | 150 s | 7 min | 19 / 5.1k | 252 / 462k | 268 / 1.5M | 371 / 6.9M | 791 / 42M |
+| Hard | ×1.25 | ×1.5 | 120 s | 5.6 min | 38 / 13k | 440 / 1.0M | 469 / 3.4M | 629 / 14M | 1,272 / 67M |
+| Eradication | ×1.5 | ×2 | 90 s | 4.2 min | 43 / 17k | 530 / 1.4M | 565 / 4.6M | 776 / 21M | 1,633 / 132M |
 
 ---
 

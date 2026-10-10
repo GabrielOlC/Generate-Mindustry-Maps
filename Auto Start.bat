@@ -15,7 +15,7 @@ REM  To reuse in another project, change only the SCRIPT, AUTO_RUN and KEEP_OPEN
 REM ============================================================
 
 REM Change python file Here (only required change!)
-set "SCRIPT=generate_map.py"
+set "SCRIPT=wf_generate.py"
 
 REM AUTO_RUN: 1 = run right away, 0 = stop first so you can add arguments (like --seed)
 set "AUTO_RUN=1"

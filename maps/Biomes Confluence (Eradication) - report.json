@@ -1,6 +1,13 @@
 {
-  "map": "Biomes Confluence",
+  "map": "Biomes Confluence (Eradication)",
   "map_type": "biomes-confluence",
+  "difficulty": {
+    "label": "Eradication",
+    "health": 1.5,
+    "spawn": 2.0,
+    "waveTime": 0.6,
+    "key": "eradication"
+  },
   "seed": 2026,
   "size": [
     800,
@@ -8,9 +15,9 @@
   ],
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
-  "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Confluence.msav",
-  "file_bytes": 102984,
-  "uncompressed_bytes": 375297,
+  "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Confluence (Eradication).msav",
+  "file_bytes": 103135,
+  "uncompressed_bytes": 377007,
   "spawns": {
     "North spawn (Frozen, harbour)": [
       380,
@@ -327,204 +334,204 @@
     }
   },
   "ore_rolls": {
-    "rolls": 5,
-    "patches_per_game": 1272,
+    "rolls": 1,
+    "patches_per_game": 1309,
     "patch_tiles": {
-      "median": 34,
+      "median": 31,
       "p10": 10,
-      "p90": 89,
+      "p90": 84,
       "smallest_counted": 6
     },
     "patches_per_biome": {
-      "Desert (E)": 321,
-      "Semi-arid (NE)": 171,
-      "Frozen (N)": 206,
-      "Forest (W)": 203,
-      "Volcano (SW)": 294,
-      "Confluence Basin": 78
+      "Desert (E)": 327,
+      "Semi-arid (NE)": 185,
+      "Frozen (N)": 209,
+      "Forest (W)": 207,
+      "Volcano (SW)": 310,
+      "Confluence Basin": 71
     },
     "patches": {
       "Desert (E)": {
-        "ore-scrap": 45,
-        "ore-urbium": 36,
-        "ore-copper": 31,
-        "ore-coal": 30,
-        "ore-lead": 27,
-        "ore-titanium": 25,
-        "ore-thorium": 21,
-        "ore-stellar-steel": 21,
-        "ore-siradamite": 19,
-        "ore-tungsten": 19,
-        "ore-dytrix": 17,
-        "ore-beryllium": 15,
-        "siratla-crystal": 14
+        "ore-scrap": 51,
+        "ore-copper": 40,
+        "ore-urbium": 33,
+        "ore-lead": 30,
+        "ore-thorium": 28,
+        "ore-coal": 27,
+        "ore-titanium": 23,
+        "ore-tungsten": 22,
+        "ore-siradamite": 17,
+        "ore-stellar-steel": 17,
+        "ore-dytrix": 15,
+        "ore-beryllium": 13,
+        "siratla-crystal": 11
       },
       "Semi-arid (NE)": {
-        "ore-titanium": 24,
+        "ore-titanium": 29,
         "ore-dytrix": 20,
-        "ore-copper": 15,
-        "ore-thorium": 14,
-        "ore-lead": 14,
-        "ore-tungsten": 14,
-        "ore-coal": 13,
-        "ore-beryllium": 12,
-        "ore-scrap": 12,
-        "ore-siradamite": 11,
-        "ore-urbium": 10,
+        "ore-lead": 19,
+        "ore-copper": 16,
+        "ore-thorium": 15,
+        "ore-coal": 15,
+        "ore-scrap": 15,
+        "ore-beryllium": 14,
+        "ore-tungsten": 13,
+        "ore-siradamite": 10,
         "ore-stellar-steel": 9,
+        "ore-urbium": 6,
         "siratla-crystal": 4
       },
       "Frozen (N)": {
-        "ore-titanium": 35,
-        "ore-siradamite": 22,
-        "ore-copper": 17,
-        "ore-stellar-steel": 17,
-        "ore-lead": 15,
-        "ore-urbium": 14,
-        "ore-coal": 13,
-        "ore-thorium": 13,
-        "ore-dytrix": 13,
+        "ore-copper": 30,
+        "ore-titanium": 25,
+        "ore-siradamite": 21,
+        "ore-lead": 18,
+        "ore-coal": 15,
+        "ore-stellar-steel": 15,
+        "ore-beryllium": 15,
+        "ore-thorium": 14,
+        "ore-scrap": 14,
         "siratla-crystal": 13,
-        "ore-beryllium": 12,
-        "ore-scrap": 12,
-        "ore-tungsten": 10
+        "ore-urbium": 11,
+        "ore-dytrix": 10,
+        "ore-tungsten": 8
       },
       "Forest (W)": {
-        "ore-coal": 30,
-        "ore-lead": 24,
-        "ore-titanium": 23,
-        "ore-copper": 16,
-        "ore-thorium": 15,
-        "ore-siradamite": 14,
-        "ore-stellar-steel": 13,
-        "ore-tungsten": 13,
-        "ore-scrap": 13,
+        "ore-coal": 34,
+        "ore-titanium": 22,
+        "ore-lead": 20,
+        "ore-scrap": 19,
+        "ore-copper": 17,
+        "ore-siradamite": 15,
+        "ore-beryllium": 15,
+        "ore-thorium": 13,
+        "ore-stellar-steel": 12,
         "ore-urbium": 12,
-        "ore-beryllium": 11,
-        "ore-dytrix": 10,
-        "siratla-crystal": 8
+        "ore-tungsten": 11,
+        "siratla-crystal": 9,
+        "ore-dytrix": 8
       },
       "Volcano (SW)": {
+        "ore-beryllium": 45,
+        "ore-thorium": 40,
         "ore-tungsten": 36,
-        "ore-thorium": 35,
-        "ore-beryllium": 34,
-        "ore-lead": 27,
-        "ore-copper": 25,
-        "ore-coal": 21,
-        "ore-scrap": 20,
-        "ore-titanium": 20,
-        "ore-siradamite": 17,
-        "ore-stellar-steel": 17,
-        "ore-dytrix": 16,
-        "ore-urbium": 14,
-        "siratla-crystal": 11
+        "ore-copper": 29,
+        "ore-lead": 26,
+        "ore-titanium": 26,
+        "ore-scrap": 21,
+        "ore-stellar-steel": 21,
+        "ore-coal": 20,
+        "ore-siradamite": 15,
+        "ore-urbium": 12,
+        "ore-dytrix": 10,
+        "siratla-crystal": 9
       },
       "Confluence Basin": {
-        "ore-copper": 16,
-        "ore-lead": 14,
-        "ore-titanium": 7,
-        "ore-coal": 6,
+        "ore-copper": 17,
+        "ore-lead": 10,
+        "ore-urbium": 7,
+        "ore-coal": 7,
+        "ore-titanium": 6,
         "ore-scrap": 5,
         "ore-beryllium": 5,
-        "ore-urbium": 4,
-        "ore-siradamite": 4,
-        "ore-stellar-steel": 4,
-        "ore-tungsten": 4,
         "ore-thorium": 3,
-        "ore-dytrix": 3,
+        "ore-tungsten": 3,
+        "ore-dytrix": 2,
+        "ore-siradamite": 2,
+        "ore-stellar-steel": 2,
         "siratla-crystal": 2
       }
     },
     "ore_tiles": {
       "Desert (E)": {
-        "ore-scrap": 1702,
-        "ore-urbium": 1554,
-        "ore-copper": 1315,
-        "ore-stellar-steel": 1106,
-        "ore-tungsten": 1105,
-        "ore-lead": 1091,
-        "ore-titanium": 1053,
-        "ore-coal": 1029,
-        "ore-thorium": 1015,
-        "ore-siradamite": 940,
-        "ore-beryllium": 923,
-        "ore-dytrix": 891,
-        "siratla-crystal": 462
+        "ore-scrap": 1656,
+        "ore-copper": 1512,
+        "ore-thorium": 1502,
+        "ore-urbium": 1501,
+        "ore-tungsten": 1358,
+        "ore-lead": 1044,
+        "ore-titanium": 1036,
+        "ore-coal": 935,
+        "ore-stellar-steel": 827,
+        "ore-dytrix": 780,
+        "ore-siradamite": 677,
+        "ore-beryllium": 597,
+        "siratla-crystal": 289
       },
       "Semi-arid (NE)": {
-        "ore-titanium": 899,
-        "ore-beryllium": 852,
-        "ore-dytrix": 843,
-        "ore-thorium": 841,
-        "ore-tungsten": 777,
-        "ore-coal": 624,
-        "ore-lead": 622,
-        "ore-siradamite": 619,
-        "ore-copper": 581,
-        "ore-scrap": 566,
+        "ore-titanium": 982,
+        "ore-dytrix": 959,
+        "ore-beryllium": 923,
+        "ore-siradamite": 830,
+        "ore-lead": 710,
+        "ore-tungsten": 677,
+        "ore-coal": 660,
+        "ore-scrap": 590,
+        "ore-thorium": 549,
         "ore-stellar-steel": 511,
-        "ore-urbium": 465,
-        "siratla-crystal": 118
+        "ore-copper": 488,
+        "ore-urbium": 186,
+        "siratla-crystal": 59
       },
       "Frozen (N)": {
-        "ore-titanium": 1270,
-        "ore-siradamite": 991,
-        "ore-urbium": 799,
-        "ore-stellar-steel": 721,
-        "ore-dytrix": 656,
-        "ore-tungsten": 639,
-        "ore-copper": 632,
-        "ore-thorium": 604,
-        "ore-scrap": 601,
-        "ore-beryllium": 538,
-        "ore-coal": 529,
-        "ore-lead": 514,
-        "siratla-crystal": 314
+        "ore-copper": 1149,
+        "ore-siradamite": 787,
+        "ore-tungsten": 744,
+        "ore-titanium": 737,
+        "ore-stellar-steel": 704,
+        "ore-scrap": 694,
+        "ore-lead": 613,
+        "ore-dytrix": 579,
+        "ore-coal": 575,
+        "ore-thorium": 575,
+        "ore-beryllium": 477,
+        "ore-urbium": 380,
+        "siratla-crystal": 300
       },
       "Forest (W)": {
-        "ore-coal": 1115,
-        "ore-lead": 939,
-        "ore-titanium": 799,
-        "ore-tungsten": 702,
-        "ore-siradamite": 649,
-        "ore-stellar-steel": 648,
-        "ore-thorium": 639,
-        "ore-copper": 608,
-        "ore-beryllium": 587,
-        "ore-scrap": 570,
-        "ore-urbium": 527,
-        "ore-dytrix": 434,
-        "siratla-crystal": 189
+        "ore-coal": 1539,
+        "ore-scrap": 964,
+        "ore-beryllium": 826,
+        "ore-titanium": 821,
+        "ore-lead": 763,
+        "ore-stellar-steel": 701,
+        "ore-siradamite": 608,
+        "ore-tungsten": 551,
+        "ore-copper": 547,
+        "ore-thorium": 434,
+        "ore-dytrix": 402,
+        "ore-urbium": 304,
+        "siratla-crystal": 241
       },
       "Volcano (SW)": {
-        "ore-tungsten": 1729,
-        "ore-thorium": 1486,
-        "ore-beryllium": 1393,
-        "ore-copper": 1026,
-        "ore-lead": 987,
-        "ore-siradamite": 964,
-        "ore-coal": 931,
-        "ore-titanium": 889,
-        "ore-scrap": 870,
-        "ore-stellar-steel": 865,
-        "ore-urbium": 822,
-        "ore-dytrix": 793,
-        "siratla-crystal": 404
+        "ore-beryllium": 1549,
+        "ore-thorium": 1498,
+        "ore-tungsten": 1474,
+        "ore-copper": 1315,
+        "ore-lead": 1138,
+        "ore-stellar-steel": 935,
+        "ore-scrap": 932,
+        "ore-urbium": 892,
+        "ore-coal": 883,
+        "ore-titanium": 861,
+        "ore-siradamite": 765,
+        "ore-dytrix": 472,
+        "siratla-crystal": 338
       },
       "Confluence Basin": {
-        "ore-copper": 631,
-        "ore-lead": 491,
-        "ore-titanium": 344,
-        "ore-beryllium": 332,
-        "ore-siradamite": 269,
-        "ore-scrap": 243,
-        "ore-coal": 239,
-        "ore-urbium": 217,
-        "ore-stellar-steel": 217,
-        "ore-tungsten": 201,
-        "ore-dytrix": 169,
-        "ore-thorium": 133,
-        "siratla-crystal": 82
+        "ore-copper": 561,
+        "ore-urbium": 419,
+        "ore-coal": 326,
+        "ore-lead": 294,
+        "ore-titanium": 285,
+        "ore-beryllium": 263,
+        "ore-scrap": 228,
+        "ore-stellar-steel": 178,
+        "ore-thorium": 175,
+        "ore-siradamite": 152,
+        "ore-dytrix": 144,
+        "siratla-crystal": 96,
+        "ore-tungsten": 83
       }
     }
   },
@@ -895,8 +902,8 @@
     "waveTimer": true,
     "waveSending": true,
     "waitEnemies": false,
-    "waveSpacing": 9000.0,
-    "initialWaveSpacing": 25200.0,
+    "waveSpacing": 5400.0,
+    "initialWaveSpacing": 15120.0,
     "winWave": 0,
     "attackMode": false,
     "pvp": false,
@@ -913,319 +920,324 @@
         "item": "lead",
         "amount": 300
       }
-    ]
+    ],
+    "teams": {
+      "2": {
+        "unitHealthMultiplier": 1.5
+      }
+    }
   },
   "spawn_groups": 133,
-  "rules_json_bytes": 13176,
+  "rules_json_bytes": 14769,
   "wave_summary": [
     {
       "wave": 1,
-      "units": 5,
-      "total_hp": 750,
-      "toughest": "5x crawler"
+      "units": 10,
+      "total_hp": 2250,
+      "toughest": "10x crawler"
     },
     {
       "wave": 10,
-      "units": 36,
-      "total_hp": 20302,
-      "toughest": "6x locus, 15x crawler, 5x dagger, 10x nova"
+      "units": 82,
+      "total_hp": 63601,
+      "toughest": "12x locus, 30x crawler, 15x dagger, 25x nova"
     },
     {
       "wave": 20,
-      "units": 90,
-      "total_hp": 50448,
-      "toughest": "6x locus, 5x heat, 2x bryde, 10x fortress"
+      "units": 185,
+      "total_hp": 152470,
+      "toughest": "12x locus, 10x heat, 4x bryde, 20x fortress"
     },
     {
       "wave": 30,
-      "units": 149,
-      "total_hp": 129069,
-      "toughest": "10x precept, 6x locus, 5x heat, 2x bryde"
+      "units": 319,
+      "total_hp": 412221,
+      "toughest": "20x precept, 18x locus, 10x heat, 4x bryde"
     },
     {
       "wave": 40,
-      "units": 230,
-      "total_hp": 435930,
-      "toughest": "5x conquer (boss), 5x tecta, 20x precept, 12x locus"
+      "units": 474,
+      "total_hp": 1318501,
+      "toughest": "10x conquer (boss), 10x tecta, 40x precept, 24x locus"
     },
     {
       "wave": 50,
-      "units": 265,
-      "total_hp": 591001,
-      "toughest": "5x conquer, 5x b04-oort (boss), 10x tecta, 30x precept"
+      "units": 567,
+      "total_hp": 1820374,
+      "toughest": "10x conquer, 10x b04-oort (boss), 20x tecta, 60x precept"
     },
     {
       "wave": 60,
-      "units": 270,
-      "total_hp": 625790,
-      "toughest": "5x conquer, 10x tecta, 5x quad, 40x precept"
+      "units": 562,
+      "total_hp": 1906020,
+      "toughest": "10x conquer, 20x tecta, 10x quad, 80x precept"
     },
     {
       "wave": 75,
-      "units": 244,
-      "total_hp": 853473,
-      "toughest": "5x conquer, 5x toxopid, 10x arkyid, 10x tecta"
+      "units": 500,
+      "total_hp": 2587153,
+      "toughest": "10x conquer, 10x toxopid, 20x arkyid, 20x tecta"
     },
     {
       "wave": 90,
-      "units": 263,
-      "total_hp": 1454315,
-      "toughest": "2x orca, 5x Fusion, 5x conquer, 5x toxopid"
+      "units": 553,
+      "total_hp": 4517241,
+      "toughest": "4x orca, 10x Fusion, 10x conquer, 10x toxopid"
     },
     {
       "wave": 100,
-      "units": 263,
-      "total_hp": 1558577,
-      "toughest": "2x orca, 5x Fusion, 5x conquer, 5x toxopid"
+      "units": 565,
+      "total_hp": 4897959,
+      "toughest": "4x orca, 10x Fusion, 10x conquer, 10x toxopid"
     },
     {
       "wave": 120,
-      "units": 318,
-      "total_hp": 4089095,
-      "toughest": "5x colossus (boss), 2x orca, 5x Fusion, 5x conquer"
+      "units": 670,
+      "total_hp": 12583589,
+      "toughest": "10x colossus (boss), 4x orca, 10x Fusion, 10x conquer"
     },
     {
       "wave": 150,
-      "units": 384,
-      "total_hp": 7235608,
-      "toughest": "5x colossus (boss), 5x xenoct, 5x bloodshed, 5x hex"
+      "units": 792,
+      "total_hp": 22336577,
+      "toughest": "10x colossus (boss), 10x xenoct, 10x bloodshed, 10x hex"
     },
     {
       "wave": 200,
-      "units": 594,
-      "total_hp": 9813832,
-      "toughest": "5x colossus (boss), 5x xenoct, 5x bloodshed, 2x balaenoptera"
+      "units": 1235,
+      "total_hp": 35957840,
+      "toughest": "15x colossus (boss), 15x xenoct, 15x bloodshed, 4x balaenoptera"
     },
     {
       "wave": 250,
-      "units": 712,
-      "total_hp": 33069348,
-      "toughest": "2x apotheosis (boss), 10x colossus (boss), 10x xenoct, 10x bloodshed"
+      "units": 1458,
+      "total_hp": 100534591,
+      "toughest": "4x apotheosis (boss), 20x colossus (boss), 20x xenoct, 20x bloodshed"
     },
     {
       "wave": 300,
-      "units": 795,
-      "total_hp": 109843417,
-      "toughest": "5x sagittarius (boss), 2x apotheosis (boss), 10x colossus (boss), 10x xenoct"
+      "units": 1639,
+      "total_hp": 335900633,
+      "toughest": "10x sagittarius (boss), 4x apotheosis (boss), 25x colossus (boss), 25x xenoct"
     }
   ],
   "wave_curve": [
     {
       "waves": "1-10",
-      "avg_units": 19.1,
-      "min_units": 5,
-      "max_units": 36,
-      "avg_total_hp": 5111
+      "avg_units": 42.7,
+      "min_units": 10,
+      "max_units": 82,
+      "avg_total_hp": 16719
     },
     {
       "waves": "11-20",
-      "avg_units": 72.1,
-      "min_units": 41,
-      "max_units": 98,
-      "avg_total_hp": 36706
+      "avg_units": 152.2,
+      "min_units": 92,
+      "max_units": 211,
+      "avg_total_hp": 113483
     },
     {
       "waves": "21-30",
-      "avg_units": 123.3,
-      "min_units": 100,
-      "max_units": 149,
-      "avg_total_hp": 83120
+      "avg_units": 259.4,
+      "min_units": 210,
+      "max_units": 319,
+      "avg_total_hp": 274872
     },
     {
       "waves": "31-40",
-      "avg_units": 183.6,
-      "min_units": 139,
-      "max_units": 235,
-      "avg_total_hp": 192893
+      "avg_units": 382.4,
+      "min_units": 289,
+      "max_units": 489,
+      "avg_total_hp": 608586
     },
     {
       "waves": "41-50",
-      "avg_units": 251.5,
-      "min_units": 230,
-      "max_units": 275,
-      "avg_total_hp": 461859
+      "avg_units": 529.9,
+      "min_units": 484,
+      "max_units": 574,
+      "avg_total_hp": 1427712
     },
     {
       "waves": "51-60",
-      "avg_units": 231.6,
-      "min_units": 205,
-      "max_units": 270,
-      "avg_total_hp": 535879
+      "avg_units": 491.6,
+      "min_units": 442,
+      "max_units": 562,
+      "avg_total_hp": 1667546
     },
     {
       "waves": "61-70",
-      "avg_units": 252.0,
-      "min_units": 230,
-      "max_units": 280,
-      "avg_total_hp": 683034
+      "avg_units": 522.0,
+      "min_units": 472,
+      "max_units": 582,
+      "avg_total_hp": 2109745
     },
     {
       "waves": "71-80",
-      "avg_units": 255.3,
-      "min_units": 239,
-      "max_units": 274,
-      "avg_total_hp": 889470
+      "avg_units": 530.2,
+      "min_units": 495,
+      "max_units": 575,
+      "avg_total_hp": 2747901
     },
     {
       "waves": "81-90",
-      "avg_units": 262.3,
-      "min_units": 248,
-      "max_units": 286,
-      "avg_total_hp": 1166384
+      "avg_units": 543.8,
+      "min_units": 516,
+      "max_units": 591,
+      "avg_total_hp": 3594510
     },
     {
       "waves": "91-100",
-      "avg_units": 267.5,
-      "min_units": 253,
-      "max_units": 278,
-      "avg_total_hp": 1475826
+      "avg_units": 565.1,
+      "min_units": 543,
+      "max_units": 600,
+      "avg_total_hp": 4640108
     },
     {
       "waves": "101-110",
-      "avg_units": 271.7,
-      "min_units": 258,
-      "max_units": 283,
-      "avg_total_hp": 1609210
+      "avg_units": 575.8,
+      "min_units": 550,
+      "max_units": 605,
+      "avg_total_hp": 5045390
     },
     {
       "waves": "111-120",
-      "avg_units": 288.0,
-      "min_units": 273,
-      "max_units": 318,
-      "avg_total_hp": 1932980
+      "avg_units": 613.0,
+      "min_units": 575,
+      "max_units": 670,
+      "avg_total_hp": 6089825
     },
     {
       "waves": "121-130",
-      "avg_units": 325.6,
-      "min_units": 302,
-      "max_units": 362,
-      "avg_total_hp": 4776040
+      "avg_units": 691.2,
+      "min_units": 641,
+      "max_units": 766,
+      "avg_total_hp": 14701640
     },
     {
       "waves": "131-140",
-      "avg_units": 348.5,
-      "min_units": 337,
-      "max_units": 362,
-      "avg_total_hp": 5263879
+      "avg_units": 730.8,
+      "min_units": 701,
+      "max_units": 756,
+      "avg_total_hp": 16132551
     },
     {
       "waves": "141-150",
-      "avg_units": 370.7,
-      "min_units": 347,
-      "max_units": 384,
-      "avg_total_hp": 6867284
+      "avg_units": 776.3,
+      "min_units": 723,
+      "max_units": 810,
+      "avg_total_hp": 21334573
     },
     {
       "waves": "151-160",
-      "avg_units": 400.9,
-      "min_units": 374,
-      "max_units": 436,
-      "avg_total_hp": 7269945
+      "avg_units": 837.9,
+      "min_units": 777,
+      "max_units": 899,
+      "avg_total_hp": 22566678
     },
     {
       "waves": "161-170",
-      "avg_units": 441.0,
-      "min_units": 426,
-      "max_units": 461,
-      "avg_total_hp": 7516327
+      "avg_units": 915.8,
+      "min_units": 879,
+      "max_units": 951,
+      "avg_total_hp": 23630979
     },
     {
       "waves": "171-180",
-      "avg_units": 487.8,
-      "min_units": 461,
-      "max_units": 508,
-      "avg_total_hp": 7847295
+      "avg_units": 1008.5,
+      "min_units": 958,
+      "max_units": 1045,
+      "avg_total_hp": 28699616
     },
     {
       "waves": "181-190",
-      "avg_units": 525.4,
-      "min_units": 505,
-      "max_units": 549,
-      "avg_total_hp": 8393895
+      "avg_units": 1087.9,
+      "min_units": 1044,
+      "max_units": 1128,
+      "avg_total_hp": 30784308
     },
     {
       "waves": "191-200",
-      "avg_units": 572.5,
-      "min_units": 554,
-      "max_units": 594,
-      "avg_total_hp": 9042205
+      "avg_units": 1188.6,
+      "min_units": 1138,
+      "max_units": 1235,
+      "avg_total_hp": 33576677
     },
     {
       "waves": "201-210",
-      "avg_units": 614.0,
-      "min_units": 594,
-      "max_units": 634,
-      "avg_total_hp": 9952008
+      "avg_units": 1276.1,
+      "min_units": 1240,
+      "max_units": 1312,
+      "avg_total_hp": 36297938
     },
     {
       "waves": "211-220",
-      "avg_units": 640.0,
-      "min_units": 624,
-      "max_units": 669,
-      "avg_total_hp": 10409623
+      "avg_units": 1331.0,
+      "min_units": 1299,
+      "max_units": 1384,
+      "avg_total_hp": 37386570
     },
     {
       "waves": "221-230",
-      "avg_units": 672.1,
-      "min_units": 656,
-      "max_units": 683,
-      "avg_total_hp": 13396869
+      "avg_units": 1378.1,
+      "min_units": 1346,
+      "max_units": 1398,
+      "avg_total_hp": 42171566
     },
     {
       "waves": "231-240",
-      "avg_units": 687.3,
-      "min_units": 675,
-      "max_units": 695,
-      "avg_total_hp": 13878901
+      "avg_units": 1403.6,
+      "min_units": 1380,
+      "max_units": 1427,
+      "avg_total_hp": 43183867
     },
     {
       "waves": "241-250",
-      "avg_units": 709.2,
-      "min_units": 700,
-      "max_units": 725,
-      "avg_total_hp": 16720892
+      "avg_units": 1448.5,
+      "min_units": 1427,
+      "max_units": 1474,
+      "avg_total_hp": 50988359
     },
     {
       "waves": "251-260",
-      "avg_units": 727.9,
-      "min_units": 714,
-      "max_units": 744,
-      "avg_total_hp": 33160393
+      "avg_units": 1489.8,
+      "min_units": 1462,
+      "max_units": 1522,
+      "avg_total_hp": 100799479
     },
     {
       "waves": "261-270",
-      "avg_units": 742.5,
-      "min_units": 729,
-      "max_units": 759,
-      "avg_total_hp": 33344117
+      "avg_units": 1517.0,
+      "min_units": 1487,
+      "max_units": 1547,
+      "avg_total_hp": 101607584
     },
     {
       "waves": "271-280",
-      "avg_units": 760.8,
-      "min_units": 749,
-      "max_units": 771,
-      "avg_total_hp": 33574901
+      "avg_units": 1565.3,
+      "min_units": 1534,
+      "max_units": 1591,
+      "avg_total_hp": 106523415
     },
     {
       "waves": "281-290",
-      "avg_units": 775.3,
-      "min_units": 758,
-      "max_units": 793,
-      "avg_total_hp": 33833368
+      "avg_units": 1591.8,
+      "min_units": 1558,
+      "max_units": 1623,
+      "avg_total_hp": 107679761
     },
     {
       "waves": "291-300",
-      "avg_units": 790.5,
-      "min_units": 775,
-      "max_units": 805,
-      "avg_total_hp": 41844057
+      "avg_units": 1633.4,
+      "min_units": 1600,
+      "max_units": 1664,
+      "avg_total_hp": 132488326
     },
     {
       "waves": "301-310",
-      "avg_units": 811.5,
-      "min_units": 795,
-      "max_units": 825,
-      "avg_total_hp": 109935522
+      "avg_units": 1677.9,
+      "min_units": 1639,
+      "max_units": 1706,
+      "avg_total_hp": 336268850
     }
   ],
   "notes": []

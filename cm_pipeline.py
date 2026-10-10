@@ -5,7 +5,8 @@
     -> layout.fnCheck (the shared checks unless the layout brings its own)
 
 Nothing here depends on a particular layout: every map type runs through the same steps with the same
-shared configuration (sys_config), ore filters (ores), spawn groups (waves) and writer (msav).
+shared configuration (sys_config), ore filters (ores), spawn groups (waves) and writer (msav). The chosen
+difficulty (sys_config.cdtDifficulties) changes the waves, the match rules and the map's name only.
 """
 
 import json
@@ -188,14 +189,14 @@ def _fnBlockTable(sResult):
     return arTable
 
 
-def _fnTags(sResult, dtRules, arFilters):
+def _fnTags(sResult, vMapName, vDescription, dtRules, arFilters):
     vCx, vCy = sResult.arCore
     return {
-        "name": sResult.vName, "author": sys_config.cMapAuthor, "description": sResult.vDescription,
+        "name": vMapName, "author": sys_config.cMapAuthor, "description": vDescription,
         "rules": json.dumps(dtRules, separators=(",", ":")),
         "width": str(sResult.vWidth), "height": str(sResult.vHeight), "build": sys_config.cGameBuild,
         "saved": str(int(time.time() * 1000)),
-        "playtime": "0", "mapname": sResult.vName, "wave": "1", "tick": "0.0", "wavetime": "0.0",
+        "playtime": "0", "mapname": vMapName, "wave": "1", "tick": "0.0", "wavetime": "0.0",
         "stats": "{}", "locales": "{}", "mods": "[]", "controlGroups": "null",
         "viewpos": "(%.1f,%.1f)" % (vCx * 8 + 4, vCy * 8 + 4),
         "controlledType": "null", "nocores": "false", "playerteam": "1", "hasExternalAssets": "false",
@@ -225,14 +226,17 @@ def _fnWriteMap(sResult, vPath, arTable, dtTags):
     assert dtCheck["buildings"][0]["team"] == 1
     assert [(p["path"], p["text"]) for p in dtCheck["patches"]] == list(sys_config.carDataPatches)
     assert json.loads(dtCheck["tags"]["genfilters"]) == json.loads(dtTags["genfilters"])
+    assert json.loads(dtCheck["tags"]["rules"]) == json.loads(dtTags["rules"])
     return vRawSize, vFileSize
 
 
-def fnGenerate(sLayout, vSeed, vOut, vOreRolls=1):
-    """Builds, writes, renders, reports and checks one map. Returns True when the checks pass."""
+def fnGenerate(sLayout, vSeed, vOut, vOreRolls=1, vDifficulty=sys_config.cDefaultDifficulty):
+    """Builds, writes, renders, reports and checks one map at one difficulty. Returns True when the checks
+    pass. The difficulty only changes the waves and match rules; the terrain depends on the seed alone."""
     vT0 = time.time()
     os.makedirs(vOut, exist_ok=True)
-    print("Map type: %s (%s), seed %d" % (sLayout.cName, sLayout.cKey, vSeed))
+    dtLevel = sys_config.cdtDifficulties[vDifficulty]
+    print("Map type: %s (%s), difficulty %s, seed %d" % (sLayout.cName, sLayout.cKey, dtLevel["label"], vSeed))
     sResult = sLayout.fnBuild(vSeed)
     _vsValidateResult(sResult)
     sGrid = cm_terrain.clGrid(sResult.vWidth, sResult.vHeight)
@@ -242,21 +246,26 @@ def fnGenerate(sLayout, vSeed, vOut, vOreRolls=1):
     print("  %-22s %6.1fs" % ("ore rolls (preview)", time.time() - vTs))
     dtCorridors, dtRoutes, dtNavalCorridors, dtNavalRoutes = _fnRoutes(sGrid, sResult)
 
-    dtRules = waves.fnBuildRules(sResult.dtSpawns, sResult.arNavalSpawnKeys, sResult.dtSpawnAliases)
-    dtTags = _fnTags(sResult, dtRules, arFilters)
-    vMapPath = os.path.join(vOut, sResult.vName + ".msav")
+    vMapName = sys_config.fnMapName(sResult.vName, vDifficulty)
+    vDescription = sResult.vDescription
+    if vDifficulty != sys_config.cBaseDifficulty:
+        vDescription += "\n" + sys_config.fnDifficultyNote(vDifficulty)
+    dtRules = waves.fnBuildRules(sResult.dtSpawns, sResult.arNavalSpawnKeys, sResult.dtSpawnAliases, vDifficulty)
+    dtTags = _fnTags(sResult, vMapName, vDescription, dtRules, arFilters)
+    vMapPath = os.path.join(vOut, vMapName + ".msav")
     vRawSize, vFileSize = _fnWriteMap(sResult, vMapPath, _fnBlockTable(sResult), dtTags)
 
-    vPreviewPath = os.path.join(vOut, sResult.vName + " - preview.png")
+    vPreviewPath = os.path.join(vOut, vMapName + " - preview.png")
     cm_render.vsRenderPreview(sResult, arPreview[0], arPreview[1], vPreviewPath)
-    vRoutesPath = os.path.join(vOut, sResult.vName + " - enemy routes.png")
+    vRoutesPath = os.path.join(vOut, vMapName + " - enemy routes.png")
     cm_render.vsRenderRoutes(sResult, dtCorridors, dtNavalCorridors, vRoutesPath)
 
     arGroups = waves.fnExpandGroups(waves.build_groups(), sResult.dtSpawns, sResult.arNavalSpawnKeys,
-                                    sResult.dtSpawnAliases)
+                                    sResult.dtSpawnAliases, vDifficulty)
     vSpawnCount = len(sResult.dtSpawns)
     dtReport = {
-        "map": sResult.vName, "map_type": sLayout.cKey, "seed": vSeed, "size": [sResult.vWidth, sResult.vHeight],
+        "map": vMapName, "map_type": sLayout.cKey,
+        "difficulty": dict(dtLevel, key=vDifficulty), "seed": vSeed, "size": [sResult.vWidth, sResult.vHeight],
         "game": sys_config.cGameLabel, "mod": sys_config.cModLabel, "file": vMapPath,
         "file_bytes": vFileSize, "uncompressed_bytes": vRawSize,
         "spawns": {sResult.dtSpawnLabels[k]: v for k, v in sResult.dtSpawns.items()},
@@ -268,11 +277,11 @@ def fnGenerate(sLayout, vSeed, vOut, vOreRolls=1):
         "data_patches": [{"path": p, "patch": json.loads(t)} for p, t in sys_config.carDataPatches],
         "rules": {k: v for k, v in dtRules.items() if k != "spawns"}, "spawn_groups": len(dtRules["spawns"]),
         "rules_json_bytes": len(dtTags["rules"]),
-        "wave_summary": waves.fnWaveSummary(cReportWaves, arGroups, vSpawnCount),
-        "wave_curve": waves.fnWaveCurve(*cCurve, arGroups, vSpawnCount),
+        "wave_summary": waves.fnWaveSummary(cReportWaves, arGroups, vSpawnCount, dtLevel["health"]),
+        "wave_curve": waves.fnWaveCurve(*cCurve, arGroups, vSpawnCount, dtLevel["health"]),
         "notes": sResult.arNotes,
     }
-    vReportPath = os.path.join(vOut, sResult.vName + " - report.json")
+    vReportPath = os.path.join(vOut, vMapName + " - report.json")
     with open(vReportPath, "w", encoding="utf-8") as sFile:
         json.dump(dtReport, sFile, indent=2)
 

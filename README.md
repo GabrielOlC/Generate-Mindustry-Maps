@@ -8,14 +8,14 @@ biome only *leans* toward the materials its faction's tech tree needs.
 
 | | |
 |---|---|
-| Map file | `maps\Biomes Extended Remastered.msav` (save format 13) |
+| Map file | `maps\Biomes Extended Remastered (Eradication).msav` (save format 13); other difficulties alongside, Normal without a suffix |
 | Size | 800 × 800 tiles (640,000) |
-| Mode | Survival / PvE, endless waves |
+| Mode | Survival / PvE, endless waves, five difficulty levels (Casual to Eradication, the default) |
 | Player core | Core: Foundation at the centre (tiles 399–402 × 399–402) |
 | Enemy spawns | 5 spawn points, one per biome, all near the map edge |
 | Ore nodes | Random on every load: about 1,240 patches per game, all 12 ores + siratla crystal in every biome |
 | Lava | Thermal generators can be built anywhere on it (molten slag and pyromagma), not only on the banks |
-| Session length | Wave 100 at ~4 h 15 min, wave 120 at ~5 h 05 min (players can call waves early) |
+| Session length | Wave 100 at ~4 h 15 min on Normal, ~2 h 30 min on Eradication (players can call waves early) |
 | Required mod | Exogenesis Old 1.9.1 (needs game build 158 or newer) |
 
 ![Map preview](docs/preview.png)
@@ -31,20 +31,52 @@ yellow dots are named choke points, and orange marks the core. North is up. The 
 
 ---
 
+## Quick start: generate a map
+
+1. Install **Python 3.8 or newer**, with "Add Python to PATH" ticked. Nothing else is needed.
+2. Double-click **`Auto Start.bat`**. Then either:
+   - press **Enter**, and answer the two questions: the map type (`1` or `2`) and the difficulty
+     (Enter = Eradication, the hardest); or
+   - type the options first and press Enter, for example `--map biomes-confluence --difficulty hard`.
+
+   From a terminal, `python wf_generate.py` does the same.
+3. Wait 1–2 minutes. The map is written to the `maps` folder, for example
+   `maps\Biomes Confluence (Hard).msav` (Normal has no suffix).
+4. In Mindustry, turn on **Exogenesis Old**, open **Editor → Import Map**, pick the `.msav`, and play
+   it from **Custom Game → Survival**.
+
+| Option | Values | If left out |
+|---|---|---|
+| `--map` | `biomes-extended`, `biomes-confluence` | asked |
+| `--difficulty` | `casual`, `easy`, `normal`, `hard`, `eradication` | `eradication` |
+| `--seed` | any number (changes the terrain) | the map's own |
+| `--ore-rolls` | how many ore rolls the report averages | 1 |
+| `--out` | output folder | `maps` |
+| `--list` | show the map types and difficulties | — |
+
+More detail is in section 8.
+
+---
+
 ## 1. Install and play
 
 1. Turn on **Exogenesis Old** under *Mods* and restart the game.
-2. From the main menu open **Editor → Import Map** and pick
-   `maps\Biomes Extended Remastered.msav` in this project's folder.
+2. From the main menu open **Editor → Import Map** and pick the map file of the difficulty you want
+   from this project's `maps` folder, for example `maps\Biomes Extended Remastered (Eradication).msav`.
    (Or copy the file into the game's `maps` folder.)
-3. Choose **Play → Custom Game → Biomes Extended Remastered → Survival**, or host it for friends.
+3. Choose **Play → Custom Game → Biomes Extended Remastered (Eradication) → Survival**, or host it for
+   friends.
 
 The wave list, loadout and rules are stored in the map file. You can change them in the editor
 under *Map Info → Rules / Waves*.
 
-**Built-in rules:** 7 minutes to set up before wave 1, then one wave every 150 s. Players may call
-waves early. The waves never end. Spawn points are visible. Each unit type has a cap of 24, plus 16
-from the Foundation core (more with bigger cores). The starting loadout is 700 copper and 300 lead.
+**Built-in rules:** on Normal, 7 minutes to set up before wave 1, then one wave every 150 s; the other
+difficulties scale both times (section 6). Players may call waves early. The waves never end. Spawn
+points are visible. Each unit type has a cap of 24, plus 16 from the Foundation core (more with bigger
+cores). The starting loadout is 700 copper and 300 lead.
+
+**Difficulty.** Each difficulty is its own map file, named after it: "Biomes Extended Remastered
+(Hard)" and so on; Normal keeps the plain name. The levels are the game's own (section 6).
 
 **Random ores.** The ore patches are not drawn into the map. The map stores a list of ore
 *generation filters*, and the game runs them with a fresh random seed every time the map is loaded,
@@ -299,7 +331,7 @@ replaced by the land or air unit of the same tier and role. (On Biomes Confluenc
 | orca, balaenoptera | anvil, fornax | Exogenesis tier 6/7 of the same lines (omura → orca → balaenoptera, reign → anvil → fornax) |
 | apotheosis | war | Apex with the closest health and armour: 5.0M HP / 90 vs 6.0M HP / 100 (war flies) |
 
-| Phase | Waves (time) | What arrives |
+| Phase | Waves (time on Normal) | What arrives |
 |---|---|---|
 | Opening | 1–19 (0:07–0:52) | crawler, dagger, nova, locus (plus a shielded locus from the East spawn), crawler packs, mace, horizon, fortress, quasar |
 | Escalation | 20–39 (0:54–1:42) | Exogenesis heat and drone-B, zenith, flare, precept, pulsar, atrax, shielded quasar and flare packs |
@@ -307,7 +339,8 @@ replaced by the land or air unit of the same tier and role. (On Biomes Confluenc
 | Late game | 100–199 (4:14–8:22) | scepter, antumbra, molten, colossus, xenoct, b05-centauri, bloodshed, hex, b06-eros, asgard, fornax, plus the boss rotation below |
 | Endgame | 200+ (8:24 →) | T-atlas and twilight, war boss from 250, sagittarius boss from 300 (12:34) |
 
-**Bosses (boss status: ×1.5 health, ×1.3 damage).** One per spawn point each time:
+**Bosses (boss status: ×1.5 health, ×1.3 damage).** One per spawn point each time (two on
+Eradication):
 
 | Boss | Waves | Notes |
 |---|---|---|
@@ -328,8 +361,8 @@ Most groups were made by the game's own wave generator: they are capped at 13 or
 because they end before they begin: the navanax boss (corvus here), set to run from wave 70 to wave 1,
 and T-prometheus, from wave 100 to wave 90. They are kept as they are so the list matches.
 
-**Difficulty curve.** Averages per 10 waves, with total health including shields and the boss
-multiplier:
+**Difficulty curve (Normal).** Averages per 10 waves, with total health including shields and the
+boss multiplier:
 
 | Waves | 1–10 | 11–20 | 21–30 | 31–40 | 41–50 | 61–70 | 91–100 | 111–120 | 141–150 | 191–200 | 241–250 | 251–260 | 301–310 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -338,6 +371,29 @@ multiplier:
 
 Unit counts climb all game: about 300 per wave by wave 100 and almost 900 by wave 300, and shields
 grow every wave. Total health jumps when war (250) and sagittarius (300) arrive.
+
+**Difficulty levels.** The five levels and their multipliers are Mindustry's own (`Difficulty` in the
+game source). The game applies them only in the campaign, so each map file carries its level:
+- **Enemy health:** the wave team's `unitHealthMultiplier` in the map rules, as the campaign sets it.
+  Damage those units take is divided by it, shields included.
+- **Wave timer:** the time between waves and the time before wave 1.
+- **Enemy units:** built into every spawn group. Amount and cap are multiplied, growth is that many
+  times faster, bosses are rounded down, and a group never drops below 1, like the campaign's own
+  rounding. Over waves 1–310 the counts stay within 4% of the campaign rule.
+
+Normal is the waves as designed. Leaving the difficulty out when generating picks the hardest,
+Eradication.
+
+| Level | Enemy health | Enemy units | Between waves | Before wave 1 | Wave 100 at | Units / total HP per wave, waves 1–10 | 41–50 | 91–100 | 141–150 | 291–300 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Casual | ×0.5 | ×0.5 | 300 s | 14 min | ~8 h 30 | 16 / 2.1k | 179 / 177k | 196 / 732k | 270 / 3.3M | 508 / 28M |
+| Easy | ×1 | ×0.75 | 225 s | 10.5 min | ~6 h 20 | 17 / 4.5k | 220 / 414k | 256 / 1.6M | 331 / 6.8M | 690 / 61M |
+| Normal | ×1 | ×1 | 150 s | 7 min | ~4 h 15 | 19 / 5.1k | 264 / 468k | 295 / 1.8M | 406 / 7.1M | 866 / 62M |
+| Hard | ×1.25 | ×1.5 | 120 s | 5.6 min | ~3 h 25 | 38 / 13k | 469 / 1.0M | 520 / 4.1M | 689 / 14M | 1,392 / 94M |
+| Eradication | ×1.5 | ×2 | 90 s | 4.2 min | ~2 h 30 | 43 / 17k | 561 / 1.5M | 623 / 5.5M | 851 / 22M | 1,786 / 194M |
+
+Small groups round up early on: one unit × 1.5 is 2, so the first waves on Hard are about twice
+Normal's.
 
 **Without the mod.** Exogenesis unit names fall back to **dagger** in the game's wave loader. If the
 waves look like endless daggers, Exogenesis Old is not enabled.
@@ -362,18 +418,23 @@ vanilla ore.
 ## 8. Regenerating or changing the map
 
 Everything runs on the Python standard library (3.8+), so there is nothing to install. One controller
-generates every map type. It asks which one you want, or takes `--map`:
+generates every map type at any difficulty. It asks for both, or takes `--map` and `--difficulty`.
+**Leaving the difficulty out picks the hardest, Eradication**, both on the command line and at the
+question (press Enter):
 
 ```bash
-python wf_generate.py                                         # lists the map types and asks
-python wf_generate.py --list                                  # biomes-extended, biomes-confluence
-python wf_generate.py --map biomes-extended                   # this map, default seed 1597
-python wf_generate.py --map biomes-confluence --ore-rolls 5   # the naval map, 5 simulated ore rolls
-python wf_generate.py --map biomes-extended --seed 42 --out "D:\someolder"
+python wf_generate.py                                         # asks for the map type, then the difficulty
+python wf_generate.py --list                                  # map types and difficulty levels
+python wf_generate.py --map biomes-extended                   # this map at Eradication, seed 1597
+python wf_generate.py --map biomes-extended --difficulty normal
+python wf_generate.py --map biomes-confluence --difficulty hard --ore-rolls 5
+python wf_generate.py --map biomes-extended --seed 42 --out "D:\some\folder"
 ```
 
-The original commands still work for this map and write the same file:
-`python generate_map.py [--seed N] [--ore-rolls N]`, then `python check_map.py`.
+Levels: `casual`, `easy`, `normal`, `hard`, `eradication`. Each one writes its own files, named after
+the level (`Biomes Extended Remastered (Hard).msav`, ...); Normal keeps the plain name. The original
+commands still work for this map and write the Normal file: `python generate_map.py [--seed N]
+[--ore-rolls N]`, then `python check_map.py`.
 
 One run takes about 1–2 minutes and writes four files to `maps`: the `.msav`, a preview PNG, an
 enemy-routes PNG and a JSON report with every measured number used in this document. It then checks
@@ -387,7 +448,7 @@ checks. Only the layout differs, and a new map type is one new file in `layouts/
 | File | What to change there |
 |---|---|
 | `wf_generate.py` | The controller: asks for the map type and runs it (no need to touch) |
-| `sys_config.py` | Shared by all maps: wave timer, first-wave delay, unit cap, loadout (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
+| `sys_config.py` | Shared by all maps: the difficulty levels (`cdtDifficulties`), wave timer, first-wave delay, unit cap, loadout (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
 | `ores.py` | The in-game ore filters: map-wide layer per ore (`WIDESPREAD`: scale = how many patches, threshold = how big), biome tendencies (`TENDENCIES`), siratla crystal (`CRYSTAL_HOSTS`), ore-free floors (`CLEAR_FLOORS`) |
 | `waves.py` | Every spawn group, and the land stand-ins for boats on maps without water routes (`cdtNavalSwap`) |
 | `generate_map.py` | This map's layout: spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), map name |

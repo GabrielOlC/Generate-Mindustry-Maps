@@ -125,6 +125,42 @@ cdtMatchRules = {
     ],
 }
 
+# Difficulty levels, easiest to hardest, with the multipliers of Mindustry's own Difficulty enum @ v159.7
+# (game/Difficulty.java). The game applies them only in the campaign (CampaignRules.apply, WaveSpawner,
+# Logic), so each map carries its level itself: the enemy health multiplier goes into the wave team's
+# rules (Rules.unitHealth divides the damage those units take, shields included), the wave timer and the
+# delay before wave 1 are scaled, and the enemy spawn multiplier is baked into the spawn groups
+# (waves.fnApplyDifficulty). "normal" is the waves as designed and keeps the plain map name; the last
+# (hardest) level is the default when none is chosen.
+cdtDifficulties = {
+    "casual": {"label": "Casual", "health": 0.5, "spawn": 0.5, "waveTime": 2.0},
+    "easy": {"label": "Easy", "health": 1.0, "spawn": 0.75, "waveTime": 1.5},
+    "normal": {"label": "Normal", "health": 1.0, "spawn": 1.0, "waveTime": 1.0},
+    "hard": {"label": "Hard", "health": 1.25, "spawn": 1.5, "waveTime": 0.8},
+    "eradication": {"label": "Eradication", "health": 1.5, "spawn": 2.0, "waveTime": 0.6},
+}
+cBaseDifficulty = "normal"
+cDefaultDifficulty = list(cdtDifficulties)[-1]
+cWaveTeam = 2              # Team.crux, the default Rules.waveTeam
+
+
+def fnMapName(vName, vDifficulty):
+    """In-game name and file name of a map at a difficulty: the plain name at normal, "Name (Level)" otherwise."""
+    if vDifficulty == cBaseDifficulty:
+        return vName
+    return "%s (%s)" % (vName, cdtDifficulties[vDifficulty]["label"])
+
+
+def fnDifficultyNote(vDifficulty):
+    """One line for the map description, in the game's own terms (Difficulty.info)."""
+    dtLevel = cdtDifficulties[vDifficulty]
+    arParts = []
+    for vKey, vText in (("health", "enemy health"), ("spawn", "enemy units"), ("waveTime", "time between waves")):
+        vPercent = int(round(dtLevel[vKey] * 100 - 100))
+        if vPercent:
+            arParts.append("%s %+d%%" % (vText, vPercent))
+    return "Difficulty: %s (%s)." % (dtLevel["label"], ", ".join(arParts) or "no modifiers")
+
 # ----------------------------------------------------------------------------------------------
 # Preview palette (map colours of floors, walls and ores)
 # ----------------------------------------------------------------------------------------------

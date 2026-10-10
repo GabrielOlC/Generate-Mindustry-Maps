@@ -15,6 +15,7 @@ A group without a `spawn` position spawns at every spawn point of the map.
 """
 
 import copy
+import math
 
 import sys_config
 
@@ -317,13 +318,40 @@ def build_groups():
     ]
 
 
-def fnExpandGroups(arGroups, dtSpawns=None, arNavalSpawnKeys=(), dtSpawnAliases=None):
-    """The groups as one map spawns them.
+def _fnJavaRound(vValue):
+    return int(math.floor(vValue + 0.5))          # arc.math.Mathf.round
+
+
+def fnApplyDifficulty(arGroups, vDifficulty):
+    """Bakes a difficulty's enemy spawn multiplier into the groups. In the campaign WaveSpawner turns each
+    group's count into max(1, round(count x multiplier)), bosses rounded down; a map has to carry that in
+    the groups themselves: each starts with its amount times the multiplier (same rounding), grows that
+    many times as fast and caps at its cap times the multiplier."""
+    vMult = sys_config.cdtDifficulties[vDifficulty]["spawn"]
+    if vMult == 1.0:
+        return list(arGroups)
+    arOut = []
+    for sGroup in arGroups:
+        sCopy = copy.copy(sGroup)
+        fnRound = int if sGroup.effect == "boss" else _fnJavaRound
+        if sGroup.amount > 0:
+            sCopy.amount = max(1, fnRound(sGroup.amount * vMult))
+        if sGroup.grow is not None:
+            sCopy.grow = sGroup.grow / vMult
+        sCopy.cap = max(1, fnRound((40 if sGroup.cap is None else sGroup.cap) * vMult))
+        arOut.append(sCopy)
+    return arOut
+
+
+def fnExpandGroups(arGroups, dtSpawns=None, arNavalSpawnKeys=(), dtSpawnAliases=None,
+                   vDifficulty=sys_config.cBaseDifficulty):
+    """The groups as one map spawns them at one difficulty.
 
     On a map with naval spawns, each naval group comes up every naval spawn (one copy pinned to each,
     since a boat at a dry spawn dies at once); everywhere else its unit takes the stand-in from
     `cdtNavalSwap`. A group pinned to a spawn key the map does not have is resolved through
-    `dtSpawnAliases` ({key used here: the map's own key}); `dtSpawns` = None skips that check."""
+    `dtSpawnAliases` ({key used here: the map's own key}); `dtSpawns` = None skips that check. Last, the
+    difficulty's spawn multiplier is applied (none at normal)."""
     dtAliases = dtSpawnAliases or {}
     arOut = []
     for sGroup in arGroups:
@@ -345,20 +373,29 @@ def fnExpandGroups(arGroups, dtSpawns=None, arNavalSpawnKeys=(), dtSpawnAliases=
                 sGroup = copy.copy(sGroup)
                 sGroup.at = vKey
         arOut.append(sGroup)
-    return arOut
+    return fnApplyDifficulty(arOut, vDifficulty)
 
 
-def fnBuildRules(dtSpawns, arNavalSpawnKeys=(), dtSpawnAliases=None):
-    """Rules JSON object for a map's "rules" tag: the shared match rules plus the map's spawn groups."""
+def fnBuildRules(dtSpawns, arNavalSpawnKeys=(), dtSpawnAliases=None, vDifficulty=sys_config.cBaseDifficulty):
+    """Rules JSON object for a map's "rules" tag: the shared match rules at the chosen difficulty (wave
+    timer and delay before wave 1 scaled, enemy health multiplier on the wave team, as CampaignRules.apply
+    and Logic do in the campaign) plus the map's spawn groups."""
+    dtLevel = sys_config.cdtDifficulties[vDifficulty]
     dtRules = copy.deepcopy(sys_config.cdtMatchRules)
-    arGroups = fnExpandGroups(build_groups(), dtSpawns, arNavalSpawnKeys, dtSpawnAliases)
+    if dtLevel["waveTime"] != 1.0:
+        for vKey in ("waveSpacing", "initialWaveSpacing"):
+            dtRules[vKey] = round(dtRules[vKey] * dtLevel["waveTime"], 1)
+    if dtLevel["health"] != 1.0:
+        dtRules["teams"] = {str(sys_config.cWaveTeam): {"unitHealthMultiplier": dtLevel["health"]}}
+    arGroups = fnExpandGroups(build_groups(), dtSpawns, arNavalSpawnKeys, dtSpawnAliases, vDifficulty)
     dtRules["spawns"] = [sGroup.to_json(dtSpawns) for sGroup in arGroups]
     return dtRules
 
 
-def fnUnitsOnWave(vWave, arGroups, vSpawnCount):
-    """(unit count, total health incl. boss multiplier and shields, {label: count}) for one wave of
-    expanded groups on a map with `vSpawnCount` spawn points."""
+def fnUnitsOnWave(vWave, arGroups, vSpawnCount, vHealth=1.0):
+    """(unit count, total health incl. boss multiplier, shields and the difficulty's enemy health
+    multiplier `vHealth`, {label: count}) for one wave of expanded groups on a map with `vSpawnCount`
+    spawn points."""
     vUnits, vHp, dtCounts = 0, 0.0, {}
     for sGroup in arGroups:
         vSpawned = sGroup.spawned(vWave)
@@ -367,8 +404,8 @@ def fnUnitsOnWave(vWave, arGroups, vSpawnCount):
         vCount = vSpawned * (vSpawnCount if sGroup.at is None else 1)
         vBoss = sGroup.effect == "boss"
         vUnits += vCount
-        vHp += vCount * (UNIT_HP.get(sGroup.unit, 0) * (BOSS_HEALTH_MULTIPLIER if vBoss else 1.0)
-                         + sGroup.shield_at(vWave))
+        vHp += vCount * vHealth * (UNIT_HP.get(sGroup.unit, 0) * (BOSS_HEALTH_MULTIPLIER if vBoss else 1.0)
+                                   + sGroup.shield_at(vWave))
         vLabel = sGroup.unit.replace(EXO, "") + (" (boss)" if vBoss else "")
         dtCounts[vLabel] = dtCounts.get(vLabel, 0) + vCount
     return vUnits, vHp, dtCounts
@@ -379,22 +416,22 @@ def _fnToughness(vLabel):
     return UNIT_HP.get(EXO + vName, UNIT_HP.get(vName, 0)) * (BOSS_HEALTH_MULTIPLIER if "(boss)" in vLabel else 1)
 
 
-def fnWaveSummary(arWaves, arGroups, vSpawnCount):
+def fnWaveSummary(arWaves, arGroups, vSpawnCount, vHealth=1.0):
     """Units, total health and the toughest units for selected waves."""
     arRows = []
     for vWave in arWaves:
-        vUnits, vHp, dtCounts = fnUnitsOnWave(vWave, arGroups, vSpawnCount)
+        vUnits, vHp, dtCounts = fnUnitsOnWave(vWave, arGroups, vSpawnCount, vHealth)
         arTop = sorted(dtCounts.items(), key=lambda kv: -_fnToughness(kv[0]))[:4]
         arRows.append({"wave": vWave, "units": vUnits, "total_hp": int(vHp),
                        "toughest": ", ".join("%dx %s" % (c, n) for n, c in arTop)})
     return arRows
 
 
-def fnWaveCurve(vFirst, vLast, vWindow, arGroups, vSpawnCount):
+def fnWaveCurve(vFirst, vLast, vWindow, arGroups, vSpawnCount, vHealth=1.0):
     """Average units and health per wave over windows of waves."""
     arRows = []
     for vStart in range(vFirst, vLast + 1, vWindow):
-        arData = [fnUnitsOnWave(w, arGroups, vSpawnCount)[:2] for w in range(vStart, vStart + vWindow)]
+        arData = [fnUnitsOnWave(w, arGroups, vSpawnCount, vHealth)[:2] for w in range(vStart, vStart + vWindow)]
         arRows.append({"waves": "%d-%d" % (vStart, vStart + vWindow - 1),
                        "avg_units": round(sum(u for u, _ in arData) / vWindow, 1),
                        "min_units": min(u for u, _ in arData), "max_units": max(u for u, _ in arData),

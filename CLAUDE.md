@@ -32,9 +32,9 @@ Targets and owner preferences:
 ## Workflow after any change
 
 ```
-python wf_generate.py                        # asks which map type; or --map <key>, --list
-python wf_generate.py --map biomes-confluence --ore-rolls 5
-python wf_generate.py --map biomes-extended --ore-rolls 5
+python wf_generate.py                        # asks for the map type, then the difficulty (Enter = hardest)
+python wf_generate.py --map biomes-confluence --ore-rolls 5            # no --difficulty = the hardest
+python wf_generate.py --map biomes-extended --difficulty normal --ore-rolls 5
 python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/item/filter/patch name
 ```
 - **What a run does:** each run takes ~1-2 min (+20-50 s per extra ore roll). It writes the .msav, a
@@ -52,8 +52,8 @@ python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/
 
 | File | Layer | Role |
 |---|---|---|
-| `wf_generate.py` | controller | Lists the map types found in `layouts/`, asks which one (or `--map`), routes it to the pipeline |
-| `sys_config.py` | core | Common configuration layer: mod prefix and blocks, liquid/deep/lava floors, floor heat, data patches, floor-to-wall palette, preview colours, match and difficulty rules, pad/plaza floor conventions |
+| `wf_generate.py` | controller | Lists the map types found in `layouts/` and the difficulty levels, asks for both (or `--map`, `--difficulty`; no difficulty = the hardest), routes them to the pipeline |
+| `sys_config.py` | core | Common configuration layer: mod prefix and blocks, liquid/deep/lava floors, floor heat, data patches, floor-to-wall palette, preview colours, match rules, **difficulty levels** (`cdtDifficulties`, `fnMapName`), pad/plaza floor conventions |
 | `cm_layout.py` | service | The layout contract (`clLayout`, `clLayoutResult`) and `fnFindLayouts` (plugin discovery) |
 | `cm_pipeline.py` | service | Shared pipeline for any layout: ore rolls, statistics, ground and naval routes, rules, `.msav` + re-decode, PNGs, report, checks |
 | `cm_terrain.py` | service | Size-independent terrain toolkit (`clGrid`): noise, discs, polylines/rivers, BFS, the naval flow field port, `fnAllDeep`, `vsSealDeepWalls` |
@@ -168,12 +168,31 @@ floors in `ores.CLEAR_FLOORS`. `CB` is the biome by (warped) sector, used for fe
   - Keep patches on mod content in their own asset with a dotted path, so a missing mod only produces
     a warning.
 
+**Difficulty**
+- **The levels are the game's own** (`Difficulty.java` @ v159.7: enemy health, enemy spawn and wave
+  time multipliers), ordered easiest to hardest in `sys_config.cdtDifficulties`.
+  - The game applies them only in the campaign (`CampaignRules.apply`, `WaveSpawner`, `Logic`), so the
+    map carries them itself.
+  - Health: `"teams": {"2": {"unitHealthMultiplier": h}}` in the rules (crux, the wave team;
+    `ShieldComp` divides damage by it).
+  - Timer: `waveSpacing` and `initialWaveSpacing` × the wave time multiplier.
+  - Units: `waves.fnApplyDifficulty` gives each group amount and cap × the multiplier and growth that
+    many times faster, with the campaign's rounding (bosses rounded down, never below 1). Over waves
+    1–310 that stays within 4% of the campaign rule.
+- **Normal must stay the identity:** normal output is the waves as designed. The framework at
+  `--difficulty normal` writes the same file as `generate_map.py` (verified: decoded map, PNGs and report).
+- **No difficulty means the hardest:** `sys_config.cDefaultDifficulty` is the last level in
+  `cdtDifficulties`, so a harder level added at the end becomes the default.
+- **Each level has its own map name and files:** "Name (Level)" (`fnMapName`); Normal keeps the plain
+  name. A non-normal map's description ends with the game-style difficulty line (`fnDifficultyNote`).
+  The terrain never depends on the difficulty.
+
 **File format**
 - The first 34 entries of the block table copy the game's runtime ids (`msav.RUNTIME_BLOCK_PREFIX`).
   Don't reorder them.
 - The core is the only building. Its data layout (`msav.core_chunk`) is version-specific.
 - Rules JSON and the genfilters JSON must each stay under 65,535 bytes (Java `writeUTF`). They are
-  about 12.5-13.2 KB and 4.5 KB now.
+  about 12.5-15.3 KB (by map and difficulty) and 4.5 KB now.
 
 **Accuracy notes**
 - The preview/report ore numbers come from `ores.py`'s port of `arc.util.noise.Simplex` and the filter
@@ -203,6 +222,9 @@ Compare these files at the new tag against v159.7:
   (`contactsShallows`, `placeableLiquid`), `world/blocks/power/ThermalGenerator.java` (`canPlaceOn`)
   and the heat values in `content/Blocks.java` (`cdtFloorHeat`). If the mod updates, check whether
   `content/blocks/environment/pyromagma.json` gained its own heat.
+- Difficulty: `game/Difficulty.java` (multipliers), `game/CampaignRules.java` (what the campaign sets),
+  `core/Logic.java` (wave timer), `ai/WaveSpawner.java` (spawn multiplier rounding),
+  `entities/comp/ShieldComp.java` and `game/Rules.java` (`unitHealth`, `TeamRules` JSON).
 - Naval and ground pathing: `ai/Pathfinder.java` (`costGround`, `costNaval`, `packTile`'s `allDeep`,
   `Flowfield.passable`), `ai/WaveSpawner.java` (where groups spawn), `entities/comp/UnitComp.java` and
   `WaterMoveComp.java` (boats on land), `entities/EntityCollisions.java` (`waterSolid`) and
