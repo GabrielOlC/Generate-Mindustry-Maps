@@ -399,9 +399,11 @@ def fnGenerate(sLayout, vSeed, vOut, vOreRolls=1, vDifficulty=sys_config.cDefaul
                           "content": {k: sorted(v) for k, v in dtBotContent.items()}}}
         if sResult.dtResourceRules:
             dtReport["resource_rules"] = {
-                "homes": {g: sResult.arRegionNames[r] for g, r in sResult.dtResourceRules["homes"].items()},
+                "homes": {g: sResult.arRegionNames[r] if r is not None else "every base"
+                          for g, r in sResult.dtResourceRules["homes"].items()},
                 "pocket_cap_tiles": sResult.dtResourceRules["pocketCap"],
-                "home_min_tiles": sResult.dtResourceRules["homeMin"]}
+                "home_min_tiles": sResult.dtResourceRules["homeMin"],
+                "shared_range_tiles": list(sResult.dtResourceRules.get("sharedRange", ()))}
     vReportPath = os.path.join(vOut, vMapName + " - report.json")
     with open(vReportPath, "w", encoding="utf-8") as sFile:
         json.dump(dtReport, sFile, indent=2)

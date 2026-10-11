@@ -13,7 +13,7 @@ format. There is no game engine involved. It has three map types (layouts) that 
   two rivers, Greenwater (water) and Rimeflow (cryofluid), to the lagoon beside the core.
 - `biomes-warfront`: **"Biomes Warfront"**, PvP for 5: one walled base per biome sector, waves from the
   Rift in the middle (RTS AI), defender bots for empty slots (a world processor), every floor resource
-  in every base (one home biome each, 3x3 pockets elsewhere).
+  in every base (one home biome each, 4x4 pockets elsewhere; arkycite: one equal pool per base).
 
 Targets and owner preferences:
 - Target game: **Mindustry v8 Build 159.7** (save format **13**).
@@ -230,8 +230,10 @@ floors in `ores.CLEAR_FLOORS`. `CB` is the biome by (warped) sector, used for fe
   centre, or `setblock` would put turrets on water. The bot pattern (`cdtBotRules`) must fit inside it.
 - **One home per resource**: every group of `sys_config.cdtResourceFloors` has one home biome
   (`cdtHomes` in the layout). Biome palettes never paint a foreign resource floor (e.g. no darksand banks
-  or sand-water outside the forest/desert), and each base garden holds one 3x3 pocket of every foreign
-  group. The checks count usable tiles per base (no solid wall on them): foreign 1..9, home 300+.
+  or sand-water outside the forest/desert), and each base garden holds one 4x4 pocket of every foreign
+  group. A group without a home (`None` in `cdtHomes`: arkycite) gets one equal pool in every base
+  instead. The checks count usable tiles per base (no solid wall on them): foreign 1..16, home 300+,
+  homeless 30..60 (`dtResourceRules`).
 - Ridge tests are per pair of sectors (the test region is those two sectors, outside the Rift): closing one
   pass cannot cut two sectors apart while the ring of other passes is open.
 - Naval links on the PvP map need only reach the other river base's harbour (`cHarbourReach` 40 tiles):

@@ -39,8 +39,8 @@ def fnFileBlockName(vName):
 
 # Floor.isLiquid (boats float, ores never spawn) and Floor.isDeep (drownTime > 0) @ v159.7.
 carLiquidFloors = {"deep-water", "shallow-water", "sand-water", "darksand-water", "tar", "pooled-cryofluid",
-                   "molten-slag", "pyromagma"}
-carDeepFloors = {"deep-water", "tar", "pooled-cryofluid", "molten-slag"}
+                   "molten-slag", "pyromagma", "arkycite-floor"}
+carDeepFloors = {"deep-water", "tar", "pooled-cryofluid", "molten-slag", "arkycite-floor"}
 # Boulders and spore clusters: drawn on the wall layer, but units walk through them.
 carNonSolidBlocks = {"boulder", "snow-boulder", "sand-boulder", "dacite-boulder", "basalt-boulder",
                      "shale-boulder", "spore-cluster", "siratla-stone-boulder"}
@@ -99,6 +99,7 @@ cdtResourceFloors = {
     "cold plasma (glowing vein)": {"glowingvein"},
     "heat (hotrock/magmarock)": {"hotrock", "magmarock"}, "spore moss": {"spore-moss"},
     "sand floor (sand/darksand)": {"sand-floor", "darksand"},
+    "arkycite": {"arkycite-floor"},     # Erekir liquid floor (Blocks.arkyciteFloor: isLiquid, drownTime 200)
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -242,6 +243,7 @@ cdtPreviewColors = {
     "siratla-stone": (150, 172, 196), "siratla-crystal": (120, 205, 245), "glowingvein": (160, 230, 255),
     "deep-water": (38, 68, 140), "shallow-water": (72, 112, 182), "sand-water": (122, 150, 170),
     "darksand-water": (90, 110, 132), "tar": (28, 28, 34), "pooled-cryofluid": (96, 200, 232),
+    "arkycite-floor": (132, 169, 75),
     "core-zone": (230, 186, 60), "metal-floor": (112, 112, 122), "metal-floor-damaged": (96, 96, 102),
     "dark-panel-1": (66, 66, 72), "dark-panel-2": (62, 62, 70), "dark-panel-3": (72, 72, 80),
     "dark-panel-4": (60, 60, 66), "dark-panel-5": (64, 64, 70), "dark-panel-6": (58, 58, 64),

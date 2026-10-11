@@ -38,10 +38,11 @@ class clLayoutResult:
     arNavalLinks         [{"label", "start": (x, y), "core": (x, y), "reach": tiles}]: boats starting at
                          `start` must come to rest within `reach` tiles of that core (naval raids between
                          bases; cm_checks.cNavalReach when not given)
-    dtResourceRules      {"homes": {resource group: region index}, "bases": [region index],
-                          "pocketCap": tiles, "homeMin": tiles}: every base region holds every group of
-                          sys_config.cdtResourceFloors, at most pocketCap tiles of each foreign one and at
-                          least homeMin of each of its own
+    dtResourceRules      {"homes": {resource group: region index or None}, "bases": [region index],
+                          "pocketCap": tiles, "homeMin": tiles, "sharedRange": (low, high)}: every base
+                          region holds every group of sys_config.cdtResourceFloors, at most pocketCap tiles
+                          of each foreign one, at least homeMin of each of its own, and between low and high
+                          of each group without a home (None)
     """
 
     def __init__(self, vName, vDescription, vWidth, vHeight, arFloor, arOverlay, arWall, arCore, dtSpawns,

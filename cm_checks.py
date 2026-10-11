@@ -300,8 +300,9 @@ def _fnPvp(dtInfo, sGrid, sResult, arFloor, arWall, dtRules):
 
     dtRes = sResult.dtResourceRules
     if dtRes:
-        print("\nResources per base (usable tiles; home groups need %d+, foreign groups 1..%d):"
-              % (dtRes["homeMin"], dtRes["pocketCap"]))
+        arShared = dtRes.get("sharedRange", (1, dtRes["pocketCap"]))
+        print("\nResources per base (usable tiles; home groups need %d+, foreign groups 1..%d, groups without a "
+              "home %d..%d):" % (dtRes["homeMin"], dtRes["pocketCap"], arShared[0], arShared[1]))
         dtCount = {}
         for i, vRegion in enumerate(sResult.arRegion):
             if arWall[i] is not None and arWall[i] not in sys_config.carNonSolidBlocks:
@@ -315,7 +316,10 @@ def _fnPvp(dtInfo, sGrid, sResult, arFloor, arWall, dtRules):
             for vGroup in sys_config.cdtResourceFloors:
                 vTiles = dtCount.get((vRegion, vGroup), 0)
                 vHome = dtRes["homes"][vGroup] == vRegion
-                vFits = vTiles >= dtRes["homeMin"] if vHome else 1 <= vTiles <= dtRes["pocketCap"]
+                if dtRes["homes"][vGroup] is None:
+                    vFits = arShared[0] <= vTiles <= arShared[1]
+                else:
+                    vFits = vTiles >= dtRes["homeMin"] if vHome else 1 <= vTiles <= dtRes["pocketCap"]
                 vGood &= vFits
                 arParts.append("%s%s %d%s" % ("*" if vHome else "", vGroup.split(" ")[0], vTiles, "" if vFits else "!"))
             vOk &= vGood

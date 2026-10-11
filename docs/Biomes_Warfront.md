@@ -2,9 +2,10 @@
 
 An 800×800 **PvP map for 5 players** for **Mindustry v8 Build 159.7** and the **Exogenesis Old** mod
 (`exogenesisold` 1.9.1), made by the same generator as Biomes Extended Remastered and Biomes Confluence.
-Each player gets a walled base in one of the five biomes. **Every base has every floor resource**:
-plenty of its own biome's, and one very small pocket of each of the others. Waves rise from **the Rift**
-in the middle and strike any player. A slot nobody takes becomes a **defender bot** that never attacks.
+Each player gets a walled base in one of the five biomes, handed out at random. **Every base has every
+floor resource**: plenty of its own biome's, one small pocket of each of the others, and a pool of
+arkycite. Waves rise from **the Rift** in the middle and strike any player. A slot nobody takes becomes a
+**defender bot** that never attacks.
 
 | | |
 |---|---|
@@ -36,8 +37,13 @@ pads and yellow dots are gates, passes, fords and other named places. North is u
 3. Host it: *Play → Host Multiplayer Game*, pick the map and the **PvP** mode. On a dedicated server:
    `host Biomes_Warfront_(Eradication) pvp` (underscores stand for spaces).
 
-The game puts every player who joins on the team with a core and the fewest players, so the first five
-players get one base each. The map's own rules make it a PvP match whatever mode is picked:
+**Who gets which base is random, the host included.** When the game starts, the host is put through the
+game's team assigner too (`Control`: `player.team(netServer.assignTeam(player))`). Every player who joins
+later goes the same way. The assigner picks a team with a core and the fewest players and breaks ties at
+random (`NetServer.assigner`), so the first five players each get a random free base. A map cannot pin a
+player to a base, so the host cannot be sent to the desert from the map file.
+
+The map's own rules make it a PvP match whatever mode is picked:
 - **Win:** the last team with a core wins (attack mode). Defender bots count as teams, so their cores
   must fall too.
 - **Waves:** on Normal, 7 minutes before wave 1, then one wave every 150 s, endless; the other levels
@@ -66,7 +72,7 @@ geometry; only the biome around it differs:
 - a Foundation core on an 18×18 metal plaza;
 - a clear square of 47×47 tiles around it, the room a defender fortress needs;
 - four outpost pads (core-zone, 7×7);
-- a resource garden behind the core (section 3);
+- a resource garden behind the core and an arkycite pool (section 3);
 - a **rampart**: a ring of vanilla walls about 66–80 tiles from the core, 11–15 tiles thick.
 
 The rampart has three gates: one toward the Rift and one toward each neighbour. No rocks or trees stand
@@ -114,34 +120,45 @@ and frozen harbours.*
 
 ## 3. Resources
 
-Every floor resource has **one home biome**, where there is a lot of it:
+Every floor resource except arkycite has **one home biome**, where there is a lot of it:
 
 | Resource | Home biome | Elsewhere |
 |---|---|---|
-| Water | Forest (Greenwater, harbour) | one 3×3 pocket of shallow water in each other base |
-| Spore moss | Forest (spore groves) | one 3×3 pocket |
-| Cryofluid | Frozen (Rimeflow, harbour) | one 3×3 pocket |
-| Cold plasma (glowing vein) | Frozen (siratla glacier) | one 3×3 pocket |
-| Oil-rich ground (shale) | Semi-arid (shale fields) | one 3×3 pocket |
-| Oil (tar) | Desert (tar pits) | one 3×3 pocket |
-| Sand floor (sand, darksand) | Desert (the whole biome) | one 3×3 pocket of darksand |
-| Slag (lava) | Volcano (crater lake, pools) | one 3×3 pocket |
-| Pyroplasma (pyromagma) | Volcano (creeks) | one 3×3 pocket |
-| Heat (hotrock, magmarock) | Volcano (the whole biome) | one 3×3 pocket of magmarock |
+| Water | Forest (Greenwater, harbour) | one 4×4 pocket of shallow water in each other base |
+| Arkycite | none: shared by all | one round pool of 37 tiles in every base, at the same spot |
+| Spore moss | Forest (spore groves) | one 4×4 pocket |
+| Cryofluid | Frozen (Rimeflow, harbour) | one 4×4 pocket |
+| Cold plasma (glowing vein) | Frozen (siratla glacier) | one 4×4 pocket |
+| Oil-rich ground (shale) | Semi-arid (shale fields) | one 4×4 pocket |
+| Oil (tar) | Desert (tar pits) | one 4×4 pocket |
+| Sand floor (sand, darksand) | Desert (the whole biome) | one 4×4 pocket of darksand |
+| Slag (lava) | Volcano (crater lake, pools) | one 4×4 pocket |
+| Pyroplasma (pyromagma) | Volcano (creeks) | one 4×4 pocket |
+| Heat (hotrock, magmarock) | Volcano (the whole biome) | one 4×4 pocket of magmarock |
 
 Each base's pockets sit together in its **resource garden**, inside the rampart behind the core: a 3×3
-grid of 3×3 pockets, 6 tiles apart. A 3×3 pocket is enough for one 2×2 thermal generator, a pump or a
-drill. The biome floors are chosen so that no biome has any other biome's resource floor outside its
-garden; for example, the river banks in the forest are mud, not darksand. The checks count every base
-(usable tiles, not under a wall):
+grid of 4×4 pockets (16 tiles each), 7 tiles apart. A 4×4 pocket takes four 2×2 thermal generators or
+pumps, or one 4×4 block.
 
-| Base | Home resources (usable tiles) | Every other resource |
-|---|---|---|
-| Frozen | cryofluid 1,829; glowing vein 1,261 | 9 tiles each (8 pockets) |
-| Semi-arid | shale 31,283 | 9 tiles each (9 pockets) |
-| Desert | sand floor 104,611; tar 793 | 9 tiles each (8 pockets) |
-| Volcano | hotrock/magmarock 16,223; pyromagma 956; slag 765 | 9 tiles each (7 pockets) |
-| Forest | water 3,528; spore moss 1,930 | 9 tiles each (8 pockets) |
+The biome floors are chosen so that no biome has any other biome's resource floor outside its garden;
+for example, the river banks in the forest are mud, not darksand.
+
+**Arkycite** is Erekir's liquid floor: "Arkycita" in the Portuguese game text, block `arkycite-floor`.
+- **Use:** Erekir's chemical combustion chamber, pyrolysis generator and neoplasia reactor. Since the
+  planet is set to <Any>, these can be built.
+- **Where:** it has no home biome. Every base has one round pool of 37 tiles inside its rampart, at the
+  same spot.
+- **Ground units:** they drown in it, as in deep water, so the middle of the pool is closed to them.
+
+The checks count every base (usable tiles, not under a wall):
+
+| Base | Home resources (usable tiles) | Every other resource | Arkycite |
+|---|---|---|---|
+| Frozen | cryofluid 1,829; glowing vein 1,261 | 16 tiles each (8 pockets) | 37 |
+| Semi-arid | shale 31,253 | 16 tiles each (9 pockets) | 37 |
+| Desert | sand floor 104,518; tar 793 | 16 tiles each (8 pockets) | 37 |
+| Volcano | hotrock/magmarock 16,223; pyromagma 956; slag 765 | 16 tiles each (7 pockets) | 37 |
+| Forest | water 3,528; spore moss 1,930 | 16 tiles each (8 pockets) | 37 |
 
 The Rift is neutral and holds the lagoon: 4,297 tiles of water and 745 of cryofluid.
 
@@ -167,7 +184,7 @@ biome's leaning):
 | siratla crystal | 17 | 5 | 12 | 12 | 10 | 2 |
 
 **Lava.** The same two data patches as on the other maps let thermal generators stand anywhere on molten
-slag and pyromagma. All 1,348 2×2 spots fully on lava are placeable, including the slag pockets in the
+slag and pyromagma. All 1,388 2×2 spots fully on lava are placeable, including the slag pockets in the
 gardens.
 
 ---
@@ -257,7 +274,7 @@ factor. The map description in the game lists the values of its level.
 
   They cannot come closer, because the fortress square keeps water at least 24 tiles from every core.
   Long-range boats can still shell the base from there.
-- **Other bases.** The other three bases have only their 3×3 water pocket. They can build boats, but the
+- **Other bases.** The other three bases have only their 4×4 water pocket. They can build boats, but the
   pocket has no way out.
 
 ---
@@ -267,15 +284,17 @@ factor. The map description in the game lists the values of its level.
 `python wf_generate.py --map biomes-warfront` re-reads the written file with the game's own region
 checks and then tests:
 - **Map file:** names, spawn marks and wave groups (no boat on dry ground); the 37 ore filters; both data
-  patches; thermal generators on all 1,348 lava spots.
+  patches; thermal generators on all 1,388 lava spots.
 - **PvP setup:**
   - five cores with the right teams;
   - the rules: PvP, attack mode, waves from team 6 with the RTS AI, flyers from the spawns;
   - the world processor: team 6, code that passes a check mirroring the game's logic parser, and every
     core looked after twice (decide and upkeep);
   - every fortress square clear of walls and liquids.
-- **Resources:** every base has every resource; each foreign one 1–9 usable tiles, each home one 300 or
-  more.
+- **Resources:** every base has every resource:
+  - each foreign one 1–16 usable tiles;
+  - each home one 300 or more;
+  - arkycite 30–60 (37 in every base).
 - **Ground routes:** every wave spawn reaches every base, and every base reaches every other.
 - **10 barrier tests** under the game's allDeep rule:
   - With a base's three gates closed, the wave spawn facing it cannot reach its core (rampart and

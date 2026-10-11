@@ -6,9 +6,9 @@ gates and a resource garden. All bases sit at the same distance from the centre 
 garden and pads; only the biome around them differs.
 
 Resources: every floor resource of sys_config.cdtResourceFloors has one home biome, where there is a
-lot of it. Every other base gets exactly one 3x3 pocket of it in its garden, and the biome palettes never
-paint a foreign resource floor anywhere else. Ores are rolled by the game on every load, as on the other
-maps.
+lot of it. Every other base gets exactly one 4x4 pocket of it in its garden, and the biome palettes never
+paint a foreign resource floor anywhere else. Arkycite has no home: every base gets the same small pool of
+it. Ores are rolled by the game on every load, as on the other maps.
 
 The Rift is a neutral basin around Confluence Lagoon. The five wave spawns stand on its shore, one facing
 each base; the RTS AI of the wave team sends every squad at a target it picks among all players
@@ -59,8 +59,12 @@ cdtGatePhi = {"Rift": 0.0, "left": 100.0, "right": -100.0}   # left faces the ne
 cGateHalf = 8.0
 carPadPhi = (40.0, -40.0, 145.0, -145.0)
 cPadDistance = 50.0
-cGardenDistance = 48.0         # resource garden behind the core (phi 180): 3x3 grid of 3x3 pockets
-cGardenStep = 6
+cGardenDistance = 48.0         # resource garden behind the core (phi 180): 3x3 grid of 4x4 pockets
+cGardenStep = 7
+cPocketSize = 4
+cArkycitePhi = 120.0           # arkycite pool, the same in every base: local angle, distance, radius
+cArkyciteDistance = 44.0
+cArkyciteRadius = 3.6          # 37 tiles around a whole-tile centre
 cHarbourDistance = 44.0
 cHarbourPool = 8.0
 cHarbourReach = 40.0           # boats raiding a river base come to rest in its harbour, this close to the core
@@ -71,6 +75,7 @@ cdtHomes = {  # resource group (sys_config.cdtResourceFloors) -> home biome
     "water": cForest, "cryofluid": cFrozen, "oil (tar)": cDesert, "oil-rich ground (shale)": cSemiarid,
     "slag (lava)": cVolcano, "pyroplasma (pyromagma)": cVolcano, "cold plasma (glowing vein)": cFrozen,
     "heat (hotrock/magmarock)": cVolcano, "spore moss": cForest, "sand floor (sand/darksand)": cDesert,
+    "arkycite": None,          # no home: one equal pool in every base
 }
 cdtPocketFloor = {
     "water": "shallow-water", "cryofluid": "pooled-cryofluid", "oil (tar)": "tar",
@@ -78,8 +83,9 @@ cdtPocketFloor = {
     "cold plasma (glowing vein)": "glowingvein", "heat (hotrock/magmarock)": "magmarock",
     "spore moss": "spore-moss", "sand floor (sand/darksand)": "darksand",
 }
-cPocketCap = 9                 # one 3x3 pocket
+cPocketCap = cPocketSize * cPocketSize    # one pocket
 cHomeMin = 300                 # usable tiles of each home resource, at least
+carSharedRange = (30, 60)      # usable tiles of a resource without a home (arkycite), in every base
 
 # Rivers: from a harbour inside the forest / frozen rampart to Confluence Lagoon (set up in fnRiverPoints).
 cLagoonRadius = 26.0
@@ -114,8 +120,9 @@ carNoDecorFloors = sys_config.carLiquidFloors | {"glowingvein", "core-zone", "me
 cDescription = (
     "[accent]800x800 PvP for 5 players, built for Exogenesis Old.[]\n"
     "Five bases, one per biome: frozen north, semi-arid east, desert south-east, volcano south-west and "
-    "forest west. Every base has every floor resource: plenty of its own biome's, and one small pocket of "
-    "each other in its resource garden. Waves rise from the Rift in the middle and strike any base. "
+    "forest west. Every base has every floor resource: plenty of its own biome's, one small pocket of "
+    "each other in its resource garden, and a pool of arkycite. Waves rise from the Rift in the middle and "
+    "strike any base. Bases are handed out at random. "
     "Boats sail Greenwater and Rimeflow between the forest and frozen bases. A slot nobody takes becomes a "
     "defender fortress after %d minutes; it never attacks, but must be destroyed to win. Ore nodes are "
     "re-rolled every time the map is loaded; thermal generators work anywhere on lava."
@@ -533,7 +540,7 @@ class clWarfrontTerrain:
                 for vTx in range(int(vX + 0.5 - vK), int(vX + 0.5 + vK) + 1)]
 
     def fnGardenSlots(self, vBiome):
-        """Centres of the nine 3x3 pocket slots of a base's resource garden, nearest first."""
+        """Centre tiles of the nine pocket slots of a base's resource garden, nearest first."""
         vGx, vGy = fnLocal(vBiome, 180.0, cGardenDistance)
         vA = (cdtAxis[vBiome] + 180.0 + 180.0) * cDeg        # outward
         vUx, vUy = math.cos(vA), math.sin(vA)
@@ -550,8 +557,11 @@ class clWarfrontTerrain:
             for i in self.fnKeepSquare(vBiome):
                 self.arKeep[i] = 1
             for vSx, vSy in self.fnGardenSlots(vBiome):
-                for i, _ in self.sGrid.fnDisc(vSx, vSy, 4.5):
+                for i, _ in self.sGrid.fnDisc(vSx + 0.5, vSy + 0.5, 5.5):
                     self.arKeep[i] = 1
+            vAx, vAy = fnLocal(vBiome, cArkycitePhi, cArkyciteDistance)
+            for i, _ in self.sGrid.fnDisc(vAx, vAy, cArkyciteRadius + 6.0):
+                self.arKeep[i] = 1
             for vPhi in carPadPhi:
                 vPx, vPy = fnLocal(vBiome, vPhi, cPadDistance)
                 for i, _ in self.sGrid.fnDisc(vPx, vPy, 10.0):
@@ -692,14 +702,17 @@ class clWarfrontTerrain:
                                     "biome": carRegionNames[vBiome], "x": vX, "y": vY})
 
     def vsGardens(self):
-        """One 3x3 pocket of every foreign resource in each base's garden."""
+        """One 4x4 pocket of every foreign resource in each base's garden (an even-sized pocket covers
+        c-1..c+2 like an even-sized block), and the arkycite pool."""
+        arOffsets = range(-((cPocketSize - 1) // 2), cPocketSize // 2 + 1)
         for vBiome in carBiomes:
-            arForeign = [g for g in sys_config.cdtResourceFloors if cdtHomes[g] != vBiome]
+            arForeign = [g for g in sys_config.cdtResourceFloors if cdtHomes[g] not in (vBiome, None)]
             arSlots = self.fnGardenSlots(vBiome)
+            assert len(arForeign) <= len(arSlots)
             dtGarden = {}
             for vGroup, (vSx, vSy) in zip(arForeign, arSlots):
-                for vDy in (-1, 0, 1):
-                    for vDx in (-1, 0, 1):
+                for vDy in arOffsets:
+                    for vDx in arOffsets:
                         i = (vSy + vDy) * cWidth + vSx + vDx
                         self.vsOpen(i)
                         self.arFloor[i] = cdtPocketFloor[vGroup]
@@ -709,6 +722,12 @@ class clWarfrontTerrain:
             self.dtGarden[vBiome] = dtGarden
             vGx, vGy = fnLocal(vBiome, 180.0, cGardenDistance)
             self.dtMarkers["%s Garden" % cdtBases[vBiome][3]] = (int(round(vGx)), int(round(vGy)))
+            vAx, vAy = fnLocal(vBiome, cArkycitePhi, cArkyciteDistance)
+            vAx, vAy = int(round(vAx)), int(round(vAy))         # whole-tile centre: the same pool everywhere
+            for i, _ in self.sGrid.fnDisc(vAx, vAy, cArkyciteRadius):
+                self.vsOpen(i)
+                self.vsSetFloor(i, "arkycite-floor", 1)
+            self.dtMarkers["%s Arkycite Pool" % cdtBases[vBiome][3]] = (vAx, vAy)
 
     def vsSpawnsAndPlazas(self):
         for vBiome in carBiomes:
@@ -843,7 +862,7 @@ class clWarfrontTerrain:
             arPads=self.arPads, arBarrierTests=self.fnBarrierTests(), arNotes=self.arNotes, sMatch="pvp",
             arTeamCores=arCores, arNavalLinks=arLinks,
             dtResourceRules={"homes": dict(cdtHomes), "bases": list(carBiomes), "pocketCap": cPocketCap,
-                             "homeMin": cHomeMin})
+                             "homeMin": cHomeMin, "sharedRange": carSharedRange})
 
 
 class clBiomesWarfront(cm_layout.clLayout):

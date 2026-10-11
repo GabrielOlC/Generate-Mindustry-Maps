@@ -16,8 +16,8 @@
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
   "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Warfront (Eradication).msav",
-  "file_bytes": 87478,
-  "uncompressed_bytes": 318558,
+  "file_bytes": 87618,
+  "uncompressed_bytes": 319147,
   "spawns": {
     "Rift spawn toward Frozen": [
       400,
@@ -289,6 +289,10 @@
       258,
       293
     ],
+    "Desert Arkycite Pool": [
+      541,
+      142
+    ],
     "Desert Garden": [
       587,
       143
@@ -304,6 +308,10 @@
     "Desert Volcano Gate": [
       510,
       131
+    ],
+    "Forest Arkycite Pool": [
+      134,
+      526
     ],
     "Forest Frozen Gate": [
       153,
@@ -328,6 +336,10 @@
     "Frostwood Pass": [
       207,
       629
+    ],
+    "Frozen Arkycite Pool": [
+      438,
+      692
     ],
     "Frozen Forest Gate": [
       330,
@@ -373,6 +385,10 @@
       679,
       290
     ],
+    "Steppe Arkycite Pool": [
+      690,
+      454
+    ],
     "Steppe Desert Gate": [
       690,
       420
@@ -388,6 +404,10 @@
     "Steppe Rift Gate": [
       589,
       461
+    ],
+    "Volcano Arkycite Pool": [
+      197,
+      187
     ],
     "Volcano Desert Gate": [
       290,
@@ -420,11 +440,11 @@
       "The Rift": 45213
     },
     "walkable_tiles": {
-      "Frozen (N)": 93758,
-      "Semi-arid (E)": 89228,
-      "Desert (SE)": 106946,
-      "Volcano (SW)": 96969,
-      "Forest (W)": 79559,
+      "Frozen (N)": 93707,
+      "Semi-arid (E)": 89170,
+      "Desert (SE)": 106895,
+      "Volcano (SW)": 96918,
+      "Forest (W)": 79501,
       "The Rift": 41135
     },
     "special_floors": {
@@ -432,49 +452,53 @@
         "heat (hotrock/magmarock)": 20342,
         "slag (lava)": 765,
         "pyroplasma (pyromagma)": 956,
-        "sand floor (sand/darksand)": 9,
-        "oil (tar)": 9,
-        "water": 9,
-        "spore moss": 9,
-        "cryofluid": 9,
-        "oil-rich ground (shale)": 9,
-        "cold plasma (glowing vein)": 9
+        "sand floor (sand/darksand)": 16,
+        "oil (tar)": 16,
+        "water": 16,
+        "spore moss": 16,
+        "cryofluid": 16,
+        "oil-rich ground (shale)": 16,
+        "cold plasma (glowing vein)": 16,
+        "arkycite": 37
       },
       "Desert (SE)": {
-        "sand floor (sand/darksand)": 127278,
+        "sand floor (sand/darksand)": 127185,
         "oil (tar)": 793,
-        "spore moss": 9,
-        "heat (hotrock/magmarock)": 9,
-        "cryofluid": 9,
-        "water": 9,
-        "pyroplasma (pyromagma)": 9,
-        "oil-rich ground (shale)": 9,
-        "slag (lava)": 9,
-        "cold plasma (glowing vein)": 9
+        "spore moss": 16,
+        "heat (hotrock/magmarock)": 16,
+        "cryofluid": 16,
+        "arkycite": 37,
+        "water": 16,
+        "pyroplasma (pyromagma)": 16,
+        "oil-rich ground (shale)": 16,
+        "slag (lava)": 16,
+        "cold plasma (glowing vein)": 16
       },
       "Semi-arid (E)": {
-        "oil-rich ground (shale)": 40202,
-        "pyroplasma (pyromagma)": 9,
-        "cryofluid": 9,
-        "spore moss": 9,
-        "slag (lava)": 9,
-        "water": 9,
-        "heat (hotrock/magmarock)": 9,
-        "cold plasma (glowing vein)": 9,
-        "oil (tar)": 9,
-        "sand floor (sand/darksand)": 9
+        "oil-rich ground (shale)": 40172,
+        "arkycite": 37,
+        "pyroplasma (pyromagma)": 16,
+        "cryofluid": 16,
+        "spore moss": 16,
+        "slag (lava)": 16,
+        "water": 16,
+        "heat (hotrock/magmarock)": 16,
+        "cold plasma (glowing vein)": 16,
+        "oil (tar)": 16,
+        "sand floor (sand/darksand)": 16
       },
       "Forest (W)": {
         "spore moss": 2482,
         "water": 3631,
-        "cold plasma (glowing vein)": 9,
-        "oil-rich ground (shale)": 9,
-        "slag (lava)": 9,
-        "cryofluid": 9,
-        "heat (hotrock/magmarock)": 9,
-        "pyroplasma (pyromagma)": 9,
-        "oil (tar)": 9,
-        "sand floor (sand/darksand)": 9
+        "cold plasma (glowing vein)": 16,
+        "oil-rich ground (shale)": 16,
+        "slag (lava)": 16,
+        "cryofluid": 16,
+        "heat (hotrock/magmarock)": 16,
+        "pyroplasma (pyromagma)": 16,
+        "oil (tar)": 16,
+        "sand floor (sand/darksand)": 16,
+        "arkycite": 37
       },
       "The Rift": {
         "water": 4297,
@@ -483,14 +507,15 @@
       "Frozen (N)": {
         "cryofluid": 1857,
         "cold plasma (glowing vein)": 1779,
-        "heat (hotrock/magmarock)": 9,
-        "slag (lava)": 9,
-        "pyroplasma (pyromagma)": 9,
-        "oil-rich ground (shale)": 9,
-        "water": 9,
-        "oil (tar)": 9,
-        "spore moss": 9,
-        "sand floor (sand/darksand)": 9
+        "arkycite": 37,
+        "heat (hotrock/magmarock)": 16,
+        "slag (lava)": 16,
+        "pyroplasma (pyromagma)": 16,
+        "oil-rich ground (shale)": 16,
+        "water": 16,
+        "oil (tar)": 16,
+        "spore moss": 16,
+        "sand floor (sand/darksand)": 16
       }
     }
   },
@@ -607,11 +632,11 @@
       "Frozen (N)": {
         "ore-titanium": 1382,
         "ore-siradamite": 1229,
-        "ore-stellar-steel": 1051,
+        "ore-stellar-steel": 1049,
         "ore-copper": 906,
         "ore-scrap": 834,
         "ore-beryllium": 811,
-        "ore-thorium": 776,
+        "ore-thorium": 775,
         "ore-dytrix": 724,
         "ore-coal": 679,
         "ore-lead": 668,
@@ -623,31 +648,31 @@
         "ore-dytrix": 1152,
         "ore-thorium": 906,
         "ore-copper": 841,
-        "ore-scrap": 839,
         "ore-beryllium": 838,
+        "ore-scrap": 834,
         "ore-titanium": 796,
         "ore-tungsten": 747,
-        "ore-stellar-steel": 718,
+        "ore-stellar-steel": 715,
         "ore-lead": 662,
-        "ore-coal": 661,
+        "ore-coal": 660,
         "ore-siradamite": 643,
         "ore-urbium": 519,
         "siratla-crystal": 142
       },
       "Desert (SE)": {
-        "ore-scrap": 1494,
+        "ore-scrap": 1492,
         "ore-urbium": 1371,
-        "ore-copper": 1204,
+        "ore-copper": 1203,
         "ore-thorium": 1055,
         "ore-titanium": 1043,
-        "ore-lead": 843,
+        "ore-lead": 842,
         "ore-siradamite": 839,
         "ore-beryllium": 823,
         "ore-coal": 814,
         "ore-dytrix": 807,
-        "ore-tungsten": 788,
+        "ore-tungsten": 786,
         "ore-stellar-steel": 653,
-        "siratla-crystal": 417
+        "siratla-crystal": 416
       },
       "Volcano (SW)": {
         "ore-thorium": 1538,
@@ -659,22 +684,22 @@
         "ore-scrap": 760,
         "ore-lead": 694,
         "ore-titanium": 674,
-        "ore-dytrix": 649,
+        "ore-dytrix": 648,
         "ore-stellar-steel": 543,
-        "ore-urbium": 540,
+        "ore-urbium": 539,
         "siratla-crystal": 349
       },
       "Forest (W)": {
-        "ore-coal": 988,
+        "ore-coal": 986,
         "ore-lead": 803,
-        "ore-urbium": 717,
+        "ore-urbium": 715,
         "ore-stellar-steel": 677,
-        "ore-titanium": 646,
-        "ore-siradamite": 623,
-        "ore-tungsten": 598,
+        "ore-titanium": 645,
+        "ore-siradamite": 622,
+        "ore-tungsten": 596,
         "ore-copper": 596,
         "ore-scrap": 590,
-        "ore-thorium": 589,
+        "ore-thorium": 586,
         "ore-beryllium": 507,
         "ore-dytrix": 504,
         "siratla-crystal": 286
@@ -1690,9 +1715,14 @@
       "cold plasma (glowing vein)": "Frozen (N)",
       "heat (hotrock/magmarock)": "Volcano (SW)",
       "spore moss": "Forest (W)",
-      "sand floor (sand/darksand)": "Desert (SE)"
+      "sand floor (sand/darksand)": "Desert (SE)",
+      "arkycite": "every base"
     },
-    "pocket_cap_tiles": 9,
-    "home_min_tiles": 300
+    "pocket_cap_tiles": 16,
+    "home_min_tiles": 300,
+    "shared_range_tiles": [
+      30,
+      60
+    ]
   }
 }
