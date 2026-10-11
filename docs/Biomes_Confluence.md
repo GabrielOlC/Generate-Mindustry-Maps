@@ -34,7 +34,8 @@ start it as **Survival**. The rules are the same as on Biomes Extended Remastere
 - on Normal, 7 minutes to set up before wave 1, then one wave every 150 s, endless (other
   difficulties scale both, see section 5);
 - a unit cap of 24 plus the core bonus;
-- a starting loadout of 700 copper and 300 lead.
+- a starting loadout of 700 copper and 300 lead;
+- the planet set to **<Any>**, so Serpulo, Erekir and Exogenesis blocks can all be built.
 
 To regenerate the map: `python wf_generate.py --map biomes-confluence [--difficulty <level>]`. Leaving
 the difficulty out gives Eradication, the hardest (README section 8).

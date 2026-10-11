@@ -212,7 +212,8 @@ Compare these files at the new tag against v159.7:
 - `entities/comp/BuildingComp.java` (`writeBase`) and `world/blocks/storage/CoreBlock.java`
   (`CoreBuild.version/write`), which define the core chunk.
 - `content/Blocks.java` (order of the first blocks, environment block names, `isLiquid`/`drownTime` of
-  the liquid floors), `game/Rules.java` (field names) and `game/SpawnGroup.java` (wave JSON keys).
+  the liquid floors), `game/Rules.java` (field names; `planet` "sun" is the rules dialog's "<Any>", see
+  `ui/dialogs/CustomRulesDialog.java`) and `game/SpawnGroup.java` (wave JSON keys).
 - Ore filters: `maps/filters/GenerateFilter.java` (noise call, `randomize`), `OreFilter.java` and
   `NoiseFilter.java` (fields and conditions), `core/World.java` (`FilterContext.applyFilters`),
   `io/JsonIO.java` (filter class tags, unknown blocks → `air`) and Arc's `util/noise/Simplex.java` at

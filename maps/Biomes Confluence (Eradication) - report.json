@@ -16,8 +16,8 @@
   "game": "Mindustry v8 build 159.7 (save version 13)",
   "mod": "Exogenesis Old (exogenesisold 1.9.1)",
   "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Confluence (Eradication).msav",
-  "file_bytes": 102852,
-  "uncompressed_bytes": 376567,
+  "file_bytes": 102868,
+  "uncompressed_bytes": 376582,
   "spawns": {
     "North spawn (Frozen, harbour)": [
       380,
@@ -911,6 +911,7 @@
     "unitCap": 24,
     "unitCapVariable": true,
     "dropZoneRadius": 300.0,
+    "planet": "sun",
     "loadout": [
       {
         "item": "copper",
@@ -928,7 +929,7 @@
     }
   },
   "spawn_groups": 133,
-  "rules_json_bytes": 14769,
+  "rules_json_bytes": 14784,
   "wave_summary": [
     {
       "wave": 1,

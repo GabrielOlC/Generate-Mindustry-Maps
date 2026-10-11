@@ -73,7 +73,8 @@ under *Map Info → Rules / Waves*.
 **Built-in rules:** on Normal, 7 minutes to set up before wave 1, then one wave every 150 s; the other
 difficulties scale both times (section 6). Players may call waves early. The waves never end. Spawn
 points are visible. Each unit type has a cap of 24, plus 16 from the Foundation core (more with bigger
-cores). The starting loadout is 700 copper and 300 lead.
+cores). The starting loadout is 700 copper and 300 lead. The planet is set to **<Any>** (the editor's
+planet option), so Serpulo, Erekir and Exogenesis blocks can all be built on the same map.
 
 **Difficulty.** Each difficulty is its own map file, named after it: "Biomes Extended Remastered
 (Hard)" and so on; Normal keeps the plain name. The levels are the game's own (section 6).
@@ -448,7 +449,7 @@ checks. Only the layout differs, and a new map type is one new file in `layouts/
 | File | What to change there |
 |---|---|
 | `wf_generate.py` | The controller: asks for the map type and runs it (no need to touch) |
-| `sys_config.py` | Shared by all maps: the difficulty levels (`cdtDifficulties`), wave timer, first-wave delay, unit cap, loadout (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
+| `sys_config.py` | Shared by all maps: the difficulty levels (`cdtDifficulties`), wave timer, first-wave delay, unit cap, loadout, planet (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
 | `ores.py` | The in-game ore filters: map-wide layer per ore (`WIDESPREAD`: scale = how many patches, threshold = how big), biome tendencies (`TENDENCIES`), siratla crystal (`CRYSTAL_HOSTS`), ore-free floors (`CLEAR_FLOORS`) |
 | `waves.py` | Every spawn group, and the land stand-ins for boats on maps without water routes (`cdtNavalSwap`) |
 | `generate_map.py` | This map's layout: spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), map name |

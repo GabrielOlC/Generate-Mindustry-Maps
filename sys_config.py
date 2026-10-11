@@ -119,6 +119,10 @@ cdtMatchRules = {
     "unitCap": 24,                  # + core bonus (foundation +16)
     "unitCapVariable": True,
     "dropZoneRadius": 300.0,
+    # Planet "<Any>" of the rules dialog (CustomRulesDialog @ v159.7): Planets.sun enables mixed tech, so
+    # Serpulo, Erekir and mod blocks can all be built (UnlockableContent.isOnPlanet). Env and attributes
+    # keep their defaults, as that button sets them.
+    "planet": "sun",
     "loadout": [
         {"item": "copper", "amount": 700},
         {"item": "lead", "amount": 300},
