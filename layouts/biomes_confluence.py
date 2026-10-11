@@ -30,14 +30,14 @@ carBorders = (22.0, 68.0, 135.0, 205.0, 285.0)
 
 cdtSpawns = {
     "frozen": (380, 764),      # harbour: head of Rimeflow
-    "semiarid": (730, 730),
-    "desert": (776, 360),
+    "semiarid": (774, 774),    # top-right corner
+    "desert": (774, 26),       # bottom-right corner
     "forest": (38, 455),       # harbour: head of Greenwater
-    "volcano": (70, 70),
+    "volcano": (26, 26),       # bottom-left corner
 }
 carNavalSpawnKeys = ("forest", "frozen")
 cdtSpawnLabels = {"frozen": "North spawn (Frozen, harbour)", "semiarid": "North-east spawn (Semi-arid)",
-                  "desert": "East spawn (Desert)", "forest": "West spawn (Forest, harbour)",
+                  "desert": "South-east spawn (Desert)", "forest": "West spawn (Forest, harbour)",
                   "volcano": "South-west spawn (Volcano)"}
 cdtRouteColors = {"frozen": (0, 190, 255), "semiarid": (255, 150, 0), "desert": (235, 215, 0),
                   "forest": (40, 200, 60), "volcano": (255, 50, 50)}

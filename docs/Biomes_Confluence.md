@@ -12,7 +12,7 @@ in the west and **Rimeflow** (cryofluid) from the frozen north.
 | Size | 800 × 800 tiles (640,000) |
 | Mode | Survival / PvE, endless waves, five difficulty levels (same rules and wave list as Biomes Extended Remastered) |
 | Player core | Core: Foundation at the centre (tiles 399–402 × 399–402), beside the lagoon |
-| Enemy spawns | 5 spawn points, one per biome; the forest and frozen spawns are **harbours** on water |
+| Enemy spawns | 5 spawn points, one per biome; the forest and frozen spawns are **harbours** on water, the other three sit in the map's corners |
 | Naval routes | Greenwater and Rimeflow into the lagoon; boats come to rest 9.5 tiles from the core |
 | Ore nodes | Random on every load: about 1,270 patches per game, all 12 ores + siratla crystal in every biome |
 | Lava | Thermal generators can be built anywhere on it (molten slag and pyromagma) |
@@ -56,10 +56,10 @@ gate → core.
 | Direction | Biome | Spawn (x, y) | Barrier and its choke points | Gate |
 |---|---|---|---|---|
 | North | Frozen / glacier | (380, 764), harbour | **Glacier Wall**: Rime Pass, Hoarfrost Pass | North Gate |
-| North-east | Semi-arid steppe | (730, 730) | **Ochre Mesa**: Ochre Canyon, Wind Gap | North-east Gate |
-| East | Desert | (776, 360) | **Dune Wall**: Glass Gap, Mirage Pass, Saltwind Breach | East Gate |
+| North-east | Semi-arid steppe | (774, 774), top-right corner | **Ochre Mesa**: Ochre Canyon, Wind Gap | North-east Gate |
+| South-east | Desert | (774, 26), bottom-right corner | **Dune Wall**: Glass Gap, Mirage Pass, Saltwind Breach | East Gate |
 | West | Forest | (38, 455), harbour | **Thornwood**: North Thorn Pass, South Thorn Pass | West Gate |
-| South-west | Volcano | (70, 70) | **lava river**: Cinder Bridge, Obsidian Bridge | South-west Gate |
+| South-west | Volcano | (26, 26), bottom-left corner | **lava river**: Cinder Bridge, Obsidian Bridge | South-west Gate |
 
 Features of each biome:
 - **Forest:** a spore-moss grove. Greenwater splits the lane, and Old Ford and Mill Ford let ground
@@ -85,17 +85,17 @@ Outpost pads (7×7 core-zone):
 
 ![Enemy routes](confluence-enemy-routes.png)
 
-*Each colour shows one spawn's near-shortest ground routes: cyan north, orange north-east, yellow east,
+*Each colour shows one spawn's near-shortest ground routes: cyan north, orange north-east, yellow south-east,
 green west, red south-west. Water tinted in a spawn's colour is the route its boats sail. Black is rock,
 blue is deep water or cryofluid, brown is lava, and white dots are choke points.*
 
 | Spawn | Ground route to the core | Choke points on it | Boats |
 |---|---|---|---|
 | North (Frozen) | 461 tiles | Rime Pass, North Gate | 479 tiles down Rimeflow |
-| North-east (Semi-arid) | 663 tiles | Last Oasis, Ochre Canyon, Wind Gap, North-east Gate | — |
-| East (Desert) | 495 tiles | Saltwind Breach, East Gate | — |
+| North-east (Semi-arid) | 751 tiles | Last Oasis, Ochre Canyon, Wind Gap, North-east Gate | — |
+| South-east (Desert) | 747 tiles | Glass Gap, East Gate | — |
 | West (Forest) | 494 tiles | Old Ford, South Thorn Pass, West Gate | 440 tiles down Greenwater |
-| South-west (Volcano) | 657 tiles | Cinder Bridge, South-west Gate | — |
+| South-west (Volcano) | 745 tiles | Cinder Bridge, South-west Gate | — |
 
 Flying units ignore all of this. They enter from the map edge in the direction of their spawn.
 
@@ -144,17 +144,17 @@ Ore patches (6+ tiles) per game, averaged over 5 simulated rolls of the in-game 
 | lead | 27 | 14 | 15 | **24** | 27 | **14** |
 | coal | 30 | 13 | 13 | **30** | 21 | 6 |
 | titanium | 25 | **24** | **35** | 23 | 20 | 7 |
-| scrap | **45** | 12 | 12 | 13 | 20 | 5 |
+| scrap | **45** | 12 | 12 | 13 | 21 | 5 |
 | thorium | 21 | 14 | 13 | 15 | **35** | 3 |
 | beryllium | 15 | 12 | 12 | 11 | **34** | 5 |
 | tungsten | 19 | 14 | 10 | 13 | **36** | 4 |
 | dytrix | 17 | **20** | 13 | 10 | 16 | 3 |
-| urbium | **36** | 10 | 14 | 12 | 14 | 4 |
+| urbium | **36** | 10 | 14 | 12 | 15 | 4 |
 | siradamite | 19 | 11 | **22** | 14 | 17 | 4 |
 | stellar steel | 21 | 9 | **17** | 13 | 17 | 4 |
 | siratla crystal | 14 | 4 | 13 | 8 | 11 | 2 |
 
-In total there are about 1,272 patches per game (median 34 tiles; 10–89 tiles for 80% of them). Bold
+In total there are about 1,273 patches per game (median 34 tiles; 10–89 tiles for 80% of them). Bold
 marks a biome's leaning; the desert is the largest biome, so it has many patches of everything.
 
 Special floors include:
