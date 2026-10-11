@@ -10,6 +10,8 @@ Downloads (standard library only, needs internet):
     filters and the data patch still mean what the generator assumes
   * the file list of github.com/AureusStratus/ExoGenesis (Exogenesis Old) - mod names are
     "exogenesisold-<file name>"
+  * on PvP maps: LStatements.java, LogicRule.java and FetchType.java at --tag, to confirm the defender
+    bots' world-processor code still parses (statements, team rules, fetch types, content names)
 A name the game does not know is silently replaced (blocks -> air/stone, units -> dagger), so this is
 the only way to catch typos or content renamed in a newer game version.
 """
@@ -108,6 +110,42 @@ def audit_patches(tag, patches, known_blocks):
     return problems
 
 
+def _fnEnumNames(java):
+    """Constant names of the first Java enum in a source file."""
+    vBody = java.split("{", 1)[1].split(";", 1)[0]
+    vBody = re.sub(r"//[^\n]*", "", vBody)
+    return {v.strip() for v in vBody.split(",") if v.strip()}
+
+
+def fnAuditLogic(vTag, arBuildings, arKnownBlocks, arKnownItems, arKnownUnits):
+    """Problems with world-processor code at this game tag (empty list = fine), and how many processors."""
+    import cm_bot
+    arCodes = [b["code"] for b in arBuildings if "code" in b]
+    if not arCodes:
+        return [], 0
+    arStatements = set(re.findall(r'@RegisterStatement\("(\w+)"\)', fetch(GAME_RAW % (vTag, "logic/LStatements.java"))))
+    arRules = _fnEnumNames(fetch(GAME_RAW % (vTag, "logic/LogicRule.java")))
+    arFetch = _fnEnumNames(fetch(GAME_RAW % (vTag, "logic/FetchType.java")))
+    arProblems = []
+    for sCode in arCodes:
+        arCheck, _, dtContent = cm_bot.fnCheckProgram(sCode)
+        arProblems += arCheck
+        for vLine in sCode.split("\n"):
+            arTokens = vLine.split("#", 1)[0].split()
+            if not arTokens or arTokens[0].endswith(":"):
+                continue
+            if arTokens[0] not in arStatements:
+                arProblems.append("statement %s does not exist" % arTokens[0])
+            elif arTokens[0] == "setrule" and arTokens[1] not in arRules:
+                arProblems.append("logic rule %s does not exist" % arTokens[1])
+            elif arTokens[0] == "fetch" and arTokens[1] not in arFetch:
+                arProblems.append("fetch type %s does not exist" % arTokens[1])
+        arProblems += ["logic block %s unknown" % n for n in sorted(dtContent["block"] - arKnownBlocks)]
+        arProblems += ["logic item %s unknown" % n for n in sorted(dtContent["item"] - arKnownItems)]
+        arProblems += ["logic unit %s unknown" % n for n in sorted(dtContent["unit"] - arKnownUnits)]
+    return sorted(set(arProblems)), len(arCodes)
+
+
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser()
@@ -156,6 +194,7 @@ def main():
     filter_names = {f[k] for f in filters for k in ("ore", "target", "floor", "block") if k in f}
     filter_problems = audit_filters(args.tag, filters, vanilla_blocks | mod_blocks)
     patch_problems = audit_patches(args.tag, info["patches"], vanilla_blocks | mod_blocks)
+    logic_problems, processors = fnAuditLogic(args.tag, info["buildings"], vanilla_blocks, vanilla_items, vanilla_units)
 
     print("game %s: %d blocks, %d units | Exogenesis Old: %d blocks, %d units"
           % (args.tag, len(vanilla_blocks), len(vanilla_units), len(mod_blocks), len(mod_units)))
@@ -168,8 +207,10 @@ def main():
     print("pinned wave spawns on spawn tiles: %s" % (pinned <= spawn_tiles))
     print("rules JSON: %d bytes, genfilters: %d bytes (limit 65535 each)"
           % (len(info["tags"]["rules"]), len(info["tags"].get("genfilters", ""))))
-    ok = (not (bad_blocks or bad_units or bad_effects or bad_items or filter_problems or patch_problems)
-          and pinned <= spawn_tiles)
+    if processors:
+        print("world processors: %d, problems: %s" % (processors, logic_problems or "none"))
+    ok = (not (bad_blocks or bad_units or bad_effects or bad_items or filter_problems or patch_problems
+               or logic_problems) and pinned <= spawn_tiles)
     print("All names valid." if ok else "PROBLEMS FOUND.")
     return 0 if ok else 1
 

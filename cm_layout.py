@@ -30,11 +30,24 @@ class clLayoutResult:
                            "region": fnInside(tile) or None}]: closing the named choke points (discs of
                            `radius`) must cut every ground path from start to goal inside the region
     dtRouteColors        {spawn key: (r, g, b)} for the routes image
+
+    PvP maps (sMatch "pvp") also give:
+    arTeamCores          [{"team": id, "key", "label", "x", "y", "region"}]: one core per player slot
+                         (sys_config.cdtPvpTeams); arCore is then only the camera position. Every core needs
+                         a clear square of sys_config.cBotKeep around it for a defender-bot fortress
+    arNavalLinks         [{"label", "start": (x, y), "core": (x, y), "reach": tiles}]: boats starting at
+                         `start` must come to rest within `reach` tiles of that core (naval raids between
+                         bases; cm_checks.cNavalReach when not given)
+    dtResourceRules      {"homes": {resource group: region index}, "bases": [region index],
+                          "pocketCap": tiles, "homeMin": tiles}: every base region holds every group of
+                          sys_config.cdtResourceFloors, at most pocketCap tiles of each foreign one and at
+                          least homeMin of each of its own
     """
 
     def __init__(self, vName, vDescription, vWidth, vHeight, arFloor, arOverlay, arWall, arCore, dtSpawns,
                  dtSpawnLabels, dtRouteColors, arRegion, arRegionNames, dtMarkers=None, arPads=None,
-                 arNavalSpawnKeys=(), dtSpawnAliases=None, arBarrierTests=(), arNotes=None):
+                 arNavalSpawnKeys=(), dtSpawnAliases=None, arBarrierTests=(), arNotes=None, sMatch="survival",
+                 arTeamCores=(), arNavalLinks=(), dtResourceRules=None):
         self.vName = vName
         self.vDescription = vDescription
         self.vWidth = vWidth
@@ -54,6 +67,17 @@ class clLayoutResult:
         self.dtSpawnAliases = dtSpawnAliases or {}
         self.arBarrierTests = list(arBarrierTests)
         self.arNotes = arNotes or []
+        self.sMatch = sMatch
+        self.arTeamCores = list(arTeamCores)
+        self.arNavalLinks = list(arNavalLinks)
+        self.dtResourceRules = dtResourceRules
+
+    def fnCores(self):
+        """[{"team", "x", "y", ...}] of every core block to write: the player cores of a PvP map, else the
+        one sharded core."""
+        if self.sMatch == "pvp":
+            return self.arTeamCores
+        return [{"team": 1, "key": None, "label": "Core", "x": self.arCore[0], "y": self.arCore[1]}]
 
 
 class clLayout:

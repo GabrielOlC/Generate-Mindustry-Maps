@@ -19,6 +19,11 @@ DATA_ASSET_PATCH = 0              # mindustry.mod.data.DataAssetType.patch.ordin
 CONTENT_TYPE_BLOCK = 1            # ContentType.block.ordinal()
 CORE_BUILD_REVISION = 1           # CoreBlock.CoreBuild.version()
 TEAM_SHARDED = 1
+cLogicBuildRevision = 4           # LogicBlock.LogicBuild.version()
+cLogicCodeFormat = 1              # first byte of LogicBlock.compress (config format version)
+cLogicMaxBytes = 1024 * 100       # LogicBlock.maxByteLen: longer code is refused as malformed
+cLogicMaxCompressed = 16000       # LogicBlock.maxCompressedLen (configs); world processors stay under it
+cPrivilegedLogic = {"world-processor"}
 
 # The reader replaces an unknown floor with the block whose *runtime* id equals Blocks.stone.id (33)
 # by looking that id up in this file's own table. Copying the first 34 runtime block ids keeps
@@ -51,19 +56,63 @@ def java_utf(text):
     return struct.pack(">H", len(out)) + bytes(out)
 
 
-def core_chunk(team_id=TEAM_SHARDED):
-    """Building data of a core: revision + Building.writeBase + CoreBuild.write."""
+def _fnBuildingBase(vRevision, vTeam):
+    """Building.version() + Building.writeBase for a fresh building of `vTeam`."""
     body = bytearray()
-    body += struct.pack(">b", CORE_BUILD_REVISION)
+    body += struct.pack(">b", vRevision)
     body += struct.pack(">f", 1.0e9)          # health; the reader caps it at the block's max health
     body += struct.pack(">B", 0x80)           # rotation 0 | "new format" flag
-    body += struct.pack(">B", team_id)
+    body += struct.pack(">B", vTeam)
     body += struct.pack(">B", 3)              # base version 3 (no fog visibility flags)
     body += struct.pack(">B", 1)              # enabled
     body += struct.pack(">B", 1 << 3)         # module bitmask: no item/power/liquid payloads follow
     body += struct.pack(">BB", 0, 0)          # efficiency, optionalEfficiency
+    return body
+
+
+def core_chunk(team_id=TEAM_SHARDED):
+    """Building data of a core: revision + Building.writeBase + CoreBuild.write."""
+    body = _fnBuildingBase(CORE_BUILD_REVISION, team_id)
     body += struct.pack(">ff", math.nan, math.nan)  # commandPos = null
     return bytes(body)
+
+
+def fnCompressLogic(sCode):
+    """LogicBlock.compress(code, no links): deflate(format byte, int length, UTF-8 code, int 0 links)."""
+    arCode = sCode.encode("utf-8")
+    if len(arCode) > cLogicMaxBytes:
+        raise ValueError("Logic code is %d bytes, over the game's %d" % (len(arCode), cLogicMaxBytes))
+    arData = zlib.compress(struct.pack(">bi", cLogicCodeFormat, len(arCode)) + arCode + struct.pack(">i", 0), 9)
+    if len(arData) > cLogicMaxCompressed:
+        raise ValueError("Compressed logic is %d bytes, over %d" % (len(arData), cLogicMaxCompressed))
+    return arData
+
+
+def fnLogicChunk(sCode, vTeam, vIpt):
+    """Building data of a privileged world processor: revision + Building.writeBase + LogicBuild.write
+    (revision 4) with the code, no links, no variables, no memory, `vIpt` instructions per tick, no tag,
+    no icon, no running wait timers and an empty accumulator."""
+    body = _fnBuildingBase(cLogicBuildRevision, vTeam)
+    arCompressed = fnCompressLogic(sCode)
+    body += struct.pack(">i", len(arCompressed)) + arCompressed
+    body += struct.pack(">ii", 0, 0)          # variables, memory
+    body += struct.pack(">h", vIpt)           # privileged: instructions per tick
+    body += struct.pack(">b", 0)              # TypeIO.writeString(tag = null)
+    body += struct.pack(">H", 0)              # iconTag
+    body += struct.pack(">H", 0)              # wait timers
+    body += struct.pack(">f", 0.0)            # accumulator
+    return bytes(body)
+
+
+def fnDecompressLogic(arData):
+    """LogicBuild.readCompressed: (code, number of links)."""
+    r = _Reader(zlib.decompress(arData))
+    r.b()                                     # format version, ignored for version 1
+    vLength = r.i()
+    if vLength > cLogicMaxBytes:
+        raise ValueError("Malformed logic data: %d bytes" % vLength)
+    sCode = r.take(vLength).decode("utf-8")
+    return sCode, r.i()
 
 
 def _region(data):
@@ -196,6 +245,29 @@ class _Reader:
         return raw.replace(b"\xc0\x80", b"\x00").decode("utf-8", errors="surrogatepass")
 
 
+def _fnReadLogicBuild(rd, vRevision):
+    """LogicBuild.read for a privileged processor (the parts after Building.readBase)."""
+    if vRevision < 1:
+        raise ValueError("Unsupported logic build revision %d" % vRevision)
+    sCode, vLinks = fnDecompressLogic(rd.take(rd.i()))
+    vVars = rd.i()
+    if vVars:
+        raise ValueError("Unexpected stored logic variables")
+    rd.take(rd.i() * 8)                       # memory, skipped by the game
+    vIpt = rd.h() if vRevision >= 2 else None
+    sTag, vIcon, vWaits, vAccumulator = None, 0, 0, 0.0
+    if vRevision >= 3:
+        if rd.b() != 0:
+            sTag = rd.utf()
+        vIcon = rd.unpack(">H")[0]
+    if vRevision >= 4:
+        vWaits = rd.unpack(">H")[0]
+        rd.take(vWaits * 6)
+        vAccumulator = rd.unpack(">f")[0]
+    return {"code": sCode, "links": vLinks, "ipt": vIpt, "tag": sTag, "icon": vIcon, "waits": vWaits,
+            "accumulator": vAccumulator}
+
+
 def validate_msav(path, known_blocks=None):
     """Re-reads a map file. Returns a summary dict; raises ValueError on any inconsistency."""
     with open(path, "rb") as fh:
@@ -291,11 +363,15 @@ def validate_msav(path, known_blocks=None):
                     health, rot, team, base_version, enabled, modules, eff, opt = rd.unpack(">fBBBBBBB")
                     if not (rot & 0x80) or base_version != 3 or modules != 8:
                         raise ValueError("Unexpected building base data")
-                    cmd = rd.unpack(">ff") if revision >= 1 else None
+                    building = {"block": blocks[block], "x": i % width, "y": i // width, "team": team,
+                                "revision": revision}
+                    if blocks[block] in cPrivilegedLogic:
+                        building.update(_fnReadLogicBuild(rd, revision))
+                    else:
+                        building["commandPos"] = rd.unpack(">ff") if revision >= 1 else None
                     if rd.pos - start != length:
                         raise ValueError("Building chunk length mismatch")
-                    stats["buildings"].append({"block": blocks[block], "x": i % width, "y": i // width,
-                                               "team": team, "revision": revision, "commandPos": cmd})
+                    stats["buildings"].append(building)
                 i += 1
             elif not had_data:
                 run = rd.ub()

@@ -3,6 +3,8 @@
 The preview shows the terrain with one simulated ore roll, spawns with their drop zones, outposts,
 choke points and the core. The routes image shows every spawn's near-shortest ground corridor in the
 spawn's colour; on maps with naval spawns, the water those spawns' boats sail along is tinted the same way.
+On a PvP map every player core is drawn in its team's colour, with the square a defender-bot fortress
+takes in the preview, and the routes image adds the naval links between the bases.
 """
 
 import struct
@@ -30,10 +32,23 @@ def fnWritePng(vPath, vWidth, vHeight, arPixels):
         sFile.write(arPng)
 
 
-def _fnCoreCentre(sResult):
-    """Visual centre of the core block (an even-sized block is centred between tiles)."""
+def _fnCoreCentres(sResult, arColor):
+    """[(x, y, colour)] of the visual centre of every core block (an even-sized block is centred between
+    tiles); PvE cores get `arColor`, PvP cores their team's colour."""
     vOffset = 0.5 if sys_config.cCoreSize % 2 == 0 else 0.0
-    return sResult.arCore[0] + vOffset, sResult.arCore[1] + vOffset
+    vPvp = sResult.sMatch == "pvp"
+    return [(d["x"] + vOffset, d["y"] + vOffset, sys_config.cdtTeamColors[d["team"]] if vPvp else arColor)
+            for d in sResult.fnCores()]
+
+
+def _vsSquare(sGrid, arPixels, vCx, vCy, vHalf, arColor):
+    """Outline of the square of Chebyshev half-size `vHalf` around (vCx, vCy)."""
+    vW, vH = sGrid.vWidth, sGrid.vHeight
+    for vX in range(int(vCx - vHalf), int(vCx + vHalf) + 1):
+        for vY in range(int(vCy - vHalf), int(vCy + vHalf) + 1):
+            if max(abs(vX - vCx), abs(vY - vCy)) >= vHalf - 1 and 0 <= vX < vW and 0 <= vY < vH:
+                vK = ((vH - 1 - vY) * vW + vX) * 3
+                arPixels[vK:vK + 3] = bytes(arColor)
 
 
 def _vsDot(sGrid, arPixels, vCx, vCy, vRad, arColor, vRing=False):
@@ -74,8 +89,11 @@ def vsRenderPreview(sResult, arFloor, arOverlay, vPath):
         _vsDot(sGrid, arPixels, dtPad["x"], dtPad["y"], 6, (0, 230, 230), vRing=True)
     for vMx, vMy in sResult.dtMarkers.values():
         _vsDot(sGrid, arPixels, vMx, vMy, 3.5, (255, 230, 0))
-    vCx, vCy = _fnCoreCentre(sResult)
-    _vsDot(sGrid, arPixels, vCx, vCy, 5, cCoreColor)
+    for vCx, vCy, arColor in _fnCoreCentres(sResult, cCoreColor):
+        if sResult.sMatch == "pvp":
+            _vsSquare(sGrid, arPixels, vCx, vCy, sys_config.cdtBotRules["wallRing"] + 1.5, arColor)
+            _vsDot(sGrid, arPixels, vCx, vCy, 7, (0, 0, 0))
+        _vsDot(sGrid, arPixels, vCx, vCy, 5, arColor)
     fnWritePng(vPath, vW, vH, arPixels)
 
 
@@ -84,7 +102,8 @@ def vsRenderRoutes(sResult, dtCorridors, dtNavalCorridors, vPath):
     vW, vH = sResult.vWidth, sResult.vHeight
     sGrid = cm_terrain.clGrid(vW, vH)
     arLayers = [(sResult.dtRouteColors[k], arTiles) for k, (_, _, arTiles) in dtCorridors.items()]
-    arLayers += [(sResult.dtRouteColors[k], arTiles) for k, (_, _, arTiles) in dtNavalCorridors.items()]
+    arLayers += [(sResult.dtRouteColors.get(k, cNavalSpawnColor), arTiles)
+                 for k, (_, _, arTiles) in dtNavalCorridors.items()]
     arPixels = bytearray(vW * vH * 3)
     for i in range(vW * vH):
         vX, vY = i % vW, i // vW
@@ -115,7 +134,7 @@ def vsRenderRoutes(sResult, dtCorridors, dtNavalCorridors, vPath):
             _vsDot(sGrid, arPixels, vSx, vSy, 3, cNavalSpawnColor)
     for dtPad in sResult.arPads:
         _vsDot(sGrid, arPixels, dtPad["x"], dtPad["y"], 4, (0, 230, 230))
-    vCx, vCy = _fnCoreCentre(sResult)
-    _vsDot(sGrid, arPixels, vCx, vCy, 7, (0, 0, 0))
-    _vsDot(sGrid, arPixels, vCx, vCy, 5, (255, 140, 0))
+    for vCx, vCy, arColor in _fnCoreCentres(sResult, (255, 140, 0)):
+        _vsDot(sGrid, arPixels, vCx, vCy, 7, (0, 0, 0))
+        _vsDot(sGrid, arPixels, vCx, vCy, 5, arColor)
     fnWritePng(vPath, vW, vH, arPixels)

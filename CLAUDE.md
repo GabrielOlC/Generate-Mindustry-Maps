@@ -1,16 +1,19 @@
 # Handoff notes for an AI assistant (or developer) maintaining this map generator
 
-Read `README.md` first for the map designs (biomes, resources, choke points, waves) and
-`docs/Biomes_Confluence.md` for the naval map. This file covers how the code works and what must not
-break.
+Read `README.md` first for the map designs (biomes, resources, choke points, waves),
+`docs/Biomes_Confluence.md` for the naval map and `docs/Biomes_Warfront.md` for the PvP map. This file
+covers how the code works and what must not break.
 
 ## What this is
 
-A stdlib-only Python framework that writes Mindustry PvE maps straight to the game's binary `.msav`
-format. There is no game engine involved. It has two map types (layouts) that share everything else:
-- `biomes-extended`: **"Biomes Extended Remastered"**, the original map (no naval routes).
-- `biomes-confluence`: **"Biomes Confluence"**, five biome lanes around a harbour core. Boats sail two
-  rivers, Greenwater (water) and Rimeflow (cryofluid), to the lagoon beside the core.
+A stdlib-only Python framework that writes Mindustry maps straight to the game's binary `.msav`
+format. There is no game engine involved. It has three map types (layouts) that share everything else:
+- `biomes-extended`: **"Biomes Extended Remastered"**, the original map (PvE, no naval routes).
+- `biomes-confluence`: **"Biomes Confluence"**, PvE: five biome lanes around a harbour core. Boats sail
+  two rivers, Greenwater (water) and Rimeflow (cryofluid), to the lagoon beside the core.
+- `biomes-warfront`: **"Biomes Warfront"**, PvP for 5: one walled base per biome sector, waves from the
+  Rift in the middle (RTS AI), defender bots for empty slots (a world processor), every floor resource
+  in every base (one home biome each, 3x3 pockets elsewhere).
 
 Targets and owner preferences:
 - Target game: **Mindustry v8 Build 159.7** (save format **13**).
@@ -35,7 +38,9 @@ Targets and owner preferences:
 python wf_generate.py                        # asks for the map type, then the difficulty (Enter = hardest)
 python wf_generate.py --map biomes-confluence --ore-rolls 5            # no --difficulty = the hardest
 python wf_generate.py --map biomes-extended --difficulty normal --ore-rolls 5
+python wf_generate.py --map biomes-warfront --ore-rolls 5
 python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/item/filter/patch name
+                                             # (and, on the PvP map, the world processor's code)
 ```
 - **What a run does:** each run takes ~1-2 min (+20-50 s per extra ore roll). It writes the .msav, a
   preview PNG, an enemy-routes PNG and a report JSON, then runs the map's checks. It must end with "All
@@ -44,8 +49,9 @@ python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/
   produce and check the original map. Both paths write the same file (verified: decoded map, both PNGs
   and the report are identical).
 - **After that:** look at the preview and routes PNGs. Update the numbers in `README.md` /
-  `docs/Biomes_Confluence.md` from the `... - report.json` if resources or waves changed, and copy the
-  PNGs into `docs/`. The documented ore numbers are averages of 5 simulated rolls, so regenerate with
+  `docs/Biomes_Confluence.md` / `docs/Biomes_Warfront.md` from the `... - report.json` if resources or
+  waves changed, and copy the PNGs into `docs/` (the PvP map writes `... - routes.png` instead of
+  `... - enemy routes.png`). The documented ore numbers are averages of 5 simulated rolls, so regenerate with
   `--ore-rolls 5` before copying them (roll 1, and so the preview, is the same with any roll count).
 
 ## Files
@@ -53,17 +59,19 @@ python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/
 | File | Layer | Role |
 |---|---|---|
 | `wf_generate.py` | controller | Lists the map types found in `layouts/` and the difficulty levels, asks for both (or `--map`, `--difficulty`; no difficulty = the hardest), routes them to the pipeline |
-| `sys_config.py` | core | Common configuration layer: mod prefix and blocks, liquid/deep/lava floors, floor heat, data patches, floor-to-wall palette, preview colours, match rules, **difficulty levels** (`cdtDifficulties`, `fnMapName`), pad/plaza floor conventions |
-| `cm_layout.py` | service | The layout contract (`clLayout`, `clLayoutResult`) and `fnFindLayouts` (plugin discovery) |
-| `cm_pipeline.py` | service | Shared pipeline for any layout: ore rolls, statistics, ground and naval routes, rules, `.msav` + re-decode, PNGs, report, checks |
+| `sys_config.py` | core | Common configuration layer: mod prefix and blocks, liquid/deep/lava floors, floor heat, data patches, floor-to-wall palette, preview colours, match rules, **difficulty levels** (`cdtDifficulties`, `fnMapName`), pad/plaza floor conventions, **PvP** teams, rules, wave team and defender bots (`cdtPvpTeams`, `cdtPvpRules`, `cdtPvpWaveTeamRules`, `cdtBotRules`, `cBotKeep`) |
+| `cm_layout.py` | service | The layout contract (`clLayout`, `clLayoutResult`, incl. the PvP fields `sMatch`, `arTeamCores`, `arNavalLinks`, `dtResourceRules`) and `fnFindLayouts` (plugin discovery) |
+| `cm_pipeline.py` | service | Shared pipeline for any layout: ore rolls, statistics, ground and naval routes, rules, `.msav` + re-decode, PNGs, report, checks. PvP: one core per team, the bots' world processor, base-to-base distances |
+| `cm_bot.py` | service | The defender bots' world-processor program (`fnBuildProgram`) and a static check that mirrors the game's logic parser (`fnCheckProgram`) |
 | `cm_terrain.py` | service | Size-independent terrain toolkit (`clGrid`): noise, discs, polylines/rivers, BFS, the naval flow field port, `fnAllDeep`, `vsSealDeepWalls` |
 | `cm_render.py` | service | PNG writer, preview and routes images |
 | `cm_checks.py` | service | Shared verification of a written map (see Invariants) |
 | `layouts/biomes_extended.py` | plugin | Adapter running `generate_map.MapBuilder` unchanged; its check is `check_map.main` |
 | `layouts/biomes_confluence.py` | plugin | The naval map (`clConfluenceTerrain`) |
+| `layouts/biomes_warfront.py` | plugin | The PvP map (`clWarfrontTerrain`) |
 | `ores.py` | shared | In-game ore filters (`build_filters`, `check_filters`, `to_json`) and a port of the game's Simplex noise + OreFilter/NoiseFilter to simulate rolls (`roll`, `measure`) |
 | `waves.py` | shared | All spawn groups (`build_groups`). `fnExpandGroups` fits them to a map (naval swap or naval pins), `fnBuildRules` builds the rules JSON, plus the wave statistics |
-| `msav.py` | shared | Save-format-13 writer (incl. embedded data patches) plus a validator that mirrors the game's reader |
+| `msav.py` | shared | Save-format-13 writer (incl. embedded data patches and world processors, `fnLogicChunk`) plus a validator that mirrors the game's reader (it decodes processor code too) |
 | `generate_map.py`, `check_map.py` | original | The original map's terrain (`MapBuilder`) and its own entry point / barrier tests |
 | `audit_names.py` | tool | Content-name audit against GitHub sources (game tag configurable with `--tag`) |
 
@@ -81,6 +89,11 @@ python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/
    them.
 4. Give `arBarrierTests` for every choke point that must seal something. If the map has water barriers,
    call `clGrid.vsSealDeepWalls` after the last wall is placed.
+5. A PvP map sets `sMatch="pvp"` and gives `arTeamCores` (one per player slot of
+   `sys_config.cdtPvpTeams`, each with a clear square of `sys_config.cBotKeep` for a bot fortress),
+   optionally `arNavalLinks` (boat raids that must arrive) and `dtResourceRules` (which biome is home to
+   which floor resource). The pipeline then adds the PvP rules, the cores and the bots' world processor;
+   the checks test all of it.
 
 ## Terrain order, which matters
 
@@ -93,6 +106,11 @@ python audit_names.py "maps\<map name>.msav" # needs internet; every block/unit/
   volcano/frozen/semi-arid/desert/forest features → keep-clear → natural walls → ridges → Harbour Wall
   → biome barriers → crater → map border → pads → spawns + plaza → decorations → connectivity (cuts
   natural walls only, never structural walls or liquids) → **seal** (`vsSealDeepWalls`, last).
+- **biomes-warfront**: noise → polar grid → roads (spawn → Rift gate, kept clear) → floors (palettes with
+  no foreign resource floor) → rivers → lagoon + harbours → Rift fords → volcano/frozen/desert/forest
+  features (liquids outside the bases, off the ridges and roads) → keep-clear → natural walls (none inside
+  ramparts) → ridges with flank passes → ramparts with gates and sluices → map border → pads → resource
+  gardens → spawns + plazas + fortress squares → decorations → connectivity → **seal** (last).
 - The pipeline then simulates the in-game ore filters on the finished terrain for the preview and the
   report (never written to the map).
 
@@ -187,10 +205,43 @@ floors in `ores.CLEAR_FLOORS`. `CB` is the biome by (warped) sector, used for fe
   name. A non-normal map's description ends with the game-style difficulty line (`fnDifficultyNote`).
   The terrain never depends on the difficulty.
 
+**PvP (biomes-warfront)**
+- **No team is AI in PvP** (`Team.isAI()` is false when `rules.pvp`), so units of every team get
+  `CommandAI` and stand still unless commanded. The base-builder AI is off in PvP (`Logic`: `buildAi &&
+  !pvp`), and `setrule` cannot switch `rtsAi`, `buildAi` or `cheat`. Hence:
+  - **Waves** come from a sixth team, neoplastic (`sys_config.cPvpWaveTeam` = 6), with `rtsAi` on
+    (`cdtPvpWaveTeamRules`). The RTS AI runs in PvP and sends each idle squad at an easy target among all
+    players' cores, drills, generators, factories and batteries. `rtsMinWeight` 0 = attack at once.
+    `airUseSpawns` is on, so flyers rise from the Rift spawns too (`WaveSpawner.eachFlyerSpawn` otherwise
+    puts them on the map edge in the spawn's direction, which here is behind the bases).
+  - **Defender bots** are a world processor (privileged, team 6: derelict buildings never update). It
+    waits `cdtBotRules["joinWindow"]` s, then for every team with a core and no player: `setrule`
+    multipliers, `setblock` turrets + wall ring, `setprop` ammo, `spawn` guards; it reloads them every
+    `refresh` s and gives a team back its normal multipliers when a player joins it.
+- **The map's rules must say `pvp: true` and `attackMode: true`** (`cdtPvpRules`). Map rules override the
+  gamemode's, and without attack mode `Logic.checkGameState` ends the game when team 1 (sharded) loses its
+  core, instead of when one team is left.
+- **The processor program must parse**: only statements, enum values and field counts that
+  `cm_bot.fnCheckProgram` knows (v159.7 `LStatements` field order), at most 1000 instructions
+  (`LExecutor.maxInstructions`) and 500 labels; the checks and the name audit run it. Logic has no arrays,
+  so the five teams are unrolled; the code fetches unit counts before spawning (team data counts new units
+  only on the next update, so a fetch right after a spawn would loop to the unit cap).
+- **Fortress squares stay clear**: no solid wall and no liquid within `cBotKeep` (Chebyshev) of any core
+  centre, or `setblock` would put turrets on water. The bot pattern (`cdtBotRules`) must fit inside it.
+- **One home per resource**: every group of `sys_config.cdtResourceFloors` has one home biome
+  (`cdtHomes` in the layout). Biome palettes never paint a foreign resource floor (e.g. no darksand banks
+  or sand-water outside the forest/desert), and each base garden holds one 3x3 pocket of every foreign
+  group. The checks count usable tiles per base (no solid wall on them): foreign 1..9, home 300+.
+- Ridge tests are per pair of sectors (the test region is those two sectors, outside the Rift): closing one
+  pass cannot cut two sectors apart while the ring of other passes is open.
+- Naval links on the PvP map need only reach the other river base's harbour (`cHarbourReach` 40 tiles):
+  the fortress square keeps water at least 24 tiles from a core.
+
 **File format**
 - The first 34 entries of the block table copy the game's runtime ids (`msav.RUNTIME_BLOCK_PREFIX`).
   Don't reorder them.
-- The core is the only building. Its data layout (`msav.core_chunk`) is version-specific.
+- The cores are the only buildings, plus one world processor on a PvP map. Their data layouts
+  (`msav.core_chunk`, `msav.fnLogicChunk`) are version-specific.
 - Rules JSON and the genfilters JSON must each stay under 65,535 bytes (Java `writeUTF`). They are
   about 12.5-15.3 KB (by map and difficulty) and 4.5 KB now.
 
@@ -231,9 +282,18 @@ Compare these files at the new tag against v159.7:
   `WaterMoveComp.java` (boats on land), `entities/EntityCollisions.java` (`waterSolid`) and
   `ai/types/GroundAI.java` (when a unit targets the core).
 
+- PvP and bots: `game/Team.java` (`isAI`), `core/Logic.java` (`checkGameState`, team AI update),
+  `core/NetServer.java` (`assigner`), `game/Gamemode.java` (`pvp`), `io/MapIO.java` (teams with cores),
+  `ai/RtsAI.java`, `ai/WaveSpawner.java` (`eachFlyerSpawn`, `airUseSpawns`), `game/Rules.java` (`TeamRule`), `world/blocks/logic/LogicBlock.java` (`LogicBuild.write/read`,
+  `compress`, limits), `logic/LParser.java`, `logic/LStatements.java` (field order), `logic/LogicRule.java`,
+  `logic/FetchType.java`, `logic/LExecutor.java` (`SetRuleI`, `SetBlockI`, `SpawnUnitI`, `FetchI`,
+  `maxInstructions`), `entities/comp/BuildingComp.java` (`setProp`) and
+  `world/blocks/defense/turrets/ItemTurret.java` (`acceptStack`, `handleStack`).
+
 Then run `python audit_names.py --tag <new tag>`. It also checks that the filter fields and the patched
 Block field still exist and that the game still re-rolls filter seeds on load.
 
 The game itself was never run during development. All validation mirrors the game's reader and source.
-Ask the owner to open the maps in the in-game editor after format-level changes, and to watch one naval
-wave on Biomes Confluence.
+Ask the owner to open the maps in the in-game editor after format-level changes, to watch one naval
+wave on Biomes Confluence, and to host Biomes Warfront as PvP with fewer than 5 players once (empty slots
+must turn into fortresses after the join window, and waves must leave the Rift).

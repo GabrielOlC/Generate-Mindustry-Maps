@@ -376,16 +376,24 @@ def fnExpandGroups(arGroups, dtSpawns=None, arNavalSpawnKeys=(), dtSpawnAliases=
     return fnApplyDifficulty(arOut, vDifficulty)
 
 
-def fnBuildRules(dtSpawns, arNavalSpawnKeys=(), dtSpawnAliases=None, vDifficulty=sys_config.cBaseDifficulty):
+def fnBuildRules(dtSpawns, arNavalSpawnKeys=(), dtSpawnAliases=None, vDifficulty=sys_config.cBaseDifficulty,
+                 sMatch="survival"):
     """Rules JSON object for a map's "rules" tag: the shared match rules at the chosen difficulty (wave
     timer and delay before wave 1 scaled, enemy health multiplier on the wave team, as CampaignRules.apply
-    and Logic do in the campaign) plus the map's spawn groups."""
+    and Logic do in the campaign) plus the map's spawn groups. A PvP map (`sMatch` "pvp") adds the PvP
+    rules and sends its waves from the PvP wave team under the RTS AI (sys_config.cdtPvpRules)."""
     dtLevel = sys_config.cdtDifficulties[vDifficulty]
     dtRules = copy.deepcopy(sys_config.cdtMatchRules)
     if dtLevel["waveTime"] != 1.0:
         for vKey in ("waveSpacing", "initialWaveSpacing"):
             dtRules[vKey] = round(dtRules[vKey] * dtLevel["waveTime"], 1)
-    if dtLevel["health"] != 1.0:
+    if sMatch == "pvp":
+        dtRules.update(copy.deepcopy(sys_config.cdtPvpRules))
+        dtWaveTeam = dict(sys_config.cdtPvpWaveTeamRules)
+        if dtLevel["health"] != 1.0:
+            dtWaveTeam["unitHealthMultiplier"] = dtLevel["health"]
+        dtRules["teams"] = {str(sys_config.cPvpWaveTeam): dtWaveTeam}
+    elif dtLevel["health"] != 1.0:
         dtRules["teams"] = {str(sys_config.cWaveTeam): {"unitHealthMultiplier": dtLevel["health"]}}
     arGroups = fnExpandGroups(build_groups(), dtSpawns, arNavalSpawnKeys, dtSpawnAliases, vDifficulty)
     dtRules["spawns"] = [sGroup.to_json(dtSpawns) for sGroup in arGroups]

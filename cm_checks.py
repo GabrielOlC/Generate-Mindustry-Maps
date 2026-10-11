@@ -9,11 +9,18 @@ The map is decoded with the same region/length checks the game performs (msav.va
     costs more, so it does not count as closed)
   * naval spawns: the spawn ring is shallow liquid, and the boats' flow field brings them to rest within
     reach of the core
+PvP maps (layout result sMatch "pvp") are checked for, instead of the single core:
+  * one core per player slot, the PvP rules (attack mode, waves from the PvP wave team under the RTS AI)
+  * the world processor of the defender bots: team, code that passes cm_bot's parser check, the cores it
+    looks after, and a clear fortress square around every core
+  * ground routes from every wave spawn to every base and between all bases, naval links between bases
+  * resources: every base holds every floor resource, foreign ones as small pockets only
 """
 
 import json
 import math
 
+import cm_bot
 import cm_terrain
 import msav
 import ores
@@ -88,8 +95,10 @@ def _fnContent(dtInfo, sResult):
           % (dtInfo["tags"]["name"], vWidth, dtInfo["height"], dtInfo["version"], len(arBlocks), len(arSpawnTiles),
              len(sResult.arNavalSpawnKeys), len(dtRules["spawns"])))
     for dtBuilding in dtInfo["buildings"]:
-        print("  building: %s at (%d, %d), team %d" % (dtBuilding["block"], dtBuilding["x"], dtBuilding["y"],
-                                                      dtBuilding["team"]))
+        print("  building: %s at (%d, %d), team %d%s" % (dtBuilding["block"], dtBuilding["x"], dtBuilding["y"],
+                                                        dtBuilding["team"], " (%d bytes of code, %s ipt)"
+                                                        % (len(dtBuilding["code"]), dtBuilding["ipt"])
+                                                        if "code" in dtBuilding else ""))
     print("  Exogenesis Old terrain used: " + ", ".join(arModContent))
     vOk = True
     if arUnprefixed:
@@ -170,15 +179,18 @@ def _fnGround(sGrid, sResult, arFloor, arWall):
     def fnPathable(i):           # what the pathfinder lets them try: no wall, not allDeep
         return not arSolid[i] and not arAllDeep[i]
 
-    vCx, vCy = sResult.arCore
-    vGoal = (vCy - 3) * vW + vCx
-    arDist = sGrid.fnBfs(vGoal, fnWalkable)
     vOk = True
-    print("\nGround routes (spawn -> core):")
-    for vKey, (vSx, vSy) in sResult.dtSpawns.items():
-        vSteps = arDist[vSy * vW + vSx]
-        vOk &= vSteps >= 0
-        print("  %-34s %s" % (sResult.dtSpawnLabels[vKey], "%d tiles" % vSteps if vSteps >= 0 else "FAIL: no route"))
+    if sResult.sMatch == "pvp":
+        vOk &= _fnGroundPvp(sGrid, sResult, fnWalkable)
+    else:
+        vCx, vCy = sResult.arCore
+        vGoal = (vCy - 3) * vW + vCx
+        arDist = sGrid.fnBfs(vGoal, fnWalkable)
+        print("\nGround routes (spawn -> core):")
+        for vKey, (vSx, vSy) in sResult.dtSpawns.items():
+            vSteps = arDist[vSy * vW + vSx]
+            vOk &= vSteps >= 0
+            print("  %-34s %s" % (sResult.dtSpawnLabels[vKey], "%d tiles" % vSteps if vSteps >= 0 else "FAIL: no route"))
     if not sResult.arBarrierTests:
         return vOk
     print("\nBarrier tests (enemy side -> core side; closed = walls and allDeep only):")
@@ -197,6 +209,141 @@ def _fnGround(sGrid, sResult, arFloor, arWall):
         print("  %-26s crossings open: %-9s crossings closed: %-9s %s"
               % (dtTest["label"], "reachable" if vOpen else "BLOCKED", "LEAKS" if vLeak else "sealed",
                  "OK" if vGood else "FAIL  <- " + ", ".join(dtTest["names"])))
+    return vOk
+
+
+def _fnGroundPvp(sGrid, sResult, fnWalkable):
+    """Every wave spawn reaches every base (the RTS AI may send a squad anywhere), every base every other."""
+    vW = sGrid.vWidth
+    vOk = True
+    arGoals = [((d["y"] - 3) * vW + d["x"], d) for d in sResult.arTeamCores]
+    print("\nGround routes (wave spawn -> every base):")
+    for vKey, (vSx, vSy) in sResult.dtSpawns.items():
+        arDist = sGrid.fnBfs(vSy * vW + vSx, fnWalkable)
+        arSteps = [(d["label"], arDist[g]) for g, d in arGoals]
+        vGood = all(v >= 0 for _, v in arSteps)
+        vOk &= vGood
+        print("  %-30s %s  %s" % (sResult.dtSpawnLabels[vKey], ", ".join("%s %s" % (k, v if v >= 0 else "none")
+                                                                        for k, v in arSteps), "OK" if vGood else "FAIL"))
+    print("\nGround routes between bases:")
+    for vGoal, d in arGoals:
+        arDist = sGrid.fnBfs(vGoal, fnWalkable)
+        arSteps = [(e["label"], arDist[g]) for g, e in arGoals if e is not d]
+        vGood = all(v >= 0 for _, v in arSteps)
+        vOk &= vGood
+        print("  %-30s %s  %s" % (d["label"], ", ".join("%s %s" % (k, v if v >= 0 else "none") for k, v in arSteps),
+                                  "OK" if vGood else "FAIL"))
+    return vOk
+
+
+def _fnPvp(dtInfo, sGrid, sResult, arFloor, arWall, dtRules):
+    """Cores, PvP rules, the defender bots' processor and fortress squares, resources per base."""
+    vW, vH = sGrid.vWidth, sGrid.vHeight
+    vOk = True
+    print("\nPvP setup:")
+    arCores = sorted((b["team"], b["x"], b["y"]) for b in dtInfo["buildings"] if b["block"] == sys_config.cCoreBlock)
+    arWanted = sorted((d["team"], d["x"], d["y"]) for d in sResult.arTeamCores)
+    vGood = arCores == arWanted
+    vOk &= vGood
+    print("  cores: %s  %s" % (", ".join("team %d at (%d, %d)" % c for c in arCores), "OK" if vGood else "FAIL"))
+    vWave = dtRules.get("waveTeam")
+    dtWaveRules = dtRules.get("teams", {}).get(str(vWave), {})
+    vGood = (dtRules.get("pvp") is True and dtRules.get("attackMode") is True and dtRules.get("waves") is True
+             and vWave == sys_config.cPvpWaveTeam and dtWaveRules.get("rtsAi") is True
+             and dtRules.get("airUseSpawns") is True and vWave not in [d["team"] for d in sResult.arTeamCores])
+    vOk &= vGood
+    print("  rules: pvp %s, attack mode %s, waves %s, wave team %s with RTS AI %s, flyers from the spawns %s  %s"
+          % (dtRules.get("pvp"), dtRules.get("attackMode"), dtRules.get("waves"), vWave, dtWaveRules.get("rtsAi"),
+             dtRules.get("airUseSpawns"), "OK" if vGood else "FAIL"))
+
+    arLogic = [b for b in dtInfo["buildings"] if b["block"] == sys_config.cWorldProcessor]
+    if len(arLogic) != 1:
+        print("  FAIL: %d world processors (want 1)" % len(arLogic))
+        return False
+    dtLogic = arLogic[0]
+    arProblems, vInstructions, dtContent = cm_bot.fnCheckProgram(dtLogic["code"])
+    arLines = [v.strip() for v in dtLogic["code"].split("\n")]
+    dtTeamNames = {vId: vName for vName, vId in sys_config.cdtPvpTeams.items()}
+    for d in sResult.arTeamCores:
+        arBlock = ["set team @%s" % dtTeamNames[d["team"]], "set cx %d" % d["x"], "set cy %d" % d["y"]]
+        vFound = sum(1 for k in range(len(arLines) - 2) if arLines[k:k + 3] == arBlock)
+        if vFound != 2:
+            arProblems.append("the %s core is looked after %d times (want 2: decide, maintain)" % (d["label"], vFound))
+    if dtLogic["team"] != sys_config.cPvpWaveTeam:
+        arProblems.append("processor team %d, want %d (derelict buildings never update)" % (dtLogic["team"], sys_config.cPvpWaveTeam))
+    vGood = not arProblems
+    vOk &= vGood
+    print("  defender bots: world processor at (%d, %d), team %d, %d instructions, %d ipt, builds %s, loads %s, "
+          "guards %s  %s" % (dtLogic["x"], dtLogic["y"], dtLogic["team"], vInstructions, dtLogic["ipt"],
+                             ", ".join(sorted(dtContent["block"])), ", ".join(sorted(dtContent["item"])),
+                             ", ".join(sorted(dtContent["unit"])), "OK" if vGood else "FAIL"))
+    for vProblem in arProblems:
+        print("  FAIL: " + vProblem)
+
+    vKeep = sys_config.cBotKeep
+    for d in sResult.arTeamCores:
+        vMx, vMy = d["x"] + 0.5, d["y"] + 0.5
+        vBad = 0
+        for vY in range(int(vMy - vKeep), int(vMy + vKeep) + 1):
+            for vX in range(int(vMx - vKeep), int(vMx + vKeep) + 1):
+                if not (0 <= vX < vW and 0 <= vY < vH):
+                    vBad += 1
+                    continue
+                i = vY * vW + vX
+                if d["x"] - 1 <= vX <= d["x"] + 2 and d["y"] - 1 <= vY <= d["y"] + 2:
+                    continue                                   # the core itself
+                if ((arWall[i] is not None and arWall[i] not in sys_config.carNonSolidBlocks)
+                        or arFloor[i] in sys_config.carLiquidFloors):
+                    vBad += 1
+        vOk &= vBad == 0
+        print("  fortress square of %-22s %s" % (d["label"], "clear  OK" if vBad == 0 else "%d blocked tiles  FAIL" % vBad))
+
+    dtRes = sResult.dtResourceRules
+    if dtRes:
+        print("\nResources per base (usable tiles; home groups need %d+, foreign groups 1..%d):"
+              % (dtRes["homeMin"], dtRes["pocketCap"]))
+        dtCount = {}
+        for i, vRegion in enumerate(sResult.arRegion):
+            if arWall[i] is not None and arWall[i] not in sys_config.carNonSolidBlocks:
+                continue                                       # under a wall: never seen, mined or pumped
+            vFloor = arFloor[i]
+            for vGroup, arMembers in sys_config.cdtResourceFloors.items():
+                if vFloor in arMembers:
+                    dtCount[(vRegion, vGroup)] = dtCount.get((vRegion, vGroup), 0) + 1
+        for vRegion in dtRes["bases"]:
+            arParts, vGood = [], True
+            for vGroup in sys_config.cdtResourceFloors:
+                vTiles = dtCount.get((vRegion, vGroup), 0)
+                vHome = dtRes["homes"][vGroup] == vRegion
+                vFits = vTiles >= dtRes["homeMin"] if vHome else 1 <= vTiles <= dtRes["pocketCap"]
+                vGood &= vFits
+                arParts.append("%s%s %d%s" % ("*" if vHome else "", vGroup.split(" ")[0], vTiles, "" if vFits else "!"))
+            vOk &= vGood
+            print("  %-20s %s  %s" % (sResult.arRegionNames[vRegion], ", ".join(arParts), "OK" if vGood else "FAIL"))
+    return vOk
+
+
+def _fnNavalLinks(sGrid, sResult, arFloor, arWall):
+    """PvP naval links: boats from each link's start come to rest within reach of that base's core."""
+    if not sResult.arNavalLinks:
+        return True
+    vW = sGrid.vWidth
+    arCost = sGrid.fnNavalCosts(arFloor, arWall)
+    vOffset = 0.5 if sys_config.cCoreSize % 2 == 0 else 0.0
+    vOk = True
+    print("\nNaval links (boats follow the naval flow field toward a base):")
+    for dtLink in sResult.arNavalLinks:
+        vCx, vCy = dtLink["core"]
+        arField = sGrid.fnFlowField(vCy * vW + vCx, arCost)
+        vSx, vSy = dtLink["start"]
+        arPath = sGrid.fnNavalStop(vSy * vW + vSx, arField, arCost)
+        vRest = arPath[-1]
+        vReach = math.hypot(vRest % vW - vCx - vOffset, vRest // vW - vCy - vOffset)
+        vLimit = dtLink.get("reach", cNavalReach)
+        vGood = arFloor[vSy * vW + vSx] in sys_config.carLiquidFloors and vReach <= vLimit
+        vOk &= vGood
+        print("  %-40s %4d tiles along the flow field, rests %.1f tiles from the core (%g allowed)  %s"
+              % (dtLink["label"], len(arPath) - 1, vReach, vLimit, "OK" if vGood else "FAIL"))
     return vOk
 
 
@@ -233,10 +380,13 @@ def fnCheckMap(vMapPath, sResult):
     """Runs every shared check on the written map; True when all pass."""
     dtInfo = msav.validate_msav(vMapPath)
     sGrid = cm_terrain.clGrid(dtInfo["width"], dtInfo["height"])
-    vOk, arFloor, arWall, _ = _fnContent(dtInfo, sResult)
+    vOk, arFloor, arWall, dtRules = _fnContent(dtInfo, sResult)
     vOk &= _fnFilters(dtInfo)
     vOk &= _fnPatches(dtInfo, arFloor, arWall)
+    if sResult.sMatch == "pvp":
+        vOk &= _fnPvp(dtInfo, sGrid, sResult, arFloor, arWall, dtRules)
     vOk &= _fnGround(sGrid, sResult, arFloor, arWall)
     vOk &= _fnNaval(sGrid, sResult, arFloor, arWall)
+    vOk &= _fnNavalLinks(sGrid, sResult, arFloor, arWall)
     print("\nAll checks passed." if vOk else "\nSome checks failed.")
     return bool(vOk)

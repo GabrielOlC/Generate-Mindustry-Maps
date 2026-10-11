@@ -24,10 +24,12 @@ biome only *leans* toward the materials its faction's tech tree needs.
 yellow dots are named choke points, and orange marks the core. North is up. The ore patches are
 **one example roll**; every game gets its own.*
 
-> **Two map types.** This project generates two maps with one shared framework (section 8). This
-> README describes **Biomes Extended Remastered**. The naval map, **Biomes Confluence**, has boats that
-> sail its water and cryofluid rivers to the core; it is described in
-> [docs/Biomes_Confluence.md](docs/Biomes_Confluence.md).
+> **Three map types.** This project generates three maps with one shared framework (section 8). This
+> README describes **Biomes Extended Remastered**. The others have their own pages:
+> - **Biomes Confluence**, PvE with boats that sail its water and cryofluid rivers to the core:
+>   [docs/Biomes_Confluence.md](docs/Biomes_Confluence.md).
+> - **Biomes Warfront**, PvP for 5 players, one base per biome, waves from the middle and defender bots
+>   in empty slots: [docs/Biomes_Warfront.md](docs/Biomes_Warfront.md).
 
 ---
 
@@ -35,7 +37,7 @@ yellow dots are named choke points, and orange marks the core. North is up. The 
 
 1. Install **Python 3.8 or newer**, with "Add Python to PATH" ticked. Nothing else is needed.
 2. Double-click **`Auto Start.bat`**. Then either:
-   - press **Enter**, and answer the two questions: the map type (`1` or `2`) and the difficulty
+   - press **Enter**, and answer the two questions: the map type (`1`, `2` or `3`) and the difficulty
      (Enter = Eradication, the hardest); or
    - type the options first and press Enter, for example `--map biomes-confluence --difficulty hard`.
 
@@ -43,11 +45,11 @@ yellow dots are named choke points, and orange marks the core. North is up. The 
 3. Wait 1–2 minutes. The map is written to the `maps` folder, for example
    `maps\Biomes Confluence (Hard).msav` (Normal has no suffix).
 4. In Mindustry, turn on **Exogenesis Old**, open **Editor → Import Map**, pick the `.msav`, and play
-   it from **Custom Game → Survival**.
+   it from **Custom Game → Survival** (Biomes Warfront: host it and pick **PvP**, see its page).
 
 | Option | Values | If left out |
 |---|---|---|
-| `--map` | `biomes-extended`, `biomes-confluence` | asked |
+| `--map` | `biomes-extended`, `biomes-confluence`, `biomes-warfront` | asked |
 | `--difficulty` | `casual`, `easy`, `normal`, `hard`, `eradication` | `eradication` |
 | `--seed` | any number (changes the terrain) | the map's own |
 | `--ore-rolls` | how many ore rolls the report averages | 1 |
@@ -429,6 +431,7 @@ python wf_generate.py --list                                  # map types and di
 python wf_generate.py --map biomes-extended                   # this map at Eradication, seed 1597
 python wf_generate.py --map biomes-extended --difficulty normal
 python wf_generate.py --map biomes-confluence --difficulty hard --ore-rolls 5
+python wf_generate.py --map biomes-warfront                   # the PvP map at Eradication (strongest bots)
 python wf_generate.py --map biomes-extended --seed 42 --out "D:\some\folder"
 ```
 
@@ -449,11 +452,13 @@ checks. Only the layout differs, and a new map type is one new file in `layouts/
 | File | What to change there |
 |---|---|
 | `wf_generate.py` | The controller: asks for the map type and runs it (no need to touch) |
-| `sys_config.py` | Shared by all maps: the difficulty levels (`cdtDifficulties`), wave timer, first-wave delay, unit cap, loadout, planet (`cdtMatchRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
+| `sys_config.py` | Shared by all maps: the difficulty levels (`cdtDifficulties`), wave timer, first-wave delay, unit cap, loadout, planet (`cdtMatchRules`), the PvP rules, teams and defender bots (`cdtPvpRules`, `cdtBotRules`), the lava data patches (`carDataPatches`, `cdtFloorHeat`), mod block names, map author |
 | `ores.py` | The in-game ore filters: map-wide layer per ore (`WIDESPREAD`: scale = how many patches, threshold = how big), biome tendencies (`TENDENCIES`), siratla crystal (`CRYSTAL_HOSTS`), ore-free floors (`CLEAR_FLOORS`) |
 | `waves.py` | Every spawn group, and the land stand-ins for boats on maps without water routes (`cdtNavalSwap`) |
 | `generate_map.py` | This map's layout: spawns, gates, ridges and passes, feature positions (`SPAWNS`, `GATES`, `RIDGES`, `FORDS`, ...), outposts (`OUTPOSTS`), map name |
 | `layouts/biomes_confluence.py` | The naval map's layout (see `docs/Biomes_Confluence.md`) |
+| `layouts/biomes_warfront.py` | The PvP map's layout: bases, gardens, rivers, ridges (see `docs/Biomes_Warfront.md`) |
+| `cm_bot.py` | The PvP map's defender bots: the world-processor program and its parser check (settings in `sys_config.cdtBotRules`) |
 | `cm_pipeline.py`, `cm_layout.py`, `cm_terrain.py`, `cm_render.py`, `cm_checks.py` | The shared pipeline, layout contract, terrain toolkit, images and checks |
 | `msav.py` | The save-format writer and validator (no need to touch) |
 | `check_map.py` | Re-reads this map, checks the ore filters, tests thermal-generator spots on all lava, and runs its barrier tests |

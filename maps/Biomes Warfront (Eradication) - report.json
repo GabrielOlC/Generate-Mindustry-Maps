@@ -1,0 +1,1698 @@
+{
+  "map": "Biomes Warfront (Eradication)",
+  "map_type": "biomes-warfront",
+  "difficulty": {
+    "label": "Eradication",
+    "health": 1.5,
+    "spawn": 2.0,
+    "waveTime": 0.6,
+    "key": "eradication"
+  },
+  "seed": 2027,
+  "size": [
+    800,
+    800
+  ],
+  "game": "Mindustry v8 build 159.7 (save version 13)",
+  "mod": "Exogenesis Old (exogenesisold 1.9.1)",
+  "file": "D:\\gabri\\Desktop\\Git\\.Developing\\Generate Mindustry Maps\\maps\\Biomes Warfront (Eradication).msav",
+  "file_bytes": 87478,
+  "uncompressed_bytes": 318558,
+  "spawns": {
+    "Rift spawn toward Frozen": [
+      400,
+      462
+    ],
+    "Rift spawn toward Semi-arid": [
+      459,
+      419
+    ],
+    "Rift spawn toward Desert": [
+      436,
+      350
+    ],
+    "Rift spawn toward Volcano": [
+      364,
+      350
+    ],
+    "Rift spawn toward Forest": [
+      341,
+      419
+    ]
+  },
+  "routes": {
+    "Rift spawn toward Frozen": {
+      "toward": "Frozen base (blue)",
+      "straight_line_tiles": 208.0,
+      "shortest_ground_path_tiles": 205,
+      "choke_points_on_near_shortest_routes": [
+        "Frozen Rift Gate"
+      ],
+      "ground_path_tiles_to_every_base": {
+        "Frozen base (blue)": 205,
+        "Semi-arid base (purple)": 293,
+        "Desert base (yellow)": 442,
+        "Volcano base (red)": 442,
+        "Forest base (green)": 325
+      }
+    },
+    "Rift spawn toward Semi-arid": {
+      "toward": "Semi-arid base (purple)",
+      "straight_line_tiles": 208.1,
+      "shortest_ground_path_tiles": 259,
+      "choke_points_on_near_shortest_routes": [
+        "Steppe Rift Gate"
+      ],
+      "ground_path_tiles_to_every_base": {
+        "Frozen base (blue)": 307,
+        "Semi-arid base (purple)": 259,
+        "Desert base (yellow)": 340,
+        "Volcano base (red)": 458,
+        "Forest base (green)": 385
+      }
+    },
+    "Rift spawn toward Desert": {
+      "toward": "Desert base (yellow)",
+      "straight_line_tiles": 208.2,
+      "shortest_ground_path_tiles": 294,
+      "choke_points_on_near_shortest_routes": [
+        "Desert Rift Gate"
+      ],
+      "ground_path_tiles_to_every_base": {
+        "Frozen base (blue)": 353,
+        "Semi-arid base (purple)": 351,
+        "Desert base (yellow)": 294,
+        "Volcano base (red)": 366,
+        "Forest base (green)": 423
+      }
+    },
+    "Rift spawn toward Volcano": {
+      "toward": "Volcano base (red)",
+      "straight_line_tiles": 208.2,
+      "shortest_ground_path_tiles": 294,
+      "choke_points_on_near_shortest_routes": [
+        "Volcano Rift Gate"
+      ],
+      "ground_path_tiles_to_every_base": {
+        "Frozen base (blue)": 353,
+        "Semi-arid base (purple)": 423,
+        "Desert base (yellow)": 366,
+        "Volcano base (red)": 294,
+        "Forest base (green)": 351
+      }
+    },
+    "Rift spawn toward Forest": {
+      "toward": "Forest base (green)",
+      "straight_line_tiles": 208.1,
+      "shortest_ground_path_tiles": 259,
+      "choke_points_on_near_shortest_routes": [
+        "Rift Ford (Greenwater)",
+        "Forest Rift Gate"
+      ],
+      "ground_path_tiles_to_every_base": {
+        "Frozen base (blue)": 315,
+        "Semi-arid base (purple)": 385,
+        "Desert base (yellow)": 458,
+        "Volcano base (red)": 340,
+        "Forest base (green)": 259
+      }
+    }
+  },
+  "naval_routes": {
+    "Boats Forest -> Frozen": {
+      "flow_field_path_tiles": 723,
+      "shortest_water_path_tiles": 715,
+      "rests_at": [
+        364,
+        661
+      ],
+      "rest_tiles_from_core": 37.7,
+      "choke_points_on_route": [
+        "Forest Harbour",
+        "Greenwater Sluice",
+        "Rift Ford (Greenwater)",
+        "Rift Ford (Rimeflow)",
+        "Rimeflow Sluice",
+        "Frozen Harbour"
+      ]
+    },
+    "Boats Frozen -> Forest": {
+      "flow_field_path_tiles": 727,
+      "shortest_water_path_tiles": 719,
+      "rests_at": [
+        160,
+        513
+      ],
+      "rest_tiles_from_core": 33.8,
+      "choke_points_on_route": [
+        "Frozen Harbour",
+        "Rimeflow Sluice",
+        "Rift Ford (Rimeflow)",
+        "Rift Ford (Greenwater)",
+        "Greenwater Sluice",
+        "Forest Harbour"
+      ]
+    }
+  },
+  "outposts": [
+    {
+      "name": "Frozen Outpost 1",
+      "biome": "Frozen (N)",
+      "x": 432,
+      "y": 632
+    },
+    {
+      "name": "Frozen Outpost 2",
+      "biome": "Frozen (N)",
+      "x": 368,
+      "y": 632
+    },
+    {
+      "name": "Frozen Outpost 3",
+      "biome": "Frozen (N)",
+      "x": 429,
+      "y": 711
+    },
+    {
+      "name": "Frozen Outpost 4",
+      "biome": "Frozen (N)",
+      "x": 371,
+      "y": 711
+    },
+    {
+      "name": "Steppe Outpost 1",
+      "biome": "Semi-arid (E)",
+      "x": 631,
+      "y": 441
+    },
+    {
+      "name": "Steppe Outpost 2",
+      "biome": "Semi-arid (E)",
+      "x": 611,
+      "y": 502
+    },
+    {
+      "name": "Steppe Outpost 3",
+      "biome": "Semi-arid (E)",
+      "x": 705,
+      "y": 468
+    },
+    {
+      "name": "Steppe Outpost 4",
+      "biome": "Semi-arid (E)",
+      "x": 687,
+      "y": 523
+    },
+    {
+      "name": "Desert Outpost 1",
+      "biome": "Desert (SE)",
+      "x": 510,
+      "y": 194
+    },
+    {
+      "name": "Desert Outpost 2",
+      "biome": "Desert (SE)",
+      "x": 562,
+      "y": 232
+    },
+    {
+      "name": "Desert Outpost 3",
+      "biome": "Desert (SE)",
+      "x": 560,
+      "y": 132
+    },
+    {
+      "name": "Desert Outpost 4",
+      "biome": "Desert (SE)",
+      "x": 606,
+      "y": 166
+    },
+    {
+      "name": "Volcano Outpost 1",
+      "biome": "Volcano (SW)",
+      "x": 238,
+      "y": 232
+    },
+    {
+      "name": "Volcano Outpost 2",
+      "biome": "Volcano (SW)",
+      "x": 290,
+      "y": 194
+    },
+    {
+      "name": "Volcano Outpost 3",
+      "biome": "Volcano (SW)",
+      "x": 194,
+      "y": 166
+    },
+    {
+      "name": "Volcano Outpost 4",
+      "biome": "Volcano (SW)",
+      "x": 240,
+      "y": 132
+    },
+    {
+      "name": "Forest Outpost 1",
+      "biome": "Forest (W)",
+      "x": 189,
+      "y": 502
+    },
+    {
+      "name": "Forest Outpost 2",
+      "biome": "Forest (W)",
+      "x": 169,
+      "y": 441
+    },
+    {
+      "name": "Forest Outpost 3",
+      "biome": "Forest (W)",
+      "x": 113,
+      "y": 523
+    },
+    {
+      "name": "Forest Outpost 4",
+      "biome": "Forest (W)",
+      "x": 95,
+      "y": 468
+    }
+  ],
+  "choke_points": {
+    "Ashgrove Pass": [
+      117,
+      299
+    ],
+    "Cinderdune Pass": [
+      371,
+      101
+    ],
+    "Crater Lake": [
+      258,
+      293
+    ],
+    "Desert Garden": [
+      587,
+      143
+    ],
+    "Desert Rift Gate": [
+      517,
+      239
+    ],
+    "Desert Steppe Gate": [
+      623,
+      213
+    ],
+    "Desert Volcano Gate": [
+      510,
+      131
+    ],
+    "Forest Frozen Gate": [
+      153,
+      553
+    ],
+    "Forest Garden": [
+      97,
+      498
+    ],
+    "Forest Harbour": [
+      169,
+      519
+    ],
+    "Forest Rift Gate": [
+      211,
+      461
+    ],
+    "Forest Volcano Gate": [
+      110,
+      420
+    ],
+    "Frostwood Pass": [
+      207,
+      629
+    ],
+    "Frozen Forest Gate": [
+      330,
+      682
+    ],
+    "Frozen Garden": [
+      400,
+      718
+    ],
+    "Frozen Harbour": [
+      358,
+      656
+    ],
+    "Frozen Rift Gate": [
+      400,
+      599
+    ],
+    "Frozen Steppe Gate": [
+      470,
+      682
+    ],
+    "Greenwater Sluice": [
+      181,
+      542
+    ],
+    "Hoarwind Pass": [
+      577,
+      643
+    ],
+    "Rift Ford (Greenwater)": [
+      333,
+      457
+    ],
+    "Rift Ford (Rimeflow)": [
+      367,
+      482
+    ],
+    "Rimeflow Sluice": [
+      333,
+      648
+    ],
+    "Saltsteppe Pass": [
+      679,
+      290
+    ],
+    "Steppe Desert Gate": [
+      690,
+      420
+    ],
+    "Steppe Frozen Gate": [
+      647,
+      553
+    ],
+    "Steppe Garden": [
+      703,
+      498
+    ],
+    "Steppe Rift Gate": [
+      589,
+      461
+    ],
+    "Volcano Desert Gate": [
+      290,
+      131
+    ],
+    "Volcano Forest Gate": [
+      177,
+      213
+    ],
+    "Volcano Garden": [
+      213,
+      143
+    ],
+    "Volcano Rift Gate": [
+      283,
+      239
+    ],
+    "Wreck Field": [
+      699,
+      166
+    ]
+  },
+  "statistics": {
+    "biome_tiles": {
+      "Frozen (N)": 123050,
+      "Semi-arid (E)": 110295,
+      "Desert (SE)": 130765,
+      "Volcano (SW)": 117949,
+      "Forest (W)": 112728,
+      "The Rift": 45213
+    },
+    "walkable_tiles": {
+      "Frozen (N)": 93758,
+      "Semi-arid (E)": 89228,
+      "Desert (SE)": 106946,
+      "Volcano (SW)": 96969,
+      "Forest (W)": 79559,
+      "The Rift": 41135
+    },
+    "special_floors": {
+      "Volcano (SW)": {
+        "heat (hotrock/magmarock)": 20342,
+        "slag (lava)": 765,
+        "pyroplasma (pyromagma)": 956,
+        "sand floor (sand/darksand)": 9,
+        "oil (tar)": 9,
+        "water": 9,
+        "spore moss": 9,
+        "cryofluid": 9,
+        "oil-rich ground (shale)": 9,
+        "cold plasma (glowing vein)": 9
+      },
+      "Desert (SE)": {
+        "sand floor (sand/darksand)": 127278,
+        "oil (tar)": 793,
+        "spore moss": 9,
+        "heat (hotrock/magmarock)": 9,
+        "cryofluid": 9,
+        "water": 9,
+        "pyroplasma (pyromagma)": 9,
+        "oil-rich ground (shale)": 9,
+        "slag (lava)": 9,
+        "cold plasma (glowing vein)": 9
+      },
+      "Semi-arid (E)": {
+        "oil-rich ground (shale)": 40202,
+        "pyroplasma (pyromagma)": 9,
+        "cryofluid": 9,
+        "spore moss": 9,
+        "slag (lava)": 9,
+        "water": 9,
+        "heat (hotrock/magmarock)": 9,
+        "cold plasma (glowing vein)": 9,
+        "oil (tar)": 9,
+        "sand floor (sand/darksand)": 9
+      },
+      "Forest (W)": {
+        "spore moss": 2482,
+        "water": 3631,
+        "cold plasma (glowing vein)": 9,
+        "oil-rich ground (shale)": 9,
+        "slag (lava)": 9,
+        "cryofluid": 9,
+        "heat (hotrock/magmarock)": 9,
+        "pyroplasma (pyromagma)": 9,
+        "oil (tar)": 9,
+        "sand floor (sand/darksand)": 9
+      },
+      "The Rift": {
+        "water": 4297,
+        "cryofluid": 745
+      },
+      "Frozen (N)": {
+        "cryofluid": 1857,
+        "cold plasma (glowing vein)": 1779,
+        "heat (hotrock/magmarock)": 9,
+        "slag (lava)": 9,
+        "pyroplasma (pyromagma)": 9,
+        "oil-rich ground (shale)": 9,
+        "water": 9,
+        "oil (tar)": 9,
+        "spore moss": 9,
+        "sand floor (sand/darksand)": 9
+      }
+    }
+  },
+  "ore_rolls": {
+    "rolls": 5,
+    "patches_per_game": 1299,
+    "patch_tiles": {
+      "median": 33,
+      "p10": 10,
+      "p90": 86,
+      "smallest_counted": 6
+    },
+    "patches_per_biome": {
+      "Frozen (N)": 250,
+      "Semi-arid (E)": 205,
+      "Desert (SE)": 270,
+      "Volcano (SW)": 247,
+      "Forest (W)": 201,
+      "The Rift": 127
+    },
+    "patches": {
+      "Frozen (N)": {
+        "ore-titanium": 40,
+        "ore-siradamite": 26,
+        "ore-stellar-steel": 25,
+        "ore-copper": 23,
+        "ore-lead": 18,
+        "siratla-crystal": 17,
+        "ore-scrap": 16,
+        "ore-thorium": 16,
+        "ore-coal": 16,
+        "ore-beryllium": 15,
+        "ore-dytrix": 13,
+        "ore-tungsten": 13,
+        "ore-urbium": 11
+      },
+      "Semi-arid (E)": {
+        "ore-dytrix": 28,
+        "ore-titanium": 21,
+        "ore-copper": 21,
+        "ore-lead": 18,
+        "ore-thorium": 17,
+        "ore-scrap": 17,
+        "ore-coal": 16,
+        "ore-beryllium": 15,
+        "ore-stellar-steel": 14,
+        "ore-tungsten": 13,
+        "ore-siradamite": 11,
+        "ore-urbium": 9,
+        "siratla-crystal": 5
+      },
+      "Desert (SE)": {
+        "ore-urbium": 34,
+        "ore-scrap": 34,
+        "ore-copper": 28,
+        "ore-titanium": 23,
+        "ore-lead": 22,
+        "ore-thorium": 22,
+        "ore-coal": 18,
+        "ore-dytrix": 17,
+        "ore-beryllium": 16,
+        "ore-siradamite": 16,
+        "ore-tungsten": 15,
+        "ore-stellar-steel": 13,
+        "siratla-crystal": 12
+      },
+      "Volcano (SW)": {
+        "ore-thorium": 33,
+        "ore-beryllium": 31,
+        "ore-tungsten": 30,
+        "ore-copper": 21,
+        "ore-coal": 19,
+        "ore-lead": 19,
+        "ore-titanium": 17,
+        "ore-scrap": 16,
+        "ore-siradamite": 14,
+        "ore-dytrix": 13,
+        "ore-stellar-steel": 12,
+        "siratla-crystal": 12,
+        "ore-urbium": 10
+      },
+      "Forest (W)": {
+        "ore-coal": 29,
+        "ore-lead": 23,
+        "ore-titanium": 19,
+        "ore-thorium": 15,
+        "ore-urbium": 14,
+        "ore-siradamite": 14,
+        "ore-copper": 14,
+        "ore-scrap": 13,
+        "ore-stellar-steel": 13,
+        "ore-beryllium": 13,
+        "ore-tungsten": 12,
+        "ore-dytrix": 12,
+        "siratla-crystal": 10
+      },
+      "The Rift": {
+        "ore-copper": 32,
+        "ore-lead": 29,
+        "ore-titanium": 9,
+        "ore-thorium": 8,
+        "ore-coal": 7,
+        "ore-dytrix": 6,
+        "ore-scrap": 6,
+        "ore-stellar-steel": 6,
+        "ore-siradamite": 6,
+        "ore-beryllium": 6,
+        "ore-urbium": 5,
+        "ore-tungsten": 5,
+        "siratla-crystal": 2
+      }
+    },
+    "ore_tiles": {
+      "Frozen (N)": {
+        "ore-titanium": 1382,
+        "ore-siradamite": 1229,
+        "ore-stellar-steel": 1051,
+        "ore-copper": 906,
+        "ore-scrap": 834,
+        "ore-beryllium": 811,
+        "ore-thorium": 776,
+        "ore-dytrix": 724,
+        "ore-coal": 679,
+        "ore-lead": 668,
+        "ore-tungsten": 596,
+        "siratla-crystal": 552,
+        "ore-urbium": 425
+      },
+      "Semi-arid (E)": {
+        "ore-dytrix": 1152,
+        "ore-thorium": 906,
+        "ore-copper": 841,
+        "ore-scrap": 839,
+        "ore-beryllium": 838,
+        "ore-titanium": 796,
+        "ore-tungsten": 747,
+        "ore-stellar-steel": 718,
+        "ore-lead": 662,
+        "ore-coal": 661,
+        "ore-siradamite": 643,
+        "ore-urbium": 519,
+        "siratla-crystal": 142
+      },
+      "Desert (SE)": {
+        "ore-scrap": 1494,
+        "ore-urbium": 1371,
+        "ore-copper": 1204,
+        "ore-thorium": 1055,
+        "ore-titanium": 1043,
+        "ore-lead": 843,
+        "ore-siradamite": 839,
+        "ore-beryllium": 823,
+        "ore-coal": 814,
+        "ore-dytrix": 807,
+        "ore-tungsten": 788,
+        "ore-stellar-steel": 653,
+        "siratla-crystal": 417
+      },
+      "Volcano (SW)": {
+        "ore-thorium": 1538,
+        "ore-beryllium": 1437,
+        "ore-tungsten": 1274,
+        "ore-copper": 954,
+        "ore-siradamite": 870,
+        "ore-coal": 823,
+        "ore-scrap": 760,
+        "ore-lead": 694,
+        "ore-titanium": 674,
+        "ore-dytrix": 649,
+        "ore-stellar-steel": 543,
+        "ore-urbium": 540,
+        "siratla-crystal": 349
+      },
+      "Forest (W)": {
+        "ore-coal": 988,
+        "ore-lead": 803,
+        "ore-urbium": 717,
+        "ore-stellar-steel": 677,
+        "ore-titanium": 646,
+        "ore-siradamite": 623,
+        "ore-tungsten": 598,
+        "ore-copper": 596,
+        "ore-scrap": 590,
+        "ore-thorium": 589,
+        "ore-beryllium": 507,
+        "ore-dytrix": 504,
+        "siratla-crystal": 286
+      },
+      "The Rift": {
+        "ore-copper": 1143,
+        "ore-lead": 986,
+        "ore-titanium": 363,
+        "ore-tungsten": 362,
+        "ore-thorium": 352,
+        "ore-beryllium": 340,
+        "ore-scrap": 314,
+        "ore-coal": 313,
+        "ore-siradamite": 291,
+        "ore-urbium": 285,
+        "ore-dytrix": 277,
+        "ore-stellar-steel": 250,
+        "siratla-crystal": 26
+      }
+    }
+  },
+  "ore_filters": [
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 37.0,
+      "threshold": 0.876,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "snow",
+      "scl": 50.0,
+      "threshold": 0.894,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "basalt",
+      "scl": 50.0,
+      "threshold": 0.894,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "grass",
+      "scl": 50.0,
+      "threshold": 0.894,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "dirt",
+      "scl": 50.0,
+      "threshold": 0.894,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "noise",
+      "floor": "exogenesisold-siratla-crystal",
+      "block": "air",
+      "target": "sand-floor",
+      "scl": 50.0,
+      "threshold": 0.894,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-dytrix",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-urbium",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-siradamite",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-stellar-steel",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-siradamite",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 40.0,
+      "threshold": 0.876,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-stellar-steel",
+      "target": "exogenesisold-siratla-stone",
+      "scl": 40.0,
+      "threshold": 0.876,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-dytrix",
+      "target": "dacite",
+      "scl": 37.0,
+      "threshold": 0.871,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "exogenesisold-ore-urbium",
+      "target": "sand-floor",
+      "scl": 44.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-copper",
+      "target": "air",
+      "scl": 46.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "air",
+      "scl": 46.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-coal",
+      "target": "air",
+      "scl": 48.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "air",
+      "scl": 48.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-scrap",
+      "target": "air",
+      "scl": 52.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-thorium",
+      "target": "air",
+      "scl": 52.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-beryllium",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-tungsten",
+      "target": "air",
+      "scl": 56.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-copper",
+      "target": "stone",
+      "scl": 31.0,
+      "threshold": 0.844,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "stone",
+      "scl": 31.0,
+      "threshold": 0.848,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-coal",
+      "target": "grass",
+      "scl": 42.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-lead",
+      "target": "moss",
+      "scl": 42.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-thorium",
+      "target": "basalt",
+      "scl": 42.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-tungsten",
+      "target": "basalt",
+      "scl": 44.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-beryllium",
+      "target": "basalt",
+      "scl": 42.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "snow",
+      "scl": 36.0,
+      "threshold": 0.867,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "ice-snow",
+      "scl": 36.0,
+      "threshold": 0.867,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-titanium",
+      "target": "dirt",
+      "scl": 46.0,
+      "threshold": 0.885,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "ore-scrap",
+      "target": "sand-floor",
+      "scl": 42.0,
+      "threshold": 0.881,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "core-zone",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "dark-panel-3",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "metal-floor",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    },
+    {
+      "class": "ore",
+      "ore": "air",
+      "target": "dark-panel-4",
+      "scl": 1.0,
+      "threshold": 0.0,
+      "octaves": 2.0,
+      "falloff": 0.15
+    }
+  ],
+  "genfilters_bytes": 4479,
+  "data_patches": [
+    {
+      "path": "thermal-generators-on-lava.json",
+      "patch": {
+        "name": "Thermal generators on lava",
+        "block": {
+          "thermal-generator": {
+            "placeableLiquid": true
+          }
+        }
+      }
+    },
+    {
+      "path": "pyromagma-heat.json",
+      "patch": {
+        "name": "Pyromagma gives heat",
+        "block.exogenesisold-pyromagma.attributes.heat": 0.85
+      }
+    }
+  ],
+  "rules": {
+    "waves": true,
+    "waveTimer": true,
+    "waveSending": false,
+    "waitEnemies": false,
+    "waveSpacing": 5400.0,
+    "initialWaveSpacing": 15120.0,
+    "winWave": 0,
+    "attackMode": true,
+    "pvp": true,
+    "hideSpawns": false,
+    "unitCap": 24,
+    "unitCapVariable": true,
+    "dropZoneRadius": 300.0,
+    "planet": "sun",
+    "loadout": [
+      {
+        "item": "copper",
+        "amount": 700
+      },
+      {
+        "item": "lead",
+        "amount": 300
+      }
+    ],
+    "waveTeam": 6,
+    "airUseSpawns": true,
+    "teams": {
+      "6": {
+        "rtsAi": true,
+        "rtsMinSquad": 1,
+        "rtsMinWeight": 0.0,
+        "unitHealthMultiplier": 1.5
+      }
+    }
+  },
+  "spawn_groups": 125,
+  "rules_json_bytes": 14044,
+  "wave_summary": [
+    {
+      "wave": 1,
+      "units": 10,
+      "total_hp": 2250,
+      "toughest": "10x crawler"
+    },
+    {
+      "wave": 10,
+      "units": 82,
+      "total_hp": 63601,
+      "toughest": "12x locus, 30x crawler, 15x dagger, 25x nova"
+    },
+    {
+      "wave": 20,
+      "units": 197,
+      "total_hp": 165160,
+      "toughest": "12x locus, 10x heat, 30x fortress, 10x quasar"
+    },
+    {
+      "wave": 30,
+      "units": 343,
+      "total_hp": 429861,
+      "toughest": "20x precept, 18x locus, 10x heat, 30x fortress"
+    },
+    {
+      "wave": 40,
+      "units": 504,
+      "total_hp": 1342486,
+      "toughest": "10x conquer (boss), 10x tecta, 40x precept, 24x locus"
+    },
+    {
+      "wave": 50,
+      "units": 600,
+      "total_hp": 1844644,
+      "toughest": "10x conquer, 10x b04-oort (boss), 20x tecta, 60x precept"
+    },
+    {
+      "wave": 60,
+      "units": 601,
+      "total_hp": 1936635,
+      "toughest": "10x conquer, 20x tecta, 10x quad, 80x precept"
+    },
+    {
+      "wave": 75,
+      "units": 545,
+      "total_hp": 2622073,
+      "toughest": "10x conquer, 10x toxopid, 20x arkyid, 20x tecta"
+    },
+    {
+      "wave": 90,
+      "units": 610,
+      "total_hp": 5328306,
+      "toughest": "10x anvil, 10x Fusion, 10x conquer, 10x toxopid"
+    },
+    {
+      "wave": 100,
+      "units": 625,
+      "total_hp": 5709309,
+      "toughest": "10x anvil, 10x Fusion, 10x conquer, 10x toxopid"
+    },
+    {
+      "wave": 120,
+      "units": 730,
+      "total_hp": 13396904,
+      "toughest": "10x colossus (boss), 10x anvil, 10x Fusion, 10x conquer"
+    },
+    {
+      "wave": 150,
+      "units": 870,
+      "total_hp": 23163152,
+      "toughest": "10x colossus (boss), 10x xenoct, 10x bloodshed, 10x hex"
+    },
+    {
+      "wave": 200,
+      "units": 1340,
+      "total_hp": 38552495,
+      "toughest": "15x colossus (boss), 15x xenoct, 10x fornax, 15x bloodshed"
+    },
+    {
+      "wave": 250,
+      "units": 1590,
+      "total_hp": 161646526,
+      "toughest": "10x war (boss), 20x colossus (boss), 20x xenoct, 10x fornax"
+    },
+    {
+      "wave": 300,
+      "units": 1795,
+      "total_hp": 397032173,
+      "toughest": "10x sagittarius (boss), 10x war (boss), 25x colossus (boss), 25x xenoct"
+    }
+  ],
+  "wave_curve": [
+    {
+      "waves": "1-10",
+      "avg_units": 42.7,
+      "min_units": 10,
+      "max_units": 82,
+      "avg_total_hp": 16719
+    },
+    {
+      "waves": "11-20",
+      "avg_units": 157.0,
+      "min_units": 92,
+      "max_units": 217,
+      "avg_total_hp": 117542
+    },
+    {
+      "waves": "21-30",
+      "avg_units": 279.8,
+      "min_units": 222,
+      "max_units": 343,
+      "avg_total_hp": 290646
+    },
+    {
+      "waves": "31-40",
+      "avg_units": 409.1,
+      "min_units": 313,
+      "max_units": 519,
+      "avg_total_hp": 628997
+    },
+    {
+      "waves": "41-50",
+      "avg_units": 560.8,
+      "min_units": 514,
+      "max_units": 604,
+      "avg_total_hp": 1451783
+    },
+    {
+      "waves": "51-60",
+      "avg_units": 527.6,
+      "min_units": 475,
+      "max_units": 601,
+      "avg_total_hp": 1695327
+    },
+    {
+      "waves": "61-70",
+      "avg_units": 561.0,
+      "min_units": 511,
+      "max_units": 621,
+      "avg_total_hp": 2140360
+    },
+    {
+      "waves": "71-80",
+      "avg_units": 575.5,
+      "min_units": 540,
+      "max_units": 620,
+      "avg_total_hp": 2859976
+    },
+    {
+      "waves": "81-90",
+      "avg_units": 599.0,
+      "min_units": 570,
+      "max_units": 645,
+      "avg_total_hp": 4403163
+    },
+    {
+      "waves": "91-100",
+      "avg_units": 623.0,
+      "min_units": 600,
+      "max_units": 660,
+      "avg_total_hp": 5451258
+    },
+    {
+      "waves": "101-110",
+      "avg_units": 635.5,
+      "min_units": 610,
+      "max_units": 665,
+      "avg_total_hp": 5857937
+    },
+    {
+      "waves": "111-120",
+      "avg_units": 673.0,
+      "min_units": 635,
+      "max_units": 730,
+      "avg_total_hp": 6903140
+    },
+    {
+      "waves": "121-130",
+      "avg_units": 759.0,
+      "min_units": 710,
+      "max_units": 835,
+      "avg_total_hp": 15521063
+    },
+    {
+      "waves": "131-140",
+      "avg_units": 801.0,
+      "min_units": 770,
+      "max_units": 825,
+      "avg_total_hp": 16954104
+    },
+    {
+      "waves": "141-150",
+      "avg_units": 851.0,
+      "min_units": 795,
+      "max_units": 885,
+      "avg_total_hp": 22160019
+    },
+    {
+      "waves": "151-160",
+      "avg_units": 918.0,
+      "min_units": 855,
+      "max_units": 980,
+      "avg_total_hp": 23396067
+    },
+    {
+      "waves": "161-170",
+      "avg_units": 998.0,
+      "min_units": 960,
+      "max_units": 1035,
+      "avg_total_hp": 24462504
+    },
+    {
+      "waves": "171-180",
+      "avg_units": 1098.5,
+      "min_units": 1045,
+      "max_units": 1135,
+      "avg_total_hp": 29711864
+    },
+    {
+      "waves": "181-190",
+      "avg_units": 1186.0,
+      "min_units": 1140,
+      "max_units": 1230,
+      "avg_total_hp": 33374638
+    },
+    {
+      "waves": "191-200",
+      "avg_units": 1291.5,
+      "min_units": 1240,
+      "max_units": 1340,
+      "avg_total_hp": 36171132
+    },
+    {
+      "waves": "201-210",
+      "avg_units": 1383.5,
+      "min_units": 1345,
+      "max_units": 1420,
+      "avg_total_hp": 38895640
+    },
+    {
+      "waves": "211-220",
+      "avg_units": 1442.0,
+      "min_units": 1410,
+      "max_units": 1495,
+      "avg_total_hp": 39987570
+    },
+    {
+      "waves": "221-230",
+      "avg_units": 1494.5,
+      "min_units": 1460,
+      "max_units": 1515,
+      "avg_total_hp": 44776814
+    },
+    {
+      "waves": "231-240",
+      "avg_units": 1524.5,
+      "min_units": 1500,
+      "max_units": 1550,
+      "avg_total_hp": 45792872
+    },
+    {
+      "waves": "241-250",
+      "avg_units": 1573.0,
+      "min_units": 1550,
+      "max_units": 1600,
+      "avg_total_hp": 59450095
+    },
+    {
+      "waves": "251-260",
+      "avg_units": 1626.0,
+      "min_units": 1600,
+      "max_units": 1660,
+      "avg_total_hp": 161915856
+    },
+    {
+      "waves": "261-270",
+      "avg_units": 1655.0,
+      "min_units": 1625,
+      "max_units": 1685,
+      "avg_total_hp": 162725864
+    },
+    {
+      "waves": "271-280",
+      "avg_units": 1710.5,
+      "min_units": 1675,
+      "max_units": 1735,
+      "avg_total_hp": 167647338
+    },
+    {
+      "waves": "281-290",
+      "avg_units": 1740.0,
+      "min_units": 1705,
+      "max_units": 1770,
+      "avg_total_hp": 168806279
+    },
+    {
+      "waves": "291-300",
+      "avg_units": 1785.5,
+      "min_units": 1750,
+      "max_units": 1820,
+      "avg_total_hp": 193618272
+    },
+    {
+      "waves": "301-310",
+      "avg_units": 1836.0,
+      "min_units": 1795,
+      "max_units": 1865,
+      "avg_total_hp": 397403204
+    }
+  ],
+  "notes": [],
+  "match": "pvp",
+  "teams": {
+    "Frozen base (blue)": {
+      "team": 5,
+      "core": [
+        400,
+        670
+      ]
+    },
+    "Semi-arid base (purple)": {
+      "team": 3,
+      "core": [
+        657,
+        483
+      ]
+    },
+    "Desert base (yellow)": {
+      "team": 1,
+      "core": [
+        559,
+        182
+      ]
+    },
+    "Volcano base (red)": {
+      "team": 2,
+      "core": [
+        241,
+        182
+      ]
+    },
+    "Forest base (green)": {
+      "team": 4,
+      "core": [
+        143,
+        483
+      ]
+    }
+  },
+  "wave_team": 6,
+  "ground_path_tiles_between_bases": {
+    "Frozen base (blue)": {
+      "Semi-arid base (purple)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 317.8
+      },
+      "Desert base (yellow)": {
+        "ground_path_tiles": 647,
+        "straight_line_tiles": 513.2
+      },
+      "Volcano base (red)": {
+        "ground_path_tiles": 647,
+        "straight_line_tiles": 513.2
+      },
+      "Forest base (green)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 317.8
+      }
+    },
+    "Semi-arid base (purple)": {
+      "Frozen base (blue)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 317.8
+      },
+      "Desert base (yellow)": {
+        "ground_path_tiles": 483,
+        "straight_line_tiles": 316.6
+      },
+      "Volcano base (red)": {
+        "ground_path_tiles": 717,
+        "straight_line_tiles": 513.5
+      },
+      "Forest base (green)": {
+        "ground_path_tiles": 598,
+        "straight_line_tiles": 514.0
+      }
+    },
+    "Desert base (yellow)": {
+      "Frozen base (blue)": {
+        "ground_path_tiles": 647,
+        "straight_line_tiles": 513.2
+      },
+      "Semi-arid base (purple)": {
+        "ground_path_tiles": 483,
+        "straight_line_tiles": 316.6
+      },
+      "Volcano base (red)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 318.0
+      },
+      "Forest base (green)": {
+        "ground_path_tiles": 717,
+        "straight_line_tiles": 513.5
+      }
+    },
+    "Volcano base (red)": {
+      "Frozen base (blue)": {
+        "ground_path_tiles": 647,
+        "straight_line_tiles": 513.2
+      },
+      "Semi-arid base (purple)": {
+        "ground_path_tiles": 717,
+        "straight_line_tiles": 513.5
+      },
+      "Desert base (yellow)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 318.0
+      },
+      "Forest base (green)": {
+        "ground_path_tiles": 465,
+        "straight_line_tiles": 316.6
+      }
+    },
+    "Forest base (green)": {
+      "Frozen base (blue)": {
+        "ground_path_tiles": 462,
+        "straight_line_tiles": 317.8
+      },
+      "Semi-arid base (purple)": {
+        "ground_path_tiles": 598,
+        "straight_line_tiles": 514.0
+      },
+      "Desert base (yellow)": {
+        "ground_path_tiles": 717,
+        "straight_line_tiles": 513.5
+      },
+      "Volcano base (red)": {
+        "ground_path_tiles": 465,
+        "straight_line_tiles": 316.6
+      }
+    }
+  },
+  "defender_bots": {
+    "join_window_s": 180,
+    "refresh_s": 15,
+    "multipliers": {
+      "blockHealth": 6.0,
+      "blockDamage": 3.0,
+      "unitHealth": 4.5,
+      "unitDamage": 3.0
+    },
+    "turrets": [
+      {
+        "block": "spectre",
+        "ammo": "thorium",
+        "offset": [
+          -13,
+          -13
+        ]
+      },
+      {
+        "block": "spectre",
+        "ammo": "thorium",
+        "offset": [
+          13,
+          -13
+        ]
+      },
+      {
+        "block": "spectre",
+        "ammo": "thorium",
+        "offset": [
+          -13,
+          13
+        ]
+      },
+      {
+        "block": "spectre",
+        "ammo": "thorium",
+        "offset": [
+          13,
+          13
+        ]
+      },
+      {
+        "block": "ripple",
+        "ammo": "plastanium",
+        "offset": [
+          -14,
+          -5
+        ]
+      },
+      {
+        "block": "ripple",
+        "ammo": "plastanium",
+        "offset": [
+          15,
+          6
+        ]
+      },
+      {
+        "block": "ripple",
+        "ammo": "plastanium",
+        "offset": [
+          6,
+          -14
+        ]
+      },
+      {
+        "block": "ripple",
+        "ammo": "plastanium",
+        "offset": [
+          -5,
+          15
+        ]
+      },
+      {
+        "block": "cyclone",
+        "ammo": "surge-alloy",
+        "offset": [
+          -14,
+          6
+        ]
+      },
+      {
+        "block": "cyclone",
+        "ammo": "surge-alloy",
+        "offset": [
+          15,
+          -5
+        ]
+      },
+      {
+        "block": "cyclone",
+        "ammo": "surge-alloy",
+        "offset": [
+          -5,
+          -14
+        ]
+      },
+      {
+        "block": "cyclone",
+        "ammo": "surge-alloy",
+        "offset": [
+          6,
+          15
+        ]
+      }
+    ],
+    "wall": "thorium-wall-large",
+    "wall_ring": 20,
+    "guards": {
+      "fortress": 4,
+      "scepter": 1
+    },
+    "processor": {
+      "tile": [
+        1,
+        1
+      ],
+      "team": 6,
+      "instructions": 210,
+      "code_bytes": 4664,
+      "content": {
+        "block": [
+          "cyclone",
+          "ripple",
+          "spectre",
+          "thorium-wall-large"
+        ],
+        "item": [
+          "plastanium",
+          "surge-alloy",
+          "thorium"
+        ],
+        "unit": [
+          "fortress",
+          "scepter"
+        ]
+      }
+    }
+  },
+  "resource_rules": {
+    "homes": {
+      "water": "Forest (W)",
+      "cryofluid": "Frozen (N)",
+      "oil (tar)": "Desert (SE)",
+      "oil-rich ground (shale)": "Semi-arid (E)",
+      "slag (lava)": "Volcano (SW)",
+      "pyroplasma (pyromagma)": "Volcano (SW)",
+      "cold plasma (glowing vein)": "Frozen (N)",
+      "heat (hotrock/magmarock)": "Volcano (SW)",
+      "spore moss": "Forest (W)",
+      "sand floor (sand/darksand)": "Desert (SE)"
+    },
+    "pocket_cap_tiles": 9,
+    "home_min_tiles": 300
+  }
+}

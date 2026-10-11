@@ -223,10 +223,10 @@ class clGrid:
         impossible. Empty list if vDst cannot be reached."""
         dtBest = {vSrc: 0}
         dtPrev = {}
-        arHeap = [(0, vSrc)]
+        arHeap = [(0, 0, vSrc)]               # (cost so far + Manhattan estimate, cost so far, tile)
         vTx, vTy = vDst % self.vWidth, vDst // self.vWidth
         while arHeap:
-            vCost, i = heapq.heappop(arHeap)
+            _, vCost, i = heapq.heappop(arHeap)
             if i == vDst:
                 break
             if vCost > dtBest.get(i, 1 << 60):
@@ -240,7 +240,7 @@ class clGrid:
                     dtBest[j] = vNew
                     dtPrev[j] = i
                     vH = abs(j % self.vWidth - vTx) + abs(j // self.vWidth - vTy)
-                    heapq.heappush(arHeap, (vNew + vH, j))
+                    heapq.heappush(arHeap, (vNew + vH, vNew, j))
         if vDst not in dtBest:
             return []
         arPath = [vDst]
